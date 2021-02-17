@@ -58,7 +58,6 @@ app.layout = html.Div( children=[
             html.H5( "ZIP code" ),
             dcc.Dropdown( id = 'zip-drop',
                           options=[ {'label': i, 'value': i} for i in zips.index.unique() ],
-                          value=[],
                           multi=False,
                           placeholder="Select a ZIP code"
                           )
