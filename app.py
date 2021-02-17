@@ -52,10 +52,10 @@ GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/61
 
 app.layout = html.Div( children=[
     html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } ),
-    html.Div( dcc.Markdown( markdown_text ) ),
+    html.Div( [dcc.Markdown( markdown_text ),
+               html.P() ] ),
     html.Div( [
         html.Div( [
-            html.P(),
             html.H5( "ZIP code" ),
             dcc.Dropdown( id = 'zip-drop',
                           options=[ {'label': i, 'value': i} for i in zips.index.unique() ],
@@ -66,7 +66,6 @@ app.layout = html.Div( children=[
         ],
             className="four columns" ),
         html.Div( [
-            html.P(),
             html.H5( "Recency" ),
             dcc.Dropdown( id = 'recency-drop',
                           options=[
@@ -83,18 +82,20 @@ app.layout = html.Div( children=[
         ],
             className="four columns" )
     ],
-        className="row"
+        style={ "marginLeft" : "auto",
+                "marginRight" : "auto" },
+        className="pretty_container row"
     ),
     html.Div(
         dcc.Graph(
             id='choropleth-graph',
             figure=fig1,
             config={'displayModeBar': False},
-            style={ "height" : "50vh" }
+            style={ "height" : "60vh" }
         ),
+        className="pretty_container",
         style={ "marginLeft" : "auto",
-                "marginRight" : "auto",
-                "max-width" : "80em" }
+                "marginRight" : "auto"}
     ),
     html.Div( [
         html.Div(
@@ -103,7 +104,7 @@ app.layout = html.Div( children=[
                 figure=fig2,
                 style={ "height" : "25em" }
             ),
-            className="four columns"
+            className="pretty_container one-third column"
         ),
         html.Div(
             dcc.Graph(
@@ -111,7 +112,8 @@ app.layout = html.Div( children=[
                 figure=fig3,
                 style={ "height" : "25em" }
             ),
-            className="four columns"
+            className="pretty_container one-third column"
+
         ),
         html.Div(
             dcc.Graph(
@@ -119,18 +121,20 @@ app.layout = html.Div( children=[
                 figure=fig4,
                 style={ "height" : "25em" }
             ),
-            className="four columns"
+            className="pretty_container one-third column"
         ),
     ], className="row",
-        style={ "marginLeft" : "auto",
-                "marginRight" : "auto",
-                "max-width" : "80em"}
+       style={ "marginLeft" : "auto",
+               "marginRight" : "auto" }
 
-    )
+    ),
+    html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } )
 ],
-style={ "marginLeft" : "auto",
-        "marginRight" : "auto",
-        "max-width" : "80em" } )
+    style={ "marginLeft" : "auto",
+            "marginRight" : "auto",
+            "maxWidth" : "80em" }
+)
+# TODO: Add download button to download metadata associated with current filtered data.
 
 @app.callback(
     [Output( "cum-graph", "figure" ),

@@ -14,6 +14,8 @@ def _add_date_formating( fig ):
 
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y" )
     fig.update_layout( template="simple_white",
+                       plot_bgcolor="#F9F9F9",
+                       paper_bgcolor="#F9F9F9",
                        margin={"r":0,"t":0,"l":0,"b":0},
                        legend=dict( yanchor="top",
                                     y=0.99,
@@ -90,7 +92,11 @@ def plot_choropleth( sf ):
                                  "sequences" : "Sequences" },
                          hover_data=[ "case_count", "sequences", "fraction" ],
                          projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl, range_color=(0,1) )
-    fig.update_geos( fitbounds="locations", visible=False )
+    fig.update_geos( fitbounds="locations",
+                     visible=False,
+                     bgcolor="#f9f9f9" )
     fig.update_layout( autosize=True,
+                       plot_bgcolor="#F9F9F9",
+                       paper_bgcolor="#F9F9F9",
                        margin={"r":0,"t":0,"l":0,"b":0} )
     return fig
