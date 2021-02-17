@@ -10,7 +10,6 @@ import pandas as pd
 import data_wrangling.download_resources as download
 import dashboard.plot as dashplot
 from dash.dependencies import Input, Output
-import json
 
 md = pd.read_csv( "resources/md.csv" )
 md = md.loc[md["collection_date"]!='Unknown']

@@ -1,0 +1,6 @@
+dash~=1.19.0
+pandas~=1.0.1
+plotly~=4.14.3
+numpy~=1.18.1
+geopandas~=0.8.1
+geojson_rewind~=1.0.0
