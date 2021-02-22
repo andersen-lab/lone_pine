@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
+import pandas as pd
 
 def _add_date_formating( fig ):
     # TODO: making background needs to be automated.
@@ -14,6 +15,7 @@ def _add_date_formating( fig ):
 
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y" )
     fig.update_layout( template="simple_white",
+                       hovermode="x unified",
                        plot_bgcolor="#F9F9F9",
                        paper_bgcolor="#F9F9F9",
                        margin={"r":0,"t":0,"l":0,"b":0},
@@ -23,50 +25,67 @@ def _add_date_formating( fig ):
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
 
+def get_date_limits( series ):
+    # Max
+    year = series.max().year
+    month = series.max().month + 1
+    day = 1
+    max_lim = pd.to_datetime( f"{year}-{month}-{day}" )
+
+    # min
+    year = series.min().year
+    month = series.min().month
+    day = 1
+    min_lim = pd.to_datetime( f"{year}-{month}-{day}" )
+    return [min_lim, max_lim]
+
 def plot_daily_cases_seqs( df ):
     fig = go.Figure()
-    fig.add_trace( go.Scatter( x=df["date"], y=df["new_cases"],
+    fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
+                                 mode='markers',
+                                 name='Daily Cases',
+                                 marker={ "color" : "#767676" } ) )
+    fig.add_trace(go.Scattergl(x=df["date"], y=df["new_sequences"],
                                mode='markers',
-                               name='Daily Cases',
-                               marker={ "color" : "#767676" } ) )
-    fig.add_trace(go.Scatter(x=df["date"], y=df["new_sequences"],
-                             mode='markers',
-                             name='Daily Sequences',
-                             marker={ "color" : "#DFB377"} ) )
+                               name='Daily Sequences',
+                               marker={ "color" : "#DFB377"} ) )
 
     _add_date_formating( fig )
     fig.update_yaxes( type="log", dtick=1, title="<b>Number of Cases</b>" )
+    fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
 
 def plot_cummulative_cases_seqs( df ):
     fig = go.Figure()
-    fig.add_trace( go.Scatter( x=df["date"], y=df["cases"],
+    fig.add_trace( go.Scattergl( x=df["date"], y=df["cases"],
                                mode='lines',
                                name='Reported',
                                line={ "color" : '#767676', "width" : 4 } ) )
-    fig.add_trace(go.Scatter(x=df["date"], y=df["sequences"],
+    fig.add_trace(go.Scattergl(x=df["date"], y=df["sequences"],
                              mode='lines',
                              name='Sequenced',
                              line={ "color" : "#DFB377", "width" : 4 } ) )
 
     _add_date_formating( fig )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative Cases</b>" )
+    fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
 
 def plot_cummulative_sampling_fraction( df ):
     fig = go.Figure()
-    fig.add_trace( go.Scatter( x=df["date"], y=df["fraction"],
-                               mode='lines',
-                               name='sampling_fraction',
-                               line={ "color" : '#767676', "width" : 4 } ) )
+    fig.add_trace( go.Scattergl( x=df["date"], y=df["fraction"],
+                                 mode='lines',
+                                 name='Fraction',
+                                 line={ "color" : '#767676', "width" : 4 } ) )
 
     _add_date_formating( fig )
 
     min_lim = np.floor( np.log10( df["fraction"].min() ) )
     max_lim = np.ceil( np.log10( df["fraction"].max() ) )
     fig.update_yaxes( type="log", title="<b>Cummulative Sampling Fraction</b>", range=[min_lim,max_lim] )
+    fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
 

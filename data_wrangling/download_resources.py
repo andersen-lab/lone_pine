@@ -3,6 +3,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 import json
+import dashboard.plot as dashplot
 
 # Download metadata from SEARCH repository
 # https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv
@@ -23,28 +24,36 @@ def download_search():
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
     return md
 
-def download_shapefile( cases, seqs ):
+def download_shapefile( cases, seqs, save=False, local=False ):
     """ Downloads and formats the San Diego ZIP GeoJSON formatted as a dictionary.
     Returns
     -------
     dict
     """
-    shapefile_loc = "https://opendata.arcgis.com/datasets/41c3a7bd375547069a78fce90153cbc0_5.geojson"
-    zip_area = gpd.read_file( shapefile_loc )
-    zip_area = zip_area[["ZIP", "geometry"]].dissolve( by="ZIP" )
-    zip_area = zip_area.reset_index()
+    if local:
+        zip_area = gpd.read_file( "resources/zips.geojson")
+    else:
+        shapefile_loc = "https://opendata.arcgis.com/datasets/41c3a7bd375547069a78fce90153cbc0_5.geojson"
+        zip_area = gpd.read_file( shapefile_loc )
+        zip_area = zip_area[["ZIP", "geometry"]].dissolve( by="ZIP" )
+        zip_area = zip_area.reset_index()
 
-    # GeoJSON from San Diego has improper winding so I have to fix it.
-    zip_area = zip_area.set_geometry(
-        gpd.GeoDataFrame.from_features(
-            json.loads(
-                geojson_rewind.rewind(
-                    zip_area.to_json(),
-                    rfc7946=False
-                )
-            )["features"]
-        ).geometry
-    )
+        # GeoJSON from San Diego has improper winding so I have to fix it.
+        zip_area = zip_area.set_geometry(
+            gpd.GeoDataFrame.from_features(
+                json.loads(
+                    geojson_rewind.rewind(
+                        zip_area.to_json(),
+                        rfc7946=False
+                    )
+                )["features"]
+            ).geometry
+        )
+
+    if save:
+        zip_area.to_file("resources/zips.geojson", driver='GeoJSON' )
+
+
 
     # Add case data so it is there...
     zip_area = zip_area.merge( cases, left_on="ZIP", right_on="ziptext" )
@@ -154,17 +163,20 @@ def get_seqs_per_case( time_series, seq_md, zip_f=None, normalized=False ):
 
     return cases
 
-#if __name__ == "__main__":
-#    md = download_search()
-#    df, ts = download_cases()
-#    zips = download_shapefile( df, md )
-#
-#    #token = open( ".mapbox" ).read()
-#    #px.set_mapbox_access_token( token )
-###
-#    #fig = px.choropleth( df, geojson=zips, featureidkey="properties.ZIP", locations="ziptext", color="fraction",
-#    #                            center={ "lat" : 33.02, "lon" : -116.77 }, labels={ "rate_100k": "Cases per 100000 residents" },
-#    #                           color_continuous_scale=px.colors.sequential.Bluyl )
-#    #fig.update_layout( margin={"r":0,"t":0,"l":0,"b":0} )
-#    fig = dashplot.plot_choropleth( zips )
-#    fig.show()
+#def date_lim( date ):
+
+if __name__ == "__main__":
+    md = pd.read_csv( "resources/md.csv" )
+    md = md.loc[md["collection_date"]!='Unknown']
+    md = md.loc[~md["collection_date"].str.startswith( "19" )]
+    md = md.loc[~md["collection_date"].str.contains( "/" )]
+    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
+    df, ts = download_cases()
+    zips = download_shapefile( df, md, local=True )
+    plot_df = get_seqs_per_case( ts, md )
+
+    fig = dashplot.plot_choropleth( zips )
+    fig.show()
+
+    #fig = dashplot.plot_daily_cases_seqs( plot_df )
+    #fig.show()
