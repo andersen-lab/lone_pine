@@ -100,17 +100,17 @@ def add_missing_to_color_scale( scale, color="white" ):
             return_list.append( [( 1 / len_scale ) * i, col] )
     return return_list
 
-def plot_choropleth( sf ):
+def plot_choropleth( sf, colorby="fraction" ):
     # TODO: This plot would be easier to read in a log scale.
     #  Requires modifying sf, the hoverdata, and then the colorscale.
     #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
     fig = px.choropleth( sf, geojson=sf.geometry,
-                         locations=sf.index, color="fraction",
+                         locations=sf.index, color=colorby,
                          labels={"fraction": "Sequences per case",
                                  "case_count" : "Cases",
                                  "sequences" : "Sequences" },
                          hover_data=[ "case_count", "sequences", "fraction" ],
-                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl, range_color=(0,1) )
+                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl )
     fig.update_geos( fitbounds="locations",
                      visible=False,
                      bgcolor="#f9f9f9" )
