@@ -124,7 +124,7 @@ app.layout = html.Div( children=[
 
     ),
     html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } ),
-    html.Div( id='hidden-data-div', style={'display': 'none'} )
+    dcc.Store( id='hidden-data' )
 ],
     style={ "marginLeft" : "auto",
             "marginRight" : "auto",
@@ -133,7 +133,7 @@ app.layout = html.Div( children=[
 # TODO: Add download button to download metadata associated with current filtered data.
 
 @app.callback(
-    Output( "hidden-data-div", "children" ),
+    Output( "hidden-data", "data" ),
     [Input( "zip-drop", "value" ),
      Input( "recency-drop", "value"  )] )
 def update_data( zip_f, window ):
@@ -162,7 +162,7 @@ def update_figures_after_click( clickData ):
 @app.callback(
     [Output( 'choropleth-graph', "figure" ),
      Output( "zip-drop", "options")],
-    [Input( "hidden-data-div", "children"),
+    [Input( "hidden-data", "data" ),
      Input( 'color-type', "value")] )
 def update_choropleth( jsonified_data, colorby ):
     datasets = json.loads( jsonified_data )
@@ -175,9 +175,9 @@ def update_choropleth( jsonified_data, colorby ):
 
 @app.callback(
     [Output( "cum-graph", "figure" ),
-     Output( "daily-graph","figure"),
-     Output("fraction-graph","figure")],
-    Input( "hidden-data-div", "children") )
+     Output( "daily-graph","figure" ),
+     Output( "fraction-graph","figure" )],
+    Input( "hidden-data", "data" ) )
 def update_figures( jsonified_data ):
     datasets = json.loads( jsonified_data )
     new_df = pd.read_json( datasets["seqs_per_case"], orient="split" )

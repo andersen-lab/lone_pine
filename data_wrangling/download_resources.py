@@ -3,9 +3,7 @@ import datetime
 import geojson_rewind
 import geopandas as gpd
 import pandas as pd
-import numpy as np
 import json
-import dashboard.plot as dashplot
 
 cached_cases = None
 cached_seqs = None
