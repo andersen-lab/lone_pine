@@ -8,7 +8,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import data_wrangling.download_resources as download
 import dashboard.plot as dashplot
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import pandas as pd
 import json
 import geopandas as gpd
@@ -162,9 +162,10 @@ def update_figures_after_click( clickData ):
 @app.callback(
     [Output( 'choropleth-graph', "figure" ),
      Output( "zip-drop", "options")],
-    [Input( "hidden-data", "data" ),
-     Input( 'color-type', "value")] )
-def update_choropleth( jsonified_data, colorby ):
+    [Input( "hidden-data", "modified_timestamp" ),
+     Input( 'color-type', "value")],
+    State( "hidden-data", "data" ))
+def update_choropleth( timestamp, colorby, jsonified_data ):
     datasets = json.loads( jsonified_data )
     zips = gpd.GeoDataFrame.from_features( json.loads( datasets["zips"] ) )
     zips = zips.set_index( "ZIP" )
@@ -177,8 +178,9 @@ def update_choropleth( jsonified_data, colorby ):
     [Output( "cum-graph", "figure" ),
      Output( "daily-graph","figure" ),
      Output( "fraction-graph","figure" )],
-    Input( "hidden-data", "data" ) )
-def update_figures( jsonified_data ):
+    Input( "hidden-data", "modified_timestamp" ),
+    State( "hidden-data", "data" ) )
+def update_figures( timestamp, jsonified_data ):
     datasets = json.loads( jsonified_data )
     new_df = pd.read_json( datasets["seqs_per_case"], orient="split" )
     return [dashplot.plot_cummulative_cases_seqs( new_df ),
