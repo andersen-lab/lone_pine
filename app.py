@@ -115,7 +115,16 @@ app.layout = html.Div( children=[
     ], className="row",
        style={ "marginLeft" : "auto",
                "marginRight" : "auto" }
-
+    ),
+    html.Div(
+        dcc.Graph(
+            id="lineage-graph",
+            config={"displayModeBar" : False},
+            style={"height"  : "25em" }
+        ),
+        className="pretty_container",
+        style={ "marginLeft" : "auto",
+                "marginRight" : "auto" }
     ),
     html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } )
 ],
@@ -170,6 +179,15 @@ def update_cummulative_graph( window, zip_f ):
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
+
+@app.callback(
+    Output( "lineage-graph", "figure" ),
+    [Input( "recency-drop", "value" ),
+     Input( "zip-drop", "value" )]
+)
+def update_cummulative_graph( window, zip_f ):
+    return dashplot.plot_lineages( sequences, window, zip_f )
+
 
 @app.callback(
     Output('zip-drop', 'value'),

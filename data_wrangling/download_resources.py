@@ -19,11 +19,19 @@ def download_search():
     md = pd.read_csv( search_md )
     drop_cols = [i for i in md.columns if i not in ["ID", "collection_date", "location", "authors", "originating_lab", "zipcode"]]
     md = md.drop( columns=drop_cols )
+    md = md.loc[md["location"]=="USA/California/San Diego"]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
     md = md.loc[~md["collection_date"].str.contains( "/" )]
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
     md["days_past"] = ( datetime.datetime.today() - md["collection_date"] ).dt.days
+
+    # Add pangolin lineage information
+    pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
+    pango = pd.read_csv( pango_loc, usecols=["taxon", "lineage"] )
+
+    md = md.merge( pango, left_on="ID", right_on="taxon", how="left" )
+
 
     #md = md.drop( columns=["days_past"] )
     return md

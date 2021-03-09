@@ -39,6 +39,48 @@ def get_date_limits( series ):
     min_lim = pd.to_datetime( f"{year}-{month}-{day}" )
     return [min_lim, max_lim]
 
+def plot_lineages( df, window=None, zip_f=None ):
+
+
+    if window:
+        df = df.loc[df["days_past"] <= window]
+
+    if zip_f:
+        if type( zip_f ) != list:
+            zip_f = [zip_f]
+        df = df.loc[df["zipcode"].isin( zip_f )]
+
+    plot_df = df["lineage"].value_counts().reset_index()
+
+    if len( plot_df ) > 50:
+        plot_df = plot_df.iloc[:50]
+
+    voc = ["B.1.1.7", "B.1.351", "P.1"]
+    voi = ["B.1.427", "B.1.429", "B.1.526", "P.2"]
+    colors = list()
+    for i in plot_df["index"]:
+        if i in voi:
+            colors.append( "#4977CE" )
+        elif i in voc:
+            colors.append( "#AC6D41" )
+        else:
+            colors.append( "#767676" )
+
+    fig = go.Figure()
+    fig.add_trace( go.Bar( x=plot_df["index"], y=plot_df["lineage"], marker_color=colors ) )
+    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
+    fig.update_xaxes( title="<b>PANGO lineage</b>" )
+    fig.update_layout( template="simple_white",
+                       plot_bgcolor="#F9F9F9",
+                       paper_bgcolor="#F9F9F9",
+                       margin={"r":0,"t":0,"l":0,"b":0},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)" ) )
+    return fig
+
 def plot_daily_cases_seqs( df ):
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
@@ -51,7 +93,7 @@ def plot_daily_cases_seqs( df ):
                                marker={ "color" : "#DFB377"} ) )
 
     _add_date_formating( fig )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Number of Cases</b>" )
+    fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>" )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
@@ -68,7 +110,7 @@ def plot_cummulative_cases_seqs( df ):
                              line={ "color" : "#DFB377", "width" : 4 } ) )
 
     _add_date_formating( fig )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative Cases</b>" )
+    fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>" )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
@@ -84,7 +126,7 @@ def plot_cummulative_sampling_fraction( df ):
 
     min_lim = np.floor( np.log10( df["fraction"].min() ) )
     max_lim = np.ceil( np.log10( df["fraction"].max() ) )
-    fig.update_yaxes( type="log", title="<b>Cummulative Sampling Fraction</b>", range=[min_lim,max_lim] )
+    fig.update_yaxes( type="log", title="<b>Cummulative sampling fraction</b>", range=[min_lim,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
