@@ -6,24 +6,17 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import data_wrangling.download_resources as download
+import data_wrangling.format_resources as format_data
 import dashboard.plot as dashplot
-from dash.dependencies import Input, Output, State
-import pandas as pd
-import json
-import geopandas as gpd
+from dash.dependencies import Input, Output
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
 
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
-
-#fig1 = dashplot.plot_choropleth( zips )
-#fig2 = dashplot.plot_cummulative_cases_seqs( plot_df )
-#fig3 = dashplot.plot_daily_cases_seqs( plot_df )
-#fig4 = dashplot.plot_cummulative_sampling_fraction( plot_df )
+sequences = format_data.load_sequences()
+cases_whole = format_data.load_cases()
 
 markdown_text = '''
 ## SARS-CoV-2 Genomics
@@ -43,6 +36,7 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "ZIP code" ),
                 dcc.Dropdown( id = 'zip-drop',
+                              options=[{"label" : i, "value": i } for i in cases_whole["ziptext"].sort_values().unique()],
                               multi=False,
                               placeholder="Select a ZIP code"
                               )
@@ -123,8 +117,7 @@ app.layout = html.Div( children=[
                "marginRight" : "auto" }
 
     ),
-    html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } ),
-    dcc.Store( id='hidden-data' )
+    html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } )
 ],
     style={ "marginLeft" : "auto",
             "marginRight" : "auto",
@@ -133,22 +126,50 @@ app.layout = html.Div( children=[
 # TODO: Add download button to download metadata associated with current filtered data.
 
 @app.callback(
-    Output( "hidden-data", "data" ),
-    [Input( "zip-drop", "value" ),
-     Input( "recency-drop", "value"  )] )
-def update_data( zip_f, window ):
-    md = download.download_search( window=window )
-    df, ts = download.download_cases( window=window )
-    zips = download.download_shapefile( df, md, local=True )
-    plot_df = download.get_seqs_per_case( ts, md, zip_f=zip_f )
+    Output( "choropleth-graph", "figure"),
+    [Input( "recency-drop", "value" ),
+     Input( 'color-type', "value")]
+)
+def update_choropleth( window, colortype ):
+    new_sequences = sequences.loc[sequences["days_past"] <= window]
+    new_cases = format_data.format_cases_total( cases_whole.loc[cases_whole["days_past"] <= window] )
+    return dashplot.plot_choropleth( format_data.format_shapefile( new_cases, new_sequences ), colortype )
 
-    datasets = {
-        "zips" : zips.reset_index().to_json(),
-        "seqs_per_case" : plot_df.to_json( orient="split", date_format="iso" )
-    }
+@app.callback(
+    Output( "cum-graph", "figure" ),
+    [Input( "recency-drop", "value" ),
+     Input( "zip-drop", "value" )]
+)
+def update_cummulative_graph( window, zip_f ):
+    new_sequences = sequences.loc[sequences["days_past"] <= window]
+    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
 
-    return json.dumps( datasets )
+    return dashplot.plot_cummulative_cases_seqs( new_seqs_per_case )
 
+@app.callback(
+    Output( "daily-graph", "figure" ),
+    [Input( "recency-drop", "value" ),
+     Input( "zip-drop", "value" )]
+)
+def update_cummulative_graph( window, zip_f ):
+    new_sequences = sequences.loc[sequences["days_past"] <= window]
+    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
+
+    return dashplot.plot_daily_cases_seqs( new_seqs_per_case )
+
+@app.callback(
+    Output( "fraction-graph", "figure" ),
+    [Input( "recency-drop", "value" ),
+     Input( "zip-drop", "value" )]
+)
+def update_cummulative_graph( window, zip_f ):
+    new_sequences = sequences.loc[sequences["days_past"] <= window]
+    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
+
+    return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
 
 @app.callback(
     Output('zip-drop', 'value'),
@@ -158,34 +179,6 @@ def update_figures_after_click( clickData ):
         return []
     else:
         return clickData["points"][0]["location"]
-
-@app.callback(
-    [Output( 'choropleth-graph', "figure" ),
-     Output( "zip-drop", "options")],
-    [Input( "hidden-data", "modified_timestamp" ),
-     Input( 'color-type', "value")],
-    State( "hidden-data", "data" ))
-def update_choropleth( timestamp, colorby, jsonified_data ):
-    datasets = json.loads( jsonified_data )
-    zips = gpd.GeoDataFrame.from_features( json.loads( datasets["zips"] ) )
-    zips = zips.set_index( "ZIP" )
-
-    zip_options = [{'label': i, 'value': i} for i in zips.index.unique()]
-
-    return [dashplot.plot_choropleth( zips, colorby=colorby ), zip_options]
-
-@app.callback(
-    [Output( "cum-graph", "figure" ),
-     Output( "daily-graph","figure" ),
-     Output( "fraction-graph","figure" )],
-    Input( "hidden-data", "modified_timestamp" ),
-    State( "hidden-data", "data" ) )
-def update_figures( timestamp, jsonified_data ):
-    datasets = json.loads( jsonified_data )
-    new_df = pd.read_json( datasets["seqs_per_case"], orient="split" )
-    return [dashplot.plot_cummulative_cases_seqs( new_df ),
-            dashplot.plot_daily_cases_seqs( new_df ),
-            dashplot.plot_cummulative_sampling_fraction( new_df )]
 
 if __name__ == '__main__':
     app.run_server( debug=True )
