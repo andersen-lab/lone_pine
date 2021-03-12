@@ -41,7 +41,7 @@ app.layout = html.Div( children=[
                               placeholder="Select a ZIP code"
                               )
             ],
-                className="four columns" ),
+                className="three columns" ),
             html.Div( [
                 html.H5( "Recency" ),
                 dcc.Dropdown( id = 'recency-drop',
@@ -58,7 +58,16 @@ app.layout = html.Div( children=[
                               searchable=False
                               )
             ],
-                className="four columns" ),
+                className="three columns" ),
+            html.Div( [
+                html.H5( "Lineage" ),
+                dcc.Dropdown( id = 'lineage-drop',
+                              options=format_data.get_lineage_values( sequences ),
+                              multi=False,
+                              placeholder="Select a PANGO lineage"
+                              )
+            ],
+                className="three columns" ),
             html.Div( [
                 html.H5( "Color by" ),
                 dcc.RadioItems(
@@ -69,7 +78,7 @@ app.layout = html.Div( children=[
                     labelStyle={'display': 'inline-block'}
                 )
             ],
-                className="four columns" )
+                className="three columns" ),
         ] )
     ],
         style={ "marginLeft" : "auto",
@@ -93,7 +102,8 @@ app.layout = html.Div( children=[
                 config={'displayModeBar': False},
                 style={ "height" : "25em" }
             ),
-            className="pretty_container four columns"
+            className="pretty_container four columns",
+            style={"flexGrow" : "1"}
         ),
         html.Div(
             dcc.Graph(
@@ -101,7 +111,8 @@ app.layout = html.Div( children=[
                 config={'displayModeBar': False},
                 style={ "height" : "25em" }
             ),
-            className="pretty_container four columns"
+            className="pretty_container four columns",
+            style={"flexGrow" : "1"}
 
         ),
         html.Div(
@@ -110,17 +121,30 @@ app.layout = html.Div( children=[
                 config={'displayModeBar': False},
                 style={ "height" : "25em" }
             ),
-            className="pretty_container four columns"
+            className="pretty_container four columns",
+            style={"flexGrow" : "1"}
         ),
     ], className="row",
        style={ "marginLeft" : "auto",
-               "marginRight" : "auto" }
+               "marginRight" : "auto",
+               "display": "flex",
+               "flexWrap": "wrap" }
     ),
     html.Div(
         dcc.Graph(
             id="lineage-graph",
             config={"displayModeBar" : False},
             style={"height"  : "25em" }
+        ),
+        className="pretty_container",
+        style={ "marginLeft" : "auto",
+                "marginRight" : "auto" }
+    ),
+    html.Div(
+        dcc.Graph(
+            id="lineage-time-graph",
+            config={"displayModeBar" : False},
+            style={"height" : "25em" }
         ),
         className="pretty_container",
         style={ "marginLeft" : "auto",
@@ -188,15 +212,33 @@ def update_cummulative_graph( window, zip_f ):
 def update_cummulative_graph( window, zip_f ):
     return dashplot.plot_lineages( sequences, window, zip_f )
 
+@app.callback(
+    Output( "lineage-time-graph", "figure" ),
+    [Input( "recency-drop", "value" ),
+     Input( "zip-drop", "value" ),
+     Input( "lineage-drop", "value")]
+)
+def update_lineage_time_graph( window, zip_f, lineage ):
+    return dashplot.plot_lineages_time( sequences, lineage=lineage, window=window, zip_f=zip_f )
 
 @app.callback(
     Output('zip-drop', 'value'),
     Input('choropleth-graph', 'clickData'))
 def update_figures_after_click( clickData ):
     if clickData is None:
-        return []
+        return None
     else:
         return clickData["points"][0]["location"]
+
+@app.callback(
+    Output( "lineage-drop", "value" ),
+    Input( "lineage-graph", "clickData" )
+)
+def update_lineage_value( clickData ):
+    if clickData is None:
+        return None
+    else:
+        return clickData["points"][0]["label"]
 
 
 if __name__ == '__main__':

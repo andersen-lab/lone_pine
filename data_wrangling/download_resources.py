@@ -4,6 +4,7 @@ import geojson_rewind
 import geopandas as gpd
 import pandas as pd
 import json
+from epiweeks import Week
 
 # Download metadata from SEARCH repository
 # https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv
@@ -23,6 +24,9 @@ def download_search():
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
     md = md.loc[~md["collection_date"].str.contains( "/" )]
+    md = md.loc[md["collection_date"] != "NaT"]
+
+    md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
     md["days_past"] = ( datetime.datetime.today() - md["collection_date"] ).dt.days
 

@@ -25,7 +25,6 @@ def load_cases( window = None ):
         cases = cases.loc[cases["days_past"] <= window].copy()
     return cases
 
-
 def format_cases_timeseries( cases_df, window=None ):
     return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
 
@@ -139,3 +138,26 @@ def format_shapefile( cases, seqs ):
     zip_area = zip_area[["geometry", "case_count","sequences", "fraction"]]
 
     return zip_area
+
+def get_lineage_values( seqs ):
+    voc = ["B.1.1.7", "B.1.351", "P.1"]
+    voi = ["B.1.427", "B.1.429", "B.1.526", "P.2"]
+
+    values = seqs["lineage"].sort_values().unique()
+
+    return_dict = [{"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
+    for i in voc:
+        if i in values:
+            return_dict.append( { "label" : i, "value" : i } )
+
+    return_dict.append( {"label" : " - Variants of interest" , "value" : "None", "disabled" : True} )
+    for i in voi:
+        if i in values:
+            return_dict.append( { "label" : i, "value" : i } )
+
+    return_dict.append( {"label" : " - PANGO lineages" , "value" : "None", "disabled" : True} )
+    for i in values:
+        if ( i not in voc ) & ( i not in voi ):
+            return_dict.append( { "label" : i, "value" : i } )
+
+    return return_dict
