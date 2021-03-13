@@ -41,7 +41,7 @@ app.layout = html.Div( children=[
                               placeholder="Select a ZIP code"
                               )
             ],
-                className="three columns" ),
+                className="five columns" ),
             html.Div( [
                 html.H5( "Recency" ),
                 dcc.Dropdown( id = 'recency-drop',
@@ -58,16 +58,7 @@ app.layout = html.Div( children=[
                               searchable=False
                               )
             ],
-                className="three columns" ),
-            html.Div( [
-                html.H5( "Lineage" ),
-                dcc.Dropdown( id = 'lineage-drop',
-                              options=format_data.get_lineage_values( sequences ),
-                              multi=False,
-                              placeholder="Select a PANGO lineage"
-                              )
-            ],
-                className="three columns" ),
+                className="five columns" ),
             html.Div( [
                 html.H5( "Color by" ),
                 dcc.RadioItems(
@@ -78,7 +69,7 @@ app.layout = html.Div( children=[
                     labelStyle={'display': 'inline-block'}
                 )
             ],
-                className="three columns" ),
+                className="two columns" ),
         ] )
     ],
         style={ "marginLeft" : "auto",
@@ -129,6 +120,18 @@ app.layout = html.Div( children=[
                "marginRight" : "auto",
                "display": "flex",
                "flexWrap": "wrap" }
+    ),
+    html.Div( [
+        html.H4( "PANGO Lineages" ),
+        html.Div(
+            dcc.Dropdown( id = 'lineage-drop',
+                          options=format_data.get_lineage_values( sequences ),
+                          multi=False,
+                          placeholder="Select a PANGO lineage"
+                          ),
+                  className="three columns" )
+    ],
+        className="row"
     ),
     html.Div(
         dcc.Graph(
