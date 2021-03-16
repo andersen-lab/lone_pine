@@ -10,7 +10,7 @@ def _add_date_formating( fig ):
         if month > 12:
             year += 1
             month -= 12
-        fig.add_vrect( x0=f"{year}-{month}-01", x1=f"{year}-{month+1}-01", fillcolor="#EFEFEF", opacity=1, layer="below" )
+        fig.add_vrect( x0=f"{year}-{month}-01", x1=f"{year}-{month+1}-01", y0=0, y1=1000000, fillcolor="#EFEFEF", opacity=1, layer="below" )
 
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y" )
     fig.update_layout( template="simple_white",
