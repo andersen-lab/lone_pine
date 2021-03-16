@@ -137,7 +137,6 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
     plot_df = plot_df.fillna( 0 )
 
     max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
-    print( max_lim )
 
     fig = go.Figure()
 
