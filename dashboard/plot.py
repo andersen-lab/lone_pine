@@ -52,7 +52,6 @@ def plot_daily_cases_seqs( df ):
     _add_date_formating( fig )
     min_lim = np.floor( np.log10( 0.75 ) )
     max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
-    print( [min_lim, max_lim]  )
     fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
