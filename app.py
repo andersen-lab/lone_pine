@@ -238,6 +238,7 @@ def update_figures_after_click( clickData ):
     Input( "lineage-graph", "clickData" )
 )
 def update_lineage_value( clickData ):
+    print( clickData )
     if clickData is None:
         return None
     else:
