@@ -50,7 +50,10 @@ def plot_daily_cases_seqs( df ):
                                marker={ "color" : "#DFB377"} ) )
 
     _add_date_formating( fig )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>" )
+    min_lim = np.floor( np.log10( 0.75 ) )
+    max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
+    print( [min_lim, max_lim]  )
+    fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
@@ -67,7 +70,10 @@ def plot_cummulative_cases_seqs( df ):
                              line={ "color" : "#DFB377", "width" : 4 } ) )
 
     _add_date_formating( fig )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>" )
+    min_lim = np.floor( np.log10( df["sequences"].min() ) )
+    max_lim = np.ceil( np.log10( df["cases"].max() ) )
+    print( [min_lim, max_lim] )
+    fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
