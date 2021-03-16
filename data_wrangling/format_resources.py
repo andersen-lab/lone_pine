@@ -142,8 +142,8 @@ def format_shapefile( cases, seqs ):
     return zip_area
 
 def get_lineage_values( seqs ):
-    voc = ["B.1.1.7", "B.1.351", "P.1"]
-    voi = ["B.1.427", "B.1.429", "B.1.526", "P.2"]
+    voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
+    voi = ["B.1.526", "B.1.525", "P.2" ]
 
     values = seqs["lineage"].sort_values().unique()
 
