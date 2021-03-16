@@ -107,6 +107,7 @@ def plot_choropleth( sf, colorby="fraction" ):
     # TODO: This plot would be easier to read in a log scale.
     #  Requires modifying sf, the hoverdata, and then the colorscale.
     #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
+    print( sf.head() )
     fig = px.choropleth( sf, geojson=sf.geometry,
                          locations=sf.index, color=colorby,
                          labels={"fraction": "Sequences per case",

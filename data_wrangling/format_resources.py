@@ -127,8 +127,6 @@ def format_shapefile( cases, seqs ):
     geopandas.GeoDataFrame:
         GeoDataFrame linking ZIP code areas to case counts, sequences, and fraction of cases sequenced.
     """
-    print( os.getcwd() )
-    print( os.listdir() )
     zip_area = gpd.read_file( "resources/zips.geojson")
 
     # Add case data so it is there...
