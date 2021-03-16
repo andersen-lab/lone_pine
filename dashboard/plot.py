@@ -69,7 +69,7 @@ def plot_cummulative_cases_seqs( df ):
                              line={ "color" : "#DFB377", "width" : 4 } ) )
 
     _add_date_formating( fig )
-    min_lim = np.floor( np.log10( df["sequences"].min() ) )
+    min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
@@ -107,7 +107,7 @@ def plot_choropleth( sf, colorby="fraction" ):
     # TODO: This plot would be easier to read in a log scale.
     #  Requires modifying sf, the hoverdata, and then the colorscale.
     #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
-    print( sf.head() )
+
     fig = px.choropleth( sf, geojson=sf.geometry,
                          locations=sf.index, color=colorby,
                          labels={"fraction": "Sequences per case",
