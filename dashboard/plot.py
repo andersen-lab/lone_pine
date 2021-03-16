@@ -115,7 +115,7 @@ def plot_choropleth( sf, colorby="fraction" ):
                                  "sequences" : "Sequences" },
                          hover_data=[ "case_count", "sequences", "fraction" ],
                          projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
-                         basemap_visible=False, fitbounds="geojson" )
+                         basemap_visible=False, fitbounds="geojson", scope=None )
     fig.update_geos( bgcolor="#f9f9f9" )
     fig.update_layout( autosize=True,
                        plot_bgcolor="#F9F9F9",
@@ -136,6 +136,9 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
 
+    max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
+    print( max_lim )
+
     fig = go.Figure()
 
     if lineage is not None:
@@ -152,7 +155,7 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
 
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
     fig.update_layout(barmode='stack')
-    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
+    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>", range=[0,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig )
 
@@ -173,8 +176,8 @@ def plot_lineages( df, window=None, zip_f=None ):
     if len( plot_df ) > 50:
         plot_df = plot_df.iloc[:50]
 
-    voc = ["B.1.1.7", "B.1.351", "P.1"]
-    voi = ["B.1.427", "B.1.429", "B.1.526", "P.2"]
+    voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
+    voi = ["B.1.526", "B.1.525", "P.2" ]
     colors = list()
     for i in plot_df["index"]:
         if i in voi:
