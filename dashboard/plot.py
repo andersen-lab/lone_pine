@@ -72,7 +72,6 @@ def plot_cummulative_cases_seqs( df ):
     _add_date_formating( fig )
     min_lim = np.floor( np.log10( df["sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
-    print( [min_lim, max_lim] )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
@@ -115,10 +114,9 @@ def plot_choropleth( sf, colorby="fraction" ):
                                  "case_count" : "Cases",
                                  "sequences" : "Sequences" },
                          hover_data=[ "case_count", "sequences", "fraction" ],
-                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl )
-    fig.update_geos( fitbounds="locations",
-                     visible=False,
-                     bgcolor="#f9f9f9" )
+                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
+                         basemap_visible=False, fitbounds="geojson" )
+    fig.update_geos( bgcolor="#f9f9f9" )
     fig.update_layout( autosize=True,
                        plot_bgcolor="#F9F9F9",
                        paper_bgcolor="#F9F9F9",
