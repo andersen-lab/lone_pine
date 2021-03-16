@@ -38,8 +38,6 @@ def get_date_limits( series ):
     min_lim = pd.to_datetime( f"{year}-{month}-{day}" )
     return [min_lim, max_lim]
 
-
-
 def plot_daily_cases_seqs( df ):
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
