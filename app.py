@@ -79,7 +79,7 @@ app.layout = html.Div( children=[
     html.Div(
         dcc.Graph(
             id='choropleth-graph',
-            config={'displayModeBar': False},
+            config={'displayModeBar': True},
             style={ "height" : "500px" }
         ),
         className="pretty_container",
