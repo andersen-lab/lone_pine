@@ -15,6 +15,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
 app.scripts.config.serve_locally = True
+app.title = "San Diego sequencing dashboard"
 
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
