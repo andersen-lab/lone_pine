@@ -14,6 +14,7 @@ from dash.dependencies import Input, Output
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
+app.scripts.config.serve_locally = True
 
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
@@ -79,7 +80,7 @@ app.layout = html.Div( children=[
     html.Div(
         dcc.Graph(
             id='choropleth-graph',
-            config={'displayModeBar': True},
+            config={'displayModeBar': False},
             style={ "height" : "500px" }
         ),
         className="pretty_container",
