@@ -23,11 +23,15 @@ def download_search():
     md = md.loc[md["location"]=="USA/California/San Diego"]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
-    md = md.loc[~md["collection_date"].str.contains( "/" )]
+    md = md.loc[md["collection_date"]!='2020-03-19/2020-03-31']
+    md = md.loc[md["collection_date"]!='2020-03-19/2020-03-25']
+    #md = md.loc[~md["collection_date"].str.contains( "/" )]
     md = md.loc[md["collection_date"] != "NaT"]
 
-    md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
-    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
+    #md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
+    #md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
+    md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%m/%d/%y" ).date() ).startdate() )
+    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%m/%d/%y" ).dt.normalize()
     md["days_past"] = ( datetime.datetime.today() - md["collection_date"] ).dt.days
 
     # Add pangolin lineage information

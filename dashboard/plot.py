@@ -111,25 +111,29 @@ def add_missing_to_color_scale( scale, color="white" ):
             return_list.append( [( 1 / len_scale ) * i, col] )
     return return_list
 
-def plot_choropleth( sf, colorby="fraction" ):
+def plot_choropleth( sf, colorby="fraction", plot=None ):
     # TODO: This plot would be easier to read in a log scale.
     #  Requires modifying sf, the hoverdata, and then the colorscale.
     #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
 
-    fig = px.choropleth( sf, geojson=sf.geometry,
-                         locations=sf.index, color=colorby,
-                         labels={"fraction": "Sequences per case",
-                                 "case_count" : "Cases",
-                                 "sequences" : "Sequences" },
-                         hover_data=[ "case_count", "sequences", "fraction" ],
-                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
-                         basemap_visible=False, fitbounds="geojson", scope=None )
-    fig.update_geos( bgcolor="#ffffff" )
-    fig.update_layout( autosize=True,
-                       plot_bgcolor="#ffffff",
-                       paper_bgcolor="#ffffff",
-                       margin={"r":0,"t":0,"l":0,"b":0} )
-    return fig
+    if plot is None:
+        fig = px.choropleth( sf, geojson=sf.geometry,
+                             locations=sf.index, color=colorby,
+                             labels={"fraction": "Sequences per case",
+                                     "case_count" : "Cases",
+                                     "sequences" : "Sequences" },
+                             hover_data=[ "case_count", "sequences", "fraction" ],
+                             projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
+                             basemap_visible=False, fitbounds="geojson", scope=None )
+        fig.update_geos( bgcolor="#ffffff" )
+        fig.update_layout( autosize=True,
+                           plot_bgcolor="#ffffff",
+                           paper_bgcolor="#ffffff",
+                           margin={"r":0,"t":0,"l":0,"b":0} )
+        return fig
+    else:
+        plot["data"][0]["z"] = sf[colorby]
+        return plot
 
 def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
 

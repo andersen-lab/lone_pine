@@ -8,7 +8,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import data_wrangling.format_resources as format_data
 import dashboard.plot as dashplot
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -165,12 +165,13 @@ app.layout = html.Div( children=[
 @app.callback(
     Output( "choropleth-graph", "figure"),
     [Input( "recency-drop", "value" ),
-     Input( 'color-type', "value")]
+     Input( 'color-type', "value")],
+    State( "choropleth-graph", "figure" )
 )
-def update_choropleth( window, colortype ):
+def update_choropleth( window, colortype, existing_figure ):
     new_sequences = sequences.loc[sequences["days_past"] <= window]
     new_cases = format_data.format_cases_total( cases_whole.loc[cases_whole["days_past"] <= window] )
-    return dashplot.plot_choropleth( format_data.format_shapefile( new_cases, new_sequences ), colortype )
+    return dashplot.plot_choropleth( format_data.format_shapefile( new_cases, new_sequences ), colortype, existing_figure )
 
 @app.callback(
     Output( "cum-graph", "figure" ),

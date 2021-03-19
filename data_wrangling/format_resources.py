@@ -15,7 +15,6 @@ def load_sequences( window=None ):
 
     return sequences
 
-
 def load_cases( window = None ):
     cases = pd.read_csv( "resources/cases.csv" )
 
@@ -30,12 +29,10 @@ def load_cases( window = None ):
 def format_cases_timeseries( cases_df, window=None ):
     return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
 
-
 def format_cases_total( cases_df, window=None ):
     return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).first()
     return_df = return_df.reset_index()
     return return_df.drop( columns=["days_past"] )
-
 
 def get_seqs_per_case( time_series, seq_md, zip_f=None, normalized=False ):
     """ Combines timeseries of cases and sequences.
@@ -84,7 +81,6 @@ def get_seqs_per_case( time_series, seq_md, zip_f=None, normalized=False ):
 
     return cases
 
-
 def get_seqs( seq_md, groupby="collection_date", zip_f=None ):
     """ Pivots the output of download_search().
     Parameters
@@ -113,7 +109,6 @@ def get_seqs( seq_md, groupby="collection_date", zip_f=None ):
 
     return seqs
 
-
 def format_shapefile( cases, seqs ):
     """ Downloads and formats the San Diego ZIP GeoJSON formatted as a dictionary.
     Parameters
@@ -134,6 +129,7 @@ def format_shapefile( cases, seqs ):
     zip_area = zip_area.merge( get_seqs( seqs, groupby="zipcode" ), left_on="ZIP", right_on="zip", how="left" )
     zip_area["sequences"] = zip_area["sequences"].fillna( 0 )
     zip_area["fraction"] = zip_area["sequences"] / zip_area["case_count"]
+    zip_area.loc[zip_area["fraction"].isna(),"fraction"] = 0
     zip_area = zip_area.set_index( "ZIP" )
 
     # Removing a number of columns to save memory.
@@ -145,7 +141,8 @@ def get_lineage_values( seqs ):
     voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
     voi = ["B.1.526", "B.1.525", "P.2" ]
 
-    values = seqs["lineage"].sort_values().unique()
+    values = seqs["lineage"].dropna()
+    values = values.sort_values().unique()
 
     return_dict = [{"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
     for i in voc:
