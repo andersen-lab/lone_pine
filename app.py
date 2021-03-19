@@ -246,4 +246,4 @@ def update_lineage_value( clickData ):
 
 
 if __name__ == '__main__':
-    app.run_server( debug=True )
+    app.run_server()
