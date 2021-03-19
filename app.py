@@ -189,7 +189,7 @@ def update_cummulative_graph( window, zip_f ):
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" )]
 )
-def update_cummulative_graph( window, zip_f ):
+def update_daily_graph( window, zip_f ):
     new_sequences = sequences.loc[sequences["days_past"] <= window]
     new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
@@ -201,7 +201,7 @@ def update_cummulative_graph( window, zip_f ):
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" )]
 )
-def update_cummulative_graph( window, zip_f ):
+def update_fraction_graph( window, zip_f ):
     new_sequences = sequences.loc[sequences["days_past"] <= window]
     new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
@@ -213,7 +213,7 @@ def update_cummulative_graph( window, zip_f ):
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" )]
 )
-def update_cummulative_graph( window, zip_f ):
+def update_lineages_graph( window, zip_f ):
     return dashplot.plot_lineages( sequences, window, zip_f )
 
 @app.callback(
