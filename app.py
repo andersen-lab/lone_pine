@@ -76,7 +76,7 @@ app.layout = html.Div( children=[
         style={ "marginLeft" : "auto",
                 "marginRight" : "auto",
                 "backgroundColor" : "#5A71A2"},
-        className="pretty_container row"
+        className="pretty_container_rounded row"
     ),
     html.Div(
         dcc.Graph(

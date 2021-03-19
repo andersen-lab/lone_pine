@@ -17,9 +17,10 @@ def _add_date_formating( fig ):
         elif i == 12:
             year2 += 1
             month2 -= 12
-        fig.add_vrect( x0=f"{year1}-{month1}-01", x1=f"{year2}-{month2}-01", y0=0, y1=1000000, fillcolor="#EFEFEF", opacity=1, layer="below" )
+        fig.add_vrect( x0=f"{year1}-{month1}-01", x1=f"{year2}-{month2}-01", fillcolor="#EFEFEF", opacity=1, layer="below" )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y" )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True )
+    fig.update_yaxes( mirror=True )
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
                        plot_bgcolor="#ffffff",
@@ -195,8 +196,8 @@ def plot_lineages( df, window=None, zip_f=None ):
 
     fig = go.Figure()
     fig.add_trace( go.Bar( x=plot_df["index"], y=plot_df["lineage"], marker_color=colors ) )
-    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
-    fig.update_xaxes( title="<b>PANGO lineage</b>" )
+    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>", mirror=True )
+    fig.update_xaxes( title="<b>PANGO lineage</b>", mirror=True )
     fig.update_layout( template="simple_white",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
