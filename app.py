@@ -21,7 +21,6 @@ sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
 
 markdown_text = '''
-## SARS-CoV-2 Genomics
 To gain insights into the emergence, spread, and transmission of COVID-19 in our community, we are working with a large 
 number of parterns to sequence SARS-CoV-2 samples from patients in San Diego. This dashboard provides up-to-date 
 information on the number and locations of our sequencing within San Diego County. Consensus sequences are deposited on 
@@ -30,22 +29,21 @@ GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/61
 '''
 
 app.layout = html.Div( children=[
-    html.Div( style={ "backgroundColor" : "#2B4267", "height" : 10 } ),
     html.Div( [dcc.Markdown( markdown_text ),
                html.P() ] ),
     html.Div( [
         html.Div( [
             html.Div( [
-                html.H5( "ZIP code" ),
+                html.H5( "ZIP code", style={ "color" : "#F8F9FA" } ),
                 dcc.Dropdown( id = 'zip-drop',
                               options=[{"label" : i, "value": i } for i in cases_whole["ziptext"].sort_values().unique()],
                               multi=False,
-                              placeholder="Select a ZIP code"
+                              placeholder="All"
                               )
             ],
                 className="five columns" ),
             html.Div( [
-                html.H5( "Recency" ),
+                html.H5( "Recency", style={ "color" : "#F8F9FA" } ),
                 dcc.Dropdown( id = 'recency-drop',
                               options=[
                                   { 'label' : "Last week", 'value': 7},
@@ -62,20 +60,22 @@ app.layout = html.Div( children=[
             ],
                 className="five columns" ),
             html.Div( [
-                html.H5( "Color by" ),
+                html.H5( "Color by", style={ "color" : "#F8F9FA" } ),
                 dcc.RadioItems(
                     id='color-type',
                     options=[{'label': "Total", 'value': 'sequences'},
                              {'label': "Fraction", 'value': "fraction"}],
                     value='sequences',
-                    labelStyle={'display': 'inline-block'}
+                    labelStyle={'display': 'inline-block',
+                                "color" : "#F8F9FA" }
                 )
             ],
                 className="two columns" ),
         ] )
     ],
         style={ "marginLeft" : "auto",
-                "marginRight" : "auto" },
+                "marginRight" : "auto",
+                "backgroundColor" : "#5A71A2"},
         className="pretty_container row"
     ),
     html.Div(
@@ -129,7 +129,7 @@ app.layout = html.Div( children=[
             dcc.Dropdown( id = 'lineage-drop',
                           options=format_data.get_lineage_values( sequences ),
                           multi=False,
-                          placeholder="Select a PANGO lineage"
+                          placeholder="All lineages"
                           ),
                   className="three columns" )
     ],
@@ -154,8 +154,7 @@ app.layout = html.Div( children=[
         className="pretty_container",
         style={ "marginLeft" : "auto",
                 "marginRight" : "auto" }
-    ),
-    html.Div( style={ "backgroundColor" : "#2B4267", "height"  : 10 } )
+    )
 ],
     style={ "marginLeft" : "auto",
             "marginRight" : "auto",
@@ -247,4 +246,4 @@ def update_lineage_value( clickData ):
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server( debug=True )

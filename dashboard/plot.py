@@ -4,19 +4,26 @@ import numpy as np
 import pandas as pd
 
 def _add_date_formating( fig ):
-    for i in range( 3, 15, 2 ):
-        year = 2020
-        month = i
-        if month > 12:
-            year += 1
-            month -= 12
-        fig.add_vrect( x0=f"{year}-{month}-01", x1=f"{year}-{month+1}-01", y0=0, y1=1000000, fillcolor="#EFEFEF", opacity=1, layer="below" )
+    for i in range( 2, 16, 2 ):
+        year1 = 2020
+        year2 = 2020
+        month1 = i
+        month2 = i + 1
+        if i > 12:
+            year1 += 1
+            year2 += 1
+            month1 -= 12
+            month2 -= 12
+        elif i == 12:
+            year2 += 1
+            month2 -= 12
+        fig.add_vrect( x0=f"{year1}-{month1}-01", x1=f"{year2}-{month2}-01", y0=0, y1=1000000, fillcolor="#EFEFEF", opacity=1, layer="below" )
 
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y" )
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
-                       plot_bgcolor="#F9F9F9",
-                       paper_bgcolor="#F9F9F9",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
                        legend=dict( yanchor="top",
                                     y=0.99,
@@ -116,10 +123,10 @@ def plot_choropleth( sf, colorby="fraction" ):
                          hover_data=[ "case_count", "sequences", "fraction" ],
                          projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
                          basemap_visible=False, fitbounds="geojson", scope=None )
-    fig.update_geos( bgcolor="#f9f9f9" )
+    fig.update_geos( bgcolor="#ffffff" )
     fig.update_layout( autosize=True,
-                       plot_bgcolor="#F9F9F9",
-                       paper_bgcolor="#F9F9F9",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0} )
     return fig
 
@@ -191,8 +198,8 @@ def plot_lineages( df, window=None, zip_f=None ):
     fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
     fig.update_xaxes( title="<b>PANGO lineage</b>" )
     fig.update_layout( template="simple_white",
-                       plot_bgcolor="#F9F9F9",
-                       paper_bgcolor="#F9F9F9",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
                        legend=dict( yanchor="top",
                                     y=0.99,
