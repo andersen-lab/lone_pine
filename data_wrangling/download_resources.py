@@ -23,15 +23,15 @@ def download_search():
     md = md.loc[md["location"]=="USA/California/San Diego"]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
-    md = md.loc[md["collection_date"]!='2020-03-19/2020-03-31']
-    md = md.loc[md["collection_date"]!='2020-03-19/2020-03-25']
-    #md = md.loc[~md["collection_date"].str.contains( "/" )]
+    #md = md.loc[md["collection_date"]!='2020-03-19/2020-03-31']
+    #md = md.loc[md["collection_date"]!='2020-03-19/2020-03-25']
+    md = md.loc[~md["collection_date"].str.contains( "/" )]
     md = md.loc[md["collection_date"] != "NaT"]
 
-    #md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
-    #md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
-    md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%m/%d/%y" ).date() ).startdate() )
-    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%m/%d/%y" ).dt.normalize()
+    md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
+    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
+    #md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%m/%d/%y" ).date() ).startdate() )
+    #md["collection_date"] = pd.to_datetime( md["collection_date"], format="%m/%d/%y" ).dt.normalize()
     md["days_past"] = ( datetime.datetime.today() - md["collection_date"] ).dt.days
 
     # Add pangolin lineage information
@@ -39,7 +39,6 @@ def download_search():
     pango = pd.read_csv( pango_loc, usecols=["taxon", "lineage"] )
 
     md = md.merge( pango, left_on="ID", right_on="taxon", how="left" )
-
 
     #md = md.drop( columns=["days_past"] )
     return md
@@ -110,22 +109,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
-    sd_zips = download_shapefile()
-    sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
-#    md = pd.read_csv( "resources/md.csv" )
-#    md = md.loc[md["collection_date"]!='Unknown']
-#    md = md.loc[~md["collection_date"].str.startswith( "19" )]
-#    md = md.loc[~md["collection_date"].str.contains( "/" )]
-#    md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
-#    df, ts = download_cases()
-#    zips = download_shapefile( df, md, local=True )
-#    plot_df = get_seqs_per_case( ts, md )
-#
-#    fig = dashplot.plot_choropleth( zips )
-#    fig.show()
-#
-#    #fig = dashplot.plot_daily_cases_seqs( plot_df )
-#    #fig.show()
+    #sd_zips = download_shapefile()
+    #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

@@ -93,8 +93,10 @@ def plot_cummulative_sampling_fraction( df ):
 
     _add_date_formating( fig )
 
-    min_lim = np.floor( np.log10( df["fraction"].min() ) )
-    max_lim = np.ceil( np.log10( df["fraction"].max() ) )
+    cleaned_array = np.log10( df.loc[df["fraction"] > 0, "fraction"] )
+    cleaned_array = cleaned_array[~np.isnan( cleaned_array)]
+    min_lim = np.floor( np.log10( cleaned_array.min() ) )
+    max_lim = np.ceil( np.log10( cleaned_array.max() ) )
     fig.update_yaxes( type="log", title="<b>Cummulative sampling fraction</b>", range=[min_lim,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
@@ -111,29 +113,25 @@ def add_missing_to_color_scale( scale, color="white" ):
             return_list.append( [( 1 / len_scale ) * i, col] )
     return return_list
 
-def plot_choropleth( sf, colorby="fraction", plot=None ):
+def plot_choropleth( sf, colorby="fraction" ):
     # TODO: This plot would be easier to read in a log scale.
     #  Requires modifying sf, the hoverdata, and then the colorscale.
     #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
 
-    if plot is None:
-        fig = px.choropleth( sf, geojson=sf.geometry,
-                             locations=sf.index, color=colorby,
-                             labels={"fraction": "Sequences per case",
-                                     "case_count" : "Cases",
-                                     "sequences" : "Sequences" },
-                             hover_data=[ "case_count", "sequences", "fraction" ],
-                             projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
-                             basemap_visible=False, fitbounds="geojson", scope=None )
-        fig.update_geos( bgcolor="#ffffff" )
-        fig.update_layout( autosize=True,
-                           plot_bgcolor="#ffffff",
-                           paper_bgcolor="#ffffff",
-                           margin={"r":0,"t":0,"l":0,"b":0} )
-        return fig
-    else:
-        plot["data"][0]["z"] = sf[colorby]
-        return plot
+    fig = px.choropleth( sf, geojson=sf.geometry,
+                         locations=sf.index, color=colorby,
+                         labels={"fraction": "Sequences per case",
+                                 "case_count" : "Cases",
+                                 "sequences" : "Sequences" },
+                         hover_data=[ "case_count", "sequences", "fraction" ],
+                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
+                         basemap_visible=False, fitbounds="geojson", scope=None )
+    fig.update_geos( bgcolor="#ffffff" )
+    fig.update_layout( autosize=True,
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":0,"l":0,"b":0} )
+    return fig
 
 def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
 
@@ -144,6 +142,7 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
         if type( zip_f ) != list:
             zip_f = [zip_f]
         df = df.loc[df["zipcode"].isin( zip_f )]
+
 
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
@@ -200,8 +199,28 @@ def plot_lineages( df, window=None, zip_f=None ):
 
     fig = go.Figure()
     fig.add_trace( go.Bar( x=plot_df["index"], y=plot_df["lineage"], marker_color=colors ) )
-    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>", mirror=True )
-    fig.update_xaxes( title="<b>PANGO lineage</b>", mirror=True )
+    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
+    fig.update_xaxes( title="<b>PANGO lineage</b>" )
+    fig.update_layout( template="simple_white",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":0,"l":0,"b":0},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)" ) )
+    return fig
+
+def plot_zips( df, colorby="fraction" ):
+    fig = go.Figure()
+    fig.add_trace( go.Bar( x=df["ziptext"], y=df[colorby], marker_color="#767676" ) )
+    title = "Sequences per case" if colorby == "fraction" else "Number of sequences"
+    max_lim = df[colorby].max() * 1.05
+    if colorby == 'sequences':
+        max_lim = np.round( max_lim )
+    fig.update_yaxes( showgrid=True, title=f"<b>{title}</b>", range=[0,max_lim] )
+    fig.update_xaxes( title="<b>ZIP code</b>", type="category", categoryorder="total descending", range=[-0.5,65.5] )
     fig.update_layout( template="simple_white",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",

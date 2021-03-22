@@ -137,6 +137,32 @@ def format_shapefile( cases, seqs ):
 
     return zip_area
 
+def format_zip_summary( cases, seqs ):
+    """ Merges cummulate cases and sequences for each ZIP code.
+    Parameters
+    ----------
+    cases : pandas.DataFrame
+        output of format_cases_total( load_cases() ) containing the cummulative cases for each zip code.
+    seqs : pandas.DataFrame
+        output of download_search() or load_sequences() containing a lkist of sequences with ZIP code information.
+    Returns
+    -------
+    pandas.DataFrame :
+        DataFrame linking ZIP code to case counts, sequences, and fraction of cases sequenced. Use format_shapefile() if
+        want GeoDataFrames.
+    """
+    cumulative_seqs = get_seqs( seqs, groupby="zipcode" )
+
+    cumulative_seqs = cumulative_seqs.merge( cases[["ziptext", "case_count"]], left_on="zip", right_on="ziptext", how="right" )
+    cumulative_seqs["sequences"] = cumulative_seqs["sequences"].fillna( 0.0 )
+    cumulative_seqs["fraction"] = cumulative_seqs["sequences"] / cumulative_seqs["case_count"]
+    cumulative_seqs.loc[cumulative_seqs["fraction"].isna(),"fraction"] = 0
+    cumulative_seqs = cumulative_seqs.drop( columns=["zip"] )
+
+    return cumulative_seqs
+
+
+
 def get_lineage_values( seqs ):
     voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
     voi = ["B.1.526", "B.1.525", "P.2" ]

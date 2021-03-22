@@ -80,13 +80,13 @@ app.layout = html.Div( children=[
     ),
     html.Div(
         dcc.Graph(
-            id='choropleth-graph',
+            id='zip-graph',
             config={'displayModeBar': False},
-            style={ "height" : "500px" }
+            style={ "height" : "25em" }
         ),
         className="pretty_container",
         style={ "marginLeft" : "auto",
-                "marginRight" : "auto"}
+                "marginRight" : "auto" }
     ),
     html.Div( [
         html.Div(
@@ -139,7 +139,7 @@ app.layout = html.Div( children=[
         dcc.Graph(
             id="lineage-graph",
             config={"displayModeBar" : False},
-            style={"height"  : "25em" }
+            style={ "height"  : "25em" }
         ),
         className="pretty_container",
         style={ "marginLeft" : "auto",
@@ -163,15 +163,14 @@ app.layout = html.Div( children=[
 # TODO: Add download button to download metadata associated with current filtered data.
 
 @app.callback(
-    Output( "choropleth-graph", "figure"),
+    Output( "zip-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( 'color-type', "value")],
-    State( "choropleth-graph", "figure" )
+     Input( "color-type", "value" )]
 )
-def update_choropleth( window, colortype, existing_figure ):
+def update_zip_graph( window, colortype ):
     new_sequences = sequences.loc[sequences["days_past"] <= window]
     new_cases = format_data.format_cases_total( cases_whole.loc[cases_whole["days_past"] <= window] )
-    return dashplot.plot_choropleth( format_data.format_shapefile( new_cases, new_sequences ), colortype, existing_figure )
+    return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ), colortype )
 
 @app.callback(
     Output( "cum-graph", "figure" ),
@@ -228,12 +227,12 @@ def update_lineage_time_graph( window, zip_f, lineage ):
 
 @app.callback(
     Output('zip-drop', 'value'),
-    Input('choropleth-graph', 'clickData'))
+    Input('zip-graph', 'clickData'))
 def update_figures_after_click( clickData ):
     if clickData is None:
         return None
     else:
-        return clickData["points"][0]["location"]
+        return float( clickData["points"][0]["x"] )
 
 @app.callback(
     Output( "lineage-drop", "value" ),
@@ -247,4 +246,4 @@ def update_lineage_value( clickData ):
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server( debug=True )
