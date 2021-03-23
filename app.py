@@ -22,7 +22,7 @@ cases_whole = format_data.load_cases()
 
 markdown_text = '''
 To gain insights into the emergence, spread, and transmission of COVID-19 in our community, we are working with a large 
-number of parterns to sequence SARS-CoV-2 samples from patients in San Diego. This dashboard provides up-to-date 
+number of partners to sequence SARS-CoV-2 samples from patients in San Diego. This dashboard provides up-to-date 
 information on the number and locations of our sequencing within San Diego County. Consensus sequences are deposited on 
 GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/612578), and the 
 [Andersen Lab Github repository](https://github.com/andersen-lab/HCoV-19-Genomics).
@@ -34,33 +34,46 @@ app.layout = html.Div( children=[
     html.Div( [
         html.Div( [
             html.Div( [
-                html.H5( "ZIP code", style={ "color" : "#F8F9FA" } ),
+                html.H5( "ZIP code", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'zip-drop',
                               options=[{"label" : i, "value": i } for i in cases_whole["ziptext"].sort_values().unique()],
                               multi=False,
-                              placeholder="All"
+                              placeholder="All",
+                              style={"margin" : "1%"}
                               )
             ],
-                className="five columns" ),
+                style={ "float" : "left", "width" : "28%" } ),
             html.Div( [
-                html.H5( "Recency", style={ "color" : "#F8F9FA" } ),
+                html.H5( "Recency", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'recency-drop',
                               options=[
                                   { 'label' : "Last week", 'value': 7},
                                   { 'label' : "Last month", 'value' : 30 },
                                   { 'label' : "Last 6 month", 'value' : 183 },
-                                  { 'label' : "Last year", 'value' : 365 },
-                                  { 'label' : "All", 'value' : 1000 }
+                                  { 'label' : "Last year", 'value' : 365 }
                               ],
-                              value=1000,
                               multi=False,
-                              clearable=False,
-                              searchable=False
+                              clearable=True,
+                              searchable=False,
+                              placeholder="All",
+                              style={"margin" : "1%"}
                               )
             ],
-                className="five columns" ),
+                style={ "float" : "left", "width" : "28%" } ),
             html.Div( [
-                html.H5( "Color by", style={ "color" : "#F8F9FA" } ),
+                html.H5( "Provider", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
+                dcc.Dropdown( id = 'provider-drop',
+                              options=[{ 'label' : i, 'value': i} for i in sequences["originating_lab"].sort_values().unique()],
+                              multi=False,
+                              clearable=True,
+                              searchable=True,
+                              placeholder="All",
+                              style={"margin" : "1%"}
+                              )
+            ],
+                style={ "float" : "left", "width" : "28%" } ),
+            html.Div( [
+                html.H5( "Summary Metric", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.RadioItems(
                     id='color-type',
                     options=[{'label': "Total", 'value': 'sequences'},
@@ -70,7 +83,7 @@ app.layout = html.Div( children=[
                                 "color" : "#F8F9FA" }
                 )
             ],
-                className="two columns" ),
+                style={ "float" : "left", "width" : "14%" } ),
         ] )
     ],
         style={ "marginLeft" : "auto",
@@ -160,26 +173,41 @@ app.layout = html.Div( children=[
             "marginRight" : "auto",
             "maxWidth" : "80em" }
 )
-# TODO: Add download button to download metadata associated with current filtered data.
+
+def get_sequences( seqs, window, provider ):
+    new_seqs = seqs.copy()
+    if window:
+        new_seqs = new_seqs.loc[sequences["days_past"] <= window]
+    if provider:
+        new_seqs = new_seqs.loc[new_seqs['originating_lab']==provider]
+    return new_seqs
+
+def get_cases( cases, window ):
+    new_cases = cases.copy()
+    if window:
+        new_cases = cases.loc[cases["days_past"] <= window]
+    return new_cases
 
 @app.callback(
     Output( "zip-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "color-type", "value" )]
+     Input( "color-type", "value" ),
+     Input( "provider-drop", "value")]
 )
-def update_zip_graph( window, colortype ):
-    new_sequences = sequences.loc[sequences["days_past"] <= window]
-    new_cases = format_data.format_cases_total( cases_whole.loc[cases_whole["days_past"] <= window] )
+def update_zip_graph( window, colortype, provider ):
+    new_sequences = get_sequences( sequences, window, provider )
+    new_cases = format_data.format_cases_total( get_cases( cases_whole, window ) )
     return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ), colortype )
 
 @app.callback(
     Output( "cum-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "zip-drop", "value" )]
+     Input( "zip-drop", "value" ),
+     Input( "provider-drop", "value")]
 )
-def update_cummulative_graph( window, zip_f ):
-    new_sequences = sequences.loc[sequences["days_past"] <= window]
-    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+def update_cummulative_graph( window, zip_f, provider ):
+    new_sequences = get_sequences( sequences, window, provider )
+    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_cases_seqs( new_seqs_per_case )
@@ -187,11 +215,12 @@ def update_cummulative_graph( window, zip_f ):
 @app.callback(
     Output( "daily-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "zip-drop", "value" )]
+     Input( "zip-drop", "value" ),
+     Input( "provider-drop", "value")]
 )
-def update_daily_graph( window, zip_f ):
-    new_sequences = sequences.loc[sequences["days_past"] <= window]
-    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+def update_daily_graph( window, zip_f, provider ):
+    new_sequences = get_sequences( sequences, window, provider )
+    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
 
     return dashplot.plot_daily_cases_seqs( new_seqs_per_case )
@@ -199,11 +228,12 @@ def update_daily_graph( window, zip_f ):
 @app.callback(
     Output( "fraction-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "zip-drop", "value" )]
+     Input( "zip-drop", "value" ),
+     Input( "provider-drop", "value")]
 )
-def update_fraction_graph( window, zip_f ):
-    new_sequences = sequences.loc[sequences["days_past"] <= window]
-    new_cases_ts = format_data.format_cases_timeseries( cases_whole.loc[cases_whole["days_past"] <= window] )
+def update_fraction_graph( window, zip_f, provider ):
+    new_sequences = get_sequences( sequences, window, provider )
+    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
     new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
@@ -211,19 +241,21 @@ def update_fraction_graph( window, zip_f ):
 @app.callback(
     Output( "lineage-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "zip-drop", "value" )]
+     Input( "zip-drop", "value" ),
+     Input( "provider-drop", "value")]
 )
-def update_lineages_graph( window, zip_f ):
-    return dashplot.plot_lineages( sequences, window, zip_f )
+def update_lineages_graph( window, zip_f, provider ):
+    return dashplot.plot_lineages( sequences, window, zip_f, provider )
 
 @app.callback(
     Output( "lineage-time-graph", "figure" ),
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
-     Input( "lineage-drop", "value")]
+     Input( "lineage-drop", "value"),
+     Input( "provider-drop", "value")]
 )
-def update_lineage_time_graph( window, zip_f, lineage ):
-    return dashplot.plot_lineages_time( sequences, lineage=lineage, window=window, zip_f=zip_f )
+def update_lineage_time_graph( window, zip_f, lineage, provider ):
+    return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider )
 
 @app.callback(
     Output('zip-drop', 'value'),

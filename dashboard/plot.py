@@ -93,11 +93,15 @@ def plot_cummulative_sampling_fraction( df ):
 
     _add_date_formating( fig )
 
+    fig.update_layout( yaxis_tickformat='.1%' )
+
     cleaned_array = np.log10( df.loc[df["fraction"] > 0, "fraction"] )
-    cleaned_array = cleaned_array[~np.isnan( cleaned_array)]
-    min_lim = np.floor( np.log10( cleaned_array.min() ) )
-    max_lim = np.ceil( np.log10( cleaned_array.max() ) )
-    fig.update_yaxes( type="log", title="<b>Cummulative sampling fraction</b>", range=[min_lim,max_lim] )
+    cleaned_array = cleaned_array[~np.isnan( cleaned_array )]
+
+    min_lim = np.floor( cleaned_array.min() )
+    max_lim = np.ceil( cleaned_array.max() )
+
+    fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>", range=[min_lim,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["date"] ) )
 
     return fig
@@ -133,7 +137,7 @@ def plot_choropleth( sf, colorby="fraction" ):
                        margin={"r":0,"t":0,"l":0,"b":0} )
     return fig
 
-def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
+def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None ):
 
     if window:
         df = df.loc[df["days_past"] <= window]
@@ -142,6 +146,9 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
         if type( zip_f ) != list:
             zip_f = [zip_f]
         df = df.loc[df["zipcode"].isin( zip_f )]
+
+    if provider:
+        df = df.loc[df["originating_lab"]==provider]
 
 
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
@@ -165,13 +172,13 @@ def plot_lineages_time( df, lineage="B.1.429", window=None, zip_f=None ):
 
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
     fig.update_layout(barmode='stack')
-    fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>", range=[0,max_lim] )
+    fig.update_yaxes( showgrid=False, title="<b>Number of sequences</b>", range=[0,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig )
 
     return fig
 
-def plot_lineages( df, window=None, zip_f=None ):
+def plot_lineages( df, window=None, zip_f=None, provider=None ):
 
     if window:
         df = df.loc[df["days_past"] <= window]
@@ -181,10 +188,10 @@ def plot_lineages( df, window=None, zip_f=None ):
             zip_f = [zip_f]
         df = df.loc[df["zipcode"].isin( zip_f )]
 
-    plot_df = df["lineage"].value_counts().reset_index()
+    if provider:
+        df = df.loc[df["originating_lab"]==provider]
 
-    if len( plot_df ) > 50:
-        plot_df = plot_df.iloc[:50]
+    plot_df = df["lineage"].value_counts().reset_index()
 
     voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
     voi = ["B.1.526", "B.1.525", "P.2" ]
@@ -201,6 +208,12 @@ def plot_lineages( df, window=None, zip_f=None ):
     fig.add_trace( go.Bar( x=plot_df["index"], y=plot_df["lineage"], marker_color=colors ) )
     fig.update_yaxes( showgrid=True, title="<b>Number of sequences</b>" )
     fig.update_xaxes( title="<b>PANGO lineage</b>" )
+
+    if len( plot_df ) > 50:
+        fig.update_xaxes( range=[-0.5, 50.5] )
+    else:
+        fig.update_xaxes( range=[-0.5, len( plot_df ) - 0.5] )
+
     fig.update_layout( template="simple_white",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
@@ -215,12 +228,22 @@ def plot_lineages( df, window=None, zip_f=None ):
 def plot_zips( df, colorby="fraction" ):
     fig = go.Figure()
     fig.add_trace( go.Bar( x=df["ziptext"], y=df[colorby], marker_color="#767676" ) )
-    title = "Sequences per case" if colorby == "fraction" else "Number of sequences"
+
+    if colorby == "fraction":
+        title="Cases sequenced (%)"
+        fig.update_layout( yaxis_tickformat='.1%' )
+    else:
+        title="Number of sequences"
+
     max_lim = df[colorby].max() * 1.05
     if colorby == 'sequences':
         max_lim = np.round( max_lim )
     fig.update_yaxes( showgrid=True, title=f"<b>{title}</b>", range=[0,max_lim] )
-    fig.update_xaxes( title="<b>ZIP code</b>", type="category", categoryorder="total descending", range=[-0.5,65.5] )
+    fig.update_xaxes( title="<b>ZIP code</b>", type="category", categoryorder="total descending" )
+    if (df['sequences']>0).sum() > 65:
+        fig.update_xaxes( range=[-0.5, 65.5] )
+    else:
+        fig.update_xaxes( range=[-0.5, (df['sequences']>0).sum() - 0.5] )
     fig.update_layout( template="simple_white",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
