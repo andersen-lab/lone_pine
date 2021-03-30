@@ -43,6 +43,8 @@ def download_search():
 
 # Grab covid statistics from data repository
 # https://gis-public.sandiegocounty.gov/arcgis/rest/services/Hosted/COVID_19_Statistics__by_ZIP_Code/FeatureServer/0/query?outFields=*&where=1%3D1
+
+# TODO: Needs to refactor for the new geojson format. ziptext -> Zip Text, case_count -> Case Count, updatedate -> Update Date
 def download_cases():
     """ Downloads the cases per San Diego ZIP code. Appends population.
     Returns
@@ -65,8 +67,7 @@ def download_cases():
     return_df["updatedate"] = pd.to_datetime( return_df["updatedate"] ).dt.tz_localize( None )
     return_df["updatedate"] = return_df["updatedate"].dt.normalize()
     return_df["ziptext"] = pd.to_numeric( return_df["ziptext"] )
-    return_df = return_df.groupby( ["updatedate", "ziptext"] ).first().reset_index()
-    return_df = _append_population( return_df )
+    return_df = return_df.groupby( ["updatedate", "ziptext"] ).last().reset_index()
     return_df = return_df.sort_values( "updatedate" )
 
     # Calculate cases per day because thats way more useable than cummulative counts.
@@ -106,8 +107,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
