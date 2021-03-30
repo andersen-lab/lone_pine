@@ -28,9 +28,9 @@ def download_search():
 
     md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
-    #md["days_past"] = ( md["collection_date"].max() - md["collection_date"] ).dt.days
     md["days_past"] = ( pd.to_datetime( "2021-02-28" ) -md["collection_date"] ).dt.days
-    #print( md["collection_date"].sort_values( ascending=False ).head( 20 ))
+
+    md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD EXCITE"} )
 
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
