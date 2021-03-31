@@ -30,7 +30,12 @@ def download_search():
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
     md["days_past"] = ( pd.to_datetime( "2021-02-28" ) -md["collection_date"] ).dt.days
 
-    md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD EXCITE"} )
+    md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD CALM Lab",
+                                                            "UCSD EXCITE" : "UCSD EXCITE Lab",
+                                                            "Andersen lab at Scripps Research" : "SD County Public Health Laboratory",
+                                                            "San Diego County Public Health Laboratory" : "SD County Public Health Laboratory",
+                                                            "Sharp HealthCare Laboratory" : "Sharp Health",
+                                                            "Scripps Medical Laboratory" : "Scripps Health"} )
 
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
@@ -107,8 +112,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

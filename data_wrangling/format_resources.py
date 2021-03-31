@@ -30,7 +30,7 @@ def format_cases_timeseries( cases_df, window=None ):
     return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
 
 def format_cases_total( cases_df, window=None ):
-    return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).first()
+    return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).last()
     return_df = return_df.reset_index()
     return return_df.drop( columns=["days_past"] )
 
