@@ -28,7 +28,7 @@ def download_search():
 
     md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
-    md["days_past"] = ( pd.to_datetime( "2021-02-28" ) -md["collection_date"] ).dt.days
+    md["days_past"] = ( md["collection_date"].max() - md["collection_date"] ).dt.days
 
     md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD CALM Lab",
                                                             "UCSD EXCITE" : "UCSD EXCITE Lab",
@@ -112,8 +112,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

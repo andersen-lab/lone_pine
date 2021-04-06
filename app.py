@@ -83,7 +83,7 @@ app.layout = html.Div( children=[
                                 "color" : "#F8F9FA" }
                 )
             ],
-                style={ "float" : "left", "width" : "14%" } ),
+                style={ "float" : "left", "width" : "14%", "marginLeft" : "15px", "marginTop" : "7px" } ),
         ] )
     ],
         style={ "marginLeft" : "auto",
@@ -144,7 +144,17 @@ app.layout = html.Div( children=[
                           multi=False,
                           placeholder="All lineages"
                           ),
-                  className="three columns" )
+                  className="three columns" ),
+        html.Div(
+            dcc.RadioItems(
+                id='lineage-type',
+                options=[{ 'label': "Total", 'value': 'sequences' },
+                         { 'label': "Fraction", 'value': "fraction" }],
+                value='sequences',
+                labelStyle={ 'display': 'inline-block' }
+            ),
+            style={"marginLeft" : "15px", "marginTop" : "7px" },
+            className="three columns" )
     ],
         className="row"
     ),
@@ -252,10 +262,11 @@ def update_lineages_graph( window, zip_f, provider ):
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
      Input( "lineage-drop", "value"),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( "lineage-type", "value")]
 )
-def update_lineage_time_graph( window, zip_f, lineage, provider ):
-    return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider )
+def update_lineage_time_graph( window, zip_f, lineage, provider, scaleby ):
+    return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider, scaleby )
 
 @app.callback(
     Output('zip-drop', 'value'),
@@ -278,4 +289,4 @@ def update_lineage_value( clickData ):
 
 
 if __name__ == '__main__':
-    app.run_server( debug=True )
+    app.run_server( debug=False )

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 def _add_date_formating( fig ):
-    for i in range( 2, 16, 2 ):
+    for i in range( 2, 18, 2 ):
         year1 = 2020
         year2 = 2020
         month1 = i
@@ -137,7 +137,7 @@ def plot_choropleth( sf, colorby="fraction" ):
                        margin={"r":0,"t":0,"l":0,"b":0} )
     return fig
 
-def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None ):
+def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None, scaleby="fraction" ):
 
     if window:
         df = df.loc[df["days_past"] <= window]
@@ -153,6 +153,9 @@ def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None
 
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
+
+    if scaleby == "fraction":
+        plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1 )
 
     max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
 
