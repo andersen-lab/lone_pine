@@ -154,8 +154,11 @@ def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
 
+    yaxis_label = "Sequences"
+
     if scaleby == "fraction":
         plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1 )
+        yaxis_label += " (%)"
 
     max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
 
@@ -173,9 +176,12 @@ def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None
         plot_df.columns = ["epiweek", "all"]
         plot_df = plot_df.set_index( "epiweek" )
 
+    if scaleby == "fraction":
+        fig.update_layout( yaxis_tickformat='.1%' )
+
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
     fig.update_layout(barmode='stack')
-    fig.update_yaxes( showgrid=False, title="<b>Number of sequences</b>", range=[0,max_lim] )
+    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0,max_lim] )
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig )
 
