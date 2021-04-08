@@ -42,7 +42,7 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "28%" } ),
+                style={ "float" : "left", "width" : "33%" } ),
             html.Div( [
                 html.H5( "Recency", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'recency-drop',
@@ -59,7 +59,7 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "28%" } ),
+                style={ "float" : "left", "width" : "33%" } ),
             html.Div( [
                 html.H5( "Provider", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'provider-drop',
@@ -71,35 +71,14 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "28%" } ),
-            html.Div( [
-                html.H5( "Summary Metric", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
-                dcc.RadioItems(
-                    id='color-type',
-                    options=[{'label': "Total", 'value': 'sequences'},
-                             {'label': "Fraction", 'value': "fraction"}],
-                    value='sequences',
-                    labelStyle={'display': 'inline-block',
-                                "color" : "#F8F9FA" }
-                )
-            ],
-                style={ "float" : "left", "width" : "14%", "marginLeft" : "15px", "marginTop" : "7px" } ),
+                style={ "float" : "left", "width" : "33%" }
+            ),
         ] )
     ],
         style={ "marginLeft" : "auto",
                 "marginRight" : "auto",
                 "backgroundColor" : "#5A71A2"},
         className="pretty_container_rounded row"
-    ),
-    html.Div(
-        dcc.Graph(
-            id='zip-graph',
-            config={'displayModeBar': False},
-            style={ "height" : "25em" }
-        ),
-        className="pretty_container",
-        style={ "marginLeft" : "auto",
-                "marginRight" : "auto" }
     ),
     html.Div( [
         html.Div(
@@ -177,6 +156,17 @@ app.layout = html.Div( children=[
         className="pretty_container",
         style={ "marginLeft" : "auto",
                 "marginRight" : "auto" }
+    ),
+    html.Div( [
+        html.H4( "ZIP Codes" ),
+        dcc.Graph(
+            id="zip-graph",
+            config={"displayModeBar" : False},
+            style={ "height"  : "25em" }
+        ) ],
+        className="pretty_container",
+        style={ "marginLeft" : "auto",
+                "marginRight" : "auto" }
     )
 ],
     style={ "marginLeft" : "auto",
@@ -201,13 +191,12 @@ def get_cases( cases, window ):
 @app.callback(
     Output( "zip-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "color-type", "value" ),
      Input( "provider-drop", "value")]
 )
-def update_zip_graph( window, colortype, provider ):
+def update_zip_graph( window, provider ):
     new_sequences = get_sequences( sequences, window, provider )
     new_cases = format_data.format_cases_total( get_cases( cases_whole, window ) )
-    return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ), colortype )
+    return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ) )
 
 @app.callback(
     Output( "cum-graph", "figure" ),

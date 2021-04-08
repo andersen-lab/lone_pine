@@ -2,6 +2,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 import pandas as pd
+from epiweeks import Week
+
 
 def _add_date_formating( fig ):
     for i in range( 2, 18, 2 ):
@@ -85,8 +87,14 @@ def plot_cummulative_cases_seqs( df ):
     return fig
 
 def plot_cummulative_sampling_fraction( df ):
+    df["epiweek"] = df["date"].apply( lambda x: Week.fromdate(x).startdate() )
+    plot_df = df.groupby( "epiweek" ).agg( new_cases = ("new_cases", "sum"), new_sequences = ("new_sequences", "sum" ) )
+    plot_df["fraction"] = plot_df["new_sequences"] / plot_df["new_cases"]
+    plot_df = plot_df.reset_index()
+
+
     fig = go.Figure()
-    fig.add_trace( go.Scattergl( x=df["date"], y=df["fraction"],
+    fig.add_trace( go.Scattergl( x=plot_df["epiweek"], y=plot_df["fraction"],
                                  mode='lines',
                                  name='Fraction',
                                  line={ "color" : '#767676', "width" : 4 } ) )
@@ -95,14 +103,16 @@ def plot_cummulative_sampling_fraction( df ):
 
     fig.update_layout( yaxis_tickformat='.1%' )
 
-    cleaned_array = np.log10( df.loc[df["fraction"] > 0, "fraction"] )
-    cleaned_array = cleaned_array[~np.isnan( cleaned_array )]
+    cleaned_array = np.log10( plot_df.loc[plot_df["fraction"] > 0, "fraction"] )
+    cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
 
     min_lim = np.floor( cleaned_array.min() )
     max_lim = np.ceil( cleaned_array.max() )
+    print( f"{min_lim} - {max_lim}" )
 
-    fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>", range=[min_lim,max_lim] )
-    fig.update_xaxes( range=get_date_limits( df["date"] ) )
+
+    fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>" )
+    fig.update_xaxes( range=get_date_limits( plot_df["epiweek"] ) )
 
     return fig
 
@@ -234,7 +244,7 @@ def plot_lineages( df, window=None, zip_f=None, provider=None ):
                                     bgcolor="rgba(0,0,0,0)" ) )
     return fig
 
-def plot_zips( df, colorby="fraction" ):
+def plot_zips( df, colorby="sequences" ):
     fig = go.Figure()
     fig.add_trace( go.Bar( x=df["ziptext"], y=df[colorby], marker_color="#767676" ) )
 

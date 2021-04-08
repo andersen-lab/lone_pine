@@ -65,8 +65,6 @@ def get_seqs_per_case( time_series, seq_md, zip_f=None ):
     cases["new_cases"] = cases["cases"].diff()
     cases["new_cases"] = cases["new_cases"].fillna( 0.0 )
     cases.loc[cases["new_cases"] < 0,"new_cases"] = 0
-    cases["fraction"] = cases["new_sequences"] / cases["new_cases"]
-    cases["fraction"] = cases["fraction"].rolling( 7, min_periods=1 ).mean()
 
     return cases
 
