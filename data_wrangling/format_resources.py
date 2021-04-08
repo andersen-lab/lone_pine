@@ -1,6 +1,7 @@
 import os
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 
 def load_sequences( window=None ):
@@ -34,42 +35,29 @@ def format_cases_total( cases_df, window=None ):
     return_df = return_df.reset_index()
     return return_df.drop( columns=["days_past"] )
 
-def get_seqs_per_case( time_series, seq_md, zip_f=None, normalized=False ):
+def get_seqs_per_case( time_series, seq_md, zip_f=None ):
     """ Combines timeseries of cases and sequences.
     Parameters
     ----------
     time_series
     seq_md
     zip_f
-    normalized
 
     Returns
     -------
 
     """
-    field = "case_100k" if normalized else "case_count"
-
-    query = time_series["variable"]==field
     if zip_f:
         if type( zip_f ) != list:
             zip_f = [zip_f]
-        query = query & ( time_series["ziptext"].isin( zip_f ) )
-    cases = time_series.loc[query].pivot_table( index="updatedate", values="value", aggfunc="sum" )
-    cases = cases.fillna( 0.0 )
+        time_series = time_series.loc[time_series["ziptext"].isin(zip_f)]
+    cases = time_series.pivot_table( index="updatedate", values="case_count", aggfunc="sum" )
+    cases["case_count"] = np.maximum.accumulate( cases["case_count"] )
     cases = cases.reset_index()
 
     cases.columns = ["date", "cases"]
 
-    #cases = cases.merge( get_seqs( seq_md ), on="date", how="outer", sort=True )
-
-    try:
-        cases = cases.merge( get_seqs( seq_md, zip_f=zip_f ), on="date", how="outer", sort=True )
-    except ValueError:
-        print( cases.head() )
-        print( get_seqs( seq_md ).head() )
-        print( cases.dtypes )
-        print( get_seqs( seq_md ).dtypes )
-        exit( 1 )
+    cases = cases.merge( get_seqs( seq_md, zip_f=zip_f ), on="date", how="outer", sort=True )
 
     cases["new_sequences"] = cases["new_sequences"].fillna( 0.0 )
     cases["sequences"] = cases["new_sequences"].cumsum()

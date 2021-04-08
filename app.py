@@ -217,8 +217,7 @@ def update_zip_graph( window, colortype, provider ):
 )
 def update_cummulative_graph( window, zip_f, provider ):
     new_sequences = get_sequences( sequences, window, provider )
-    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
-    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
+    new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_cases_seqs( new_seqs_per_case )
 
@@ -230,8 +229,7 @@ def update_cummulative_graph( window, zip_f, provider ):
 )
 def update_daily_graph( window, zip_f, provider ):
     new_sequences = get_sequences( sequences, window, provider )
-    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
-    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
+    new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_daily_cases_seqs( new_seqs_per_case )
 
@@ -243,8 +241,7 @@ def update_daily_graph( window, zip_f, provider ):
 )
 def update_fraction_graph( window, zip_f, provider ):
     new_sequences = get_sequences( sequences, window, provider )
-    new_cases_ts = format_data.format_cases_timeseries( get_cases( cases_whole, window ) )
-    new_seqs_per_case = format_data.get_seqs_per_case( new_cases_ts, new_sequences, zip_f=zip_f )
+    new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
 
