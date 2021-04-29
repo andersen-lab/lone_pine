@@ -89,9 +89,9 @@ def plot_cummulative_cases_seqs( df ):
 def plot_cummulative_sampling_fraction( df ):
     df["epiweek"] = df["date"].apply( lambda x: Week.fromdate(x).startdate() )
     plot_df = df.groupby( "epiweek" ).agg( new_cases = ("new_cases", "sum"), new_sequences = ("new_sequences", "sum" ) )
+    plot_df = plot_df.loc[plot_df["new_sequences"]>0]
     plot_df["fraction"] = plot_df["new_sequences"] / plot_df["new_cases"]
     plot_df = plot_df.reset_index()
-
 
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=plot_df["epiweek"], y=plot_df["fraction"],
