@@ -213,7 +213,7 @@ def plot_lineages( df, window=None, zip_f=None, provider=None ):
     plot_df = df["lineage"].value_counts().reset_index()
 
     voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
-    voi = ["B.1.526", "B.1.525", "P.2" ]
+    voi = ["B.1.526", "B.1.526.1", "B.1.526.2", "B.1.525", "P.2", "B.1.617", "B.1.617.2" ]
     colors = list()
     for i in plot_df["index"]:
         if i in voi:

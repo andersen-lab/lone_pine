@@ -152,7 +152,7 @@ def format_zip_summary( cases, seqs ):
 
 def get_lineage_values( seqs ):
     voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
-    voi = ["B.1.526", "B.1.525", "P.2" ]
+    voi = ["B.1.526", "B.1.526.1", "B.1.526.2", "B.1.525", "P.2", "B.1.617", "B.1.617.2" ]
 
     values = seqs["lineage"].dropna()
     values = values.sort_values().unique()
