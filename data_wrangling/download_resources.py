@@ -32,6 +32,7 @@ def download_search():
 
     md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD CALM Lab",
                                                             "UCSD EXCITE" : "UCSD EXCITE Lab",
+                                                            "EXCITE Lab" : "UCSD EXCITE Lab",
                                                             "Andersen lab at Scripps Research" : "SD County Public Health Laboratory",
                                                             "San Diego County Public Health Laboratory" : "SD County Public Health Laboratory",
                                                             "Sharp HealthCare Laboratory" : "Sharp Health",
