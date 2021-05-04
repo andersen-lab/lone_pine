@@ -26,18 +26,21 @@ def download_search():
     md = md.loc[~md["collection_date"].str.contains( "/" )]
     md = md.loc[md["collection_date"] != "NaT"]
 
+    #clean up zipcode
+    md["zipcode"] = md["zipcode"].astype( "str" )
+    md["zipcode"] = md["zipcode"].apply( lambda x: x.split( "-" )[0] )
+
     md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
     md["days_past"] = ( md["collection_date"].max() - md["collection_date"] ).dt.days
 
-    md["originating_lab"] = md["originating_lab"].replace( {'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD CALM Lab",
+    md["originating_lab"] = md["originating_lab"].replace( { 'UC San Diego Center for Advanced Laboratory Medicine' :  "UCSD CALM Lab",
                                                             "UCSD EXCITE" : "UCSD EXCITE Lab",
                                                             "EXCITE Lab" : "UCSD EXCITE Lab",
                                                             "Andersen lab at Scripps Research" : "SD County Public Health Laboratory",
                                                             "San Diego County Public Health Laboratory" : "SD County Public Health Laboratory",
                                                             "Sharp HealthCare Laboratory" : "Sharp Health",
-                                                            "Scripps Medical Laboratory" : "Scripps Health"} )
-
+                                                            "Scripps Medical Laboratory" : "Scripps Health" } )
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
     pango = pd.read_csv( pango_loc, usecols=["taxon", "lineage"] )
@@ -67,7 +70,8 @@ def download_cases():
         dataframe["population"] = dataframe["ziptext"].map( pop )
         return dataframe
 
-    cases_loc = "https://opendata.arcgis.com/datasets/854d7e48e3dc451aa93b9daf82789089_0.geojson"
+    #cases_loc = "https://opendata.arcgis.com/datasets/854d7e48e3dc451aa93b9daf82789089_0.geojson"
+    cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
     return_df = gpd.read_file( cases_loc )
     return_df = return_df[["ziptext","case_count", "updatedate"]]
     return_df["updatedate"] = pd.to_datetime( return_df["updatedate"] ).dt.tz_localize( None )
@@ -113,8 +117,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
