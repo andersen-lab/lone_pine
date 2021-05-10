@@ -147,21 +147,21 @@ def plot_choropleth( sf, colorby="fraction" ):
                        margin={"r":0,"t":0,"l":0,"b":0} )
     return fig
 
-def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None, scaleby="fraction" ):
+def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None, scaleby="fraction", sequencer=None ):
 
     if window:
         df = df.loc[df["days_past"] <= window]
-
     if zip_f:
         if type( zip_f ) != list:
             zip_f = [zip_f]
         df = df.loc[df["zipcode"].isin( zip_f )]
-
     if provider:
-        df = df.loc[df["originating_lab"]==provider]
+        df = df.loc[df["provider"]==provider]
+    if sequencer:
+        df = df.loc[df["sequencer"]=="sequencer"]
 
 
-    plot_df = df.pivot_table( index="epiweek", columns="lineage", values="taxon", aggfunc="count" )
+    plot_df = df.pivot_table( index="epiweek", columns="lineage", values="ID", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
 
     yaxis_label = "Sequences"
@@ -195,20 +195,21 @@ def plot_lineages_time( df, lineage=None, window=None, zip_f=None, provider=None
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig )
 
+    np.nan
     return fig
 
-def plot_lineages( df, window=None, zip_f=None, provider=None ):
+def plot_lineages( df, window=None, zip_f=None, provider=None, sequencer=None ):
 
     if window:
         df = df.loc[df["days_past"] <= window]
-
     if zip_f:
         if type( zip_f ) != list:
             zip_f = [zip_f]
         df = df.loc[df["zipcode"].isin( zip_f )]
-
     if provider:
-        df = df.loc[df["originating_lab"]==provider]
+        df = df.loc[df["provider"]==provider]
+    if sequencer:
+        df = df.loc[df["sequencer"]=="sequencer"]
 
     plot_df = df["lineage"].value_counts().reset_index()
 

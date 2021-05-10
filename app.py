@@ -42,7 +42,7 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "33%" } ),
+                style={ "float" : "left", "width" : "25%" } ),
             html.Div( [
                 html.H5( "Recency", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'recency-drop',
@@ -59,11 +59,21 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "33%" } ),
+                style={ "float" : "left", "width" : "25%" } ),
+            html.Div( [
+                html.H5( "Sequencing Lab", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
+                dcc.Dropdown( id = 'sequencer-drop',
+                              options=[{"label" : i, "value": i } for i in sequences["sequencer"].sort_values().unique()],
+                              multi=False,
+                              placeholder="All",
+                              style={"margin" : "1%"}
+                              )
+            ],
+                style={ "float" : "left", "width" : "25%" } ),
             html.Div( [
                 html.H5( "Provider", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'provider-drop',
-                              options=[{ 'label' : i, 'value': i} for i in sequences["originating_lab"].sort_values().unique()],
+                              options=[{ 'label' : i, 'value': i} for i in sequences["provider"].sort_values().unique()],
                               multi=False,
                               clearable=True,
                               searchable=True,
@@ -71,7 +81,7 @@ app.layout = html.Div( children=[
                               style={"margin" : "1%"}
                               )
             ],
-                style={ "float" : "left", "width" : "33%" }
+                style={ "float" : "left", "width" : "25%" }
             ),
         ] )
     ],
@@ -174,12 +184,14 @@ app.layout = html.Div( children=[
             "maxWidth" : "80em" }
 )
 
-def get_sequences( seqs, window, provider ):
+def get_sequences( seqs, window, provider, sequencer ):
     new_seqs = seqs.copy()
     if window:
         new_seqs = new_seqs.loc[sequences["days_past"] <= window]
     if provider:
-        new_seqs = new_seqs.loc[new_seqs['originating_lab']==provider]
+        new_seqs = new_seqs.loc[new_seqs['provider']==provider]
+    if sequencer:
+        new_seqs = new_seqs.loc[new_seqs["sequencer"]==sequencer]
     return new_seqs
 
 def get_cases( cases, window ):
@@ -191,10 +203,11 @@ def get_cases( cases, window ):
 @app.callback(
     Output( "zip-graph", "figure" ),
     [Input( "recency-drop", "value" ),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_zip_graph( window, provider ):
-    new_sequences = get_sequences( sequences, window, provider )
+def update_zip_graph( window, provider, sequencer ):
+    new_sequences = get_sequences( sequences, window, provider, sequencer )
     new_cases = format_data.format_cases_total( get_cases( cases_whole, window ) )
     return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ) )
 
@@ -202,10 +215,11 @@ def update_zip_graph( window, provider ):
     Output( "cum-graph", "figure" ),
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_cummulative_graph( window, zip_f, provider ):
-    new_sequences = get_sequences( sequences, window, provider )
+def update_cummulative_graph( window, zip_f, provider, sequencer ):
+    new_sequences = get_sequences( sequences, window, provider, sequencer )
     new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_cases_seqs( new_seqs_per_case )
@@ -214,10 +228,11 @@ def update_cummulative_graph( window, zip_f, provider ):
     Output( "daily-graph", "figure" ),
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_daily_graph( window, zip_f, provider ):
-    new_sequences = get_sequences( sequences, window, provider )
+def update_daily_graph( window, zip_f, provider, sequencer ):
+    new_sequences = get_sequences( sequences, window, provider, sequencer )
     new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_daily_cases_seqs( new_seqs_per_case )
@@ -226,10 +241,11 @@ def update_daily_graph( window, zip_f, provider ):
     Output( "fraction-graph", "figure" ),
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_fraction_graph( window, zip_f, provider ):
-    new_sequences = get_sequences( sequences, window, provider )
+def update_fraction_graph( window, zip_f, provider, sequencer ):
+    new_sequences = get_sequences( sequences, window, provider, sequencer )
     new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
     return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
@@ -238,10 +254,11 @@ def update_fraction_graph( window, zip_f, provider ):
     Output( "lineage-graph", "figure" ),
     [Input( "recency-drop", "value" ),
      Input( "zip-drop", "value" ),
-     Input( "provider-drop", "value")]
+     Input( "provider-drop", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_lineages_graph( window, zip_f, provider ):
-    return dashplot.plot_lineages( sequences, window, zip_f, provider )
+def update_lineages_graph( window, zip_f, provider, sequencer ):
+    return dashplot.plot_lineages( sequences, window, zip_f, provider, sequencer )
 
 @app.callback(
     Output( "lineage-time-graph", "figure" ),
@@ -249,10 +266,11 @@ def update_lineages_graph( window, zip_f, provider ):
      Input( "zip-drop", "value" ),
      Input( "lineage-drop", "value"),
      Input( "provider-drop", "value"),
-     Input( "lineage-type", "value")]
+     Input( "lineage-type", "value"),
+     Input( 'sequencer-drop', "value")]
 )
-def update_lineage_time_graph( window, zip_f, lineage, provider, scaleby ):
-    return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider, scaleby )
+def update_lineage_time_graph( window, zip_f, lineage, provider, scaleby, sequencer ):
+    return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider, scaleby, sequencer )
 
 @app.callback(
     Output('zip-drop', 'value'),

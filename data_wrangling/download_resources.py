@@ -8,6 +8,12 @@ from epiweeks import Week
 
 # Download metadata from SEARCH repository
 # https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv
+def load_excite_providers() :
+    excite = pd.read_csv( "resources/0428_ccbb_full_metadata.csv", usecols=["search_id", "source" ] )
+    excite = excite.set_index( "search_id" )
+    return excite["source"].to_dict()
+
+
 def download_search():
     """ Downloads the metadata from the SEARCH github repository. Removes entries with very wrong dates.
     Returns
@@ -41,11 +47,28 @@ def download_search():
                                                             "San Diego County Public Health Laboratory" : "SD County Public Health Laboratory",
                                                             "Sharp HealthCare Laboratory" : "Sharp Health",
                                                             "Scripps Medical Laboratory" : "Scripps Health" } )
+
+
+    excite_providers = load_excite_providers()
+
+    md["sequencer"] = "Andersen Lab"
+    md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
+
+    md["provider"] = md["originating_lab"]
+    md.loc[md["originating_lab"]=="UCSD EXCITE Lab", "provider"] = md["ID"].map( excite_providers )
+    md["provider"] = md["provider"].replace( {"RTL" : "UCSD Return to Learn",
+                                             "CALM" : "UCSD CALM Lab",
+                                             "HELIX" : "Helix",
+                                             "San Diego Fire-Rescue Department" : "SD Fire-Rescue Department",
+                                             "SASEA" : "UCSD Safer at School Early Action" } )
+
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
     pango = pd.read_csv( pango_loc, usecols=["taxon", "lineage"] )
 
     md = md.merge( pango, left_on="ID", right_on="taxon", how="left" )
+
+    md = md[["ID","collection_date", "zipcode", "epiweek", "days_past", "sequencer", "provider", "lineage"]]
 
     return md
 
