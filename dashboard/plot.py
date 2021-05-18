@@ -108,8 +108,6 @@ def plot_cummulative_sampling_fraction( df ):
 
     min_lim = np.floor( cleaned_array.min() )
     max_lim = np.ceil( cleaned_array.max() )
-    print( f"{min_lim} - {max_lim}" )
-
 
     fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>" )
     fig.update_xaxes( range=get_date_limits( plot_df["epiweek"] ) )

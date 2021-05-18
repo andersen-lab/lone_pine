@@ -48,7 +48,6 @@ def download_search():
                                                             "Sharp HealthCare Laboratory" : "Sharp Health",
                                                             "Scripps Medical Laboratory" : "Scripps Health" } )
 
-
     excite_providers = load_excite_providers()
 
     md["sequencer"] = "Andersen Lab"
@@ -61,6 +60,7 @@ def download_search():
                                              "HELIX" : "Helix",
                                              "San Diego Fire-Rescue Department" : "SD Fire-Rescue Department",
                                              "SASEA" : "UCSD Safer at School Early Action" } )
+    md.loc[md["provider"].isna(),"provider"] = md["sequencer"]
 
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"

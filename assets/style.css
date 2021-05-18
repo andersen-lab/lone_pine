@@ -28,16 +28,14 @@ h5 {
     border-radius: 0;
     background-color: #ffffff;
     margin: 10px;
-    padding: 15px;
-    padding-top: 5px;
+    padding: 5px 15px 15px;
     position: relative;
 }
 
 .pretty_container_rounded {
     border-radius: 5px;
     margin: 10px;
-    padding: 15px;
-    padding-top: 5px;
+    padding: 5px 15px 15px;
     position: relative;
     box-shadow: 0 0 5px lightgray;
 }
@@ -54,10 +52,8 @@ h5 {
 }
 
 .control_label {
-    margin: 0;
-    padding: 10px;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
+    padding: 10px 10px 0px;
+    margin: 0 0 0px;
     width: calc(100%-40px);
 }
 
@@ -157,4 +153,50 @@ h5 {
 #pie_graph > div > div > svg:nth-child(3) > g.infolayer > g.legend {
     pointer-events: all;
     transform: translate(30px, 349px);
+}
+
+table {
+    width: 100%;
+    border-bottom: 0 solid white;
+    border-top: 0 solid white;
+}
+
+td {
+    padding: 2px 0;
+}
+
+tr {
+    border-bottom: 0 solid white;
+    border-top: 0 solid white;
+}
+
+tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+table.reversed tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+table.reversed tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+td,
+th {
+  padding: 8px;
+}
+
+.columns {
+  margin-left: 0 !important;
+}
+
+.row > .columns:not(:first-child) {
+  padding-left: 20px;
 }

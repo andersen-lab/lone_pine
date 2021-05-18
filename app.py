@@ -28,9 +28,15 @@ GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/61
 [Andersen Lab Github repository](https://github.com/andersen-lab/HCoV-19-Genomics).
 '''
 
+format_data.get_provider_sequencer_values( sequences, "sequencer" )
+
 app.layout = html.Div( children=[
     html.Div( [dcc.Markdown( markdown_text ),
                html.P() ] ),
+    html.Div( [html.Table( id="summary-table" )], style={"width" : "30em",
+                                                         "marginLeft" : "auto",
+                                                         "marginRight" : "auto",
+                                                         "marginBottom" : "20px"} ),
     html.Div( [
         html.Div( [
             html.Div( [
@@ -63,7 +69,7 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "Sequencing Lab", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'sequencer-drop',
-                              options=[{"label" : i, "value": i } for i in sequences["sequencer"].sort_values().unique()],
+                              options=format_data.get_provider_sequencer_values( sequences, "sequencer"),
                               multi=False,
                               placeholder="All",
                               style={"margin" : "1%"}
@@ -73,12 +79,12 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "Provider", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'provider-drop',
-                              options=[{ 'label' : i, 'value': i} for i in sequences["provider"].sort_values().unique()],
+                              options=format_data.get_provider_sequencer_values( sequences, "provider"),
                               multi=False,
                               clearable=True,
                               searchable=True,
                               placeholder="All",
-                              style={"margin" : "1%"}
+                              style={"margin" : "1%", "font-size" : "85%" }
                               )
             ],
                 style={ "float" : "left", "width" : "25%" }
@@ -184,7 +190,7 @@ app.layout = html.Div( children=[
             "maxWidth" : "80em" }
 )
 
-def get_sequences( seqs, window, provider, sequencer ):
+def get_sequences( seqs, window, provider, sequencer, zip_f=None ):
     new_seqs = seqs.copy()
     if window:
         new_seqs = new_seqs.loc[sequences["days_past"] <= window]
@@ -192,6 +198,9 @@ def get_sequences( seqs, window, provider, sequencer ):
         new_seqs = new_seqs.loc[new_seqs['provider']==provider]
     if sequencer:
         new_seqs = new_seqs.loc[new_seqs["sequencer"]==sequencer]
+    if zip_f:
+        new_seqs = new_seqs.loc[new_seqs["zipcode"]==zip_f]
+
     return new_seqs
 
 def get_cases( cases, window ):
@@ -199,6 +208,16 @@ def get_cases( cases, window ):
     if window:
         new_cases = cases.loc[cases["days_past"] <= window]
     return new_cases
+
+@app.callback(
+    Output( "summary-table", "children"),
+    [Input( "provider-drop", "value"),
+     Input( "sequencer-drop", "value"),
+     Input( "zip-drop", "value")]
+)
+def update_summary_table( provider, sequencer, zip_f ):
+    new_sequences = get_sequences( sequences, None, provider, sequencer, zip_f )
+    return format_data.get_summary_table( new_sequences )
 
 @app.callback(
     Output( "zip-graph", "figure" ),

@@ -3,6 +3,10 @@ import os
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import dash_html_components as html
+
+VOC = sorted( ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"] )
+VOI = ["B.1.526", "B.1.526.1", "B.1.526.2", "B.1.525", "P.2", "B.1.617", "B.1.617.2" ]
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
@@ -151,25 +155,41 @@ def format_zip_summary( cases, seqs ):
 
 
 def get_lineage_values( seqs ):
-    voc = ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"]
-    voi = ["B.1.526", "B.1.526.1", "B.1.526.2", "B.1.525", "P.2", "B.1.617", "B.1.617.2" ]
+
 
     values = seqs["lineage"].dropna()
     values = values.sort_values().unique()
 
     return_dict = [{"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
-    for i in voc:
+    for i in VOC:
         if i in values:
             return_dict.append( { "label" : i, "value" : i } )
 
     return_dict.append( {"label" : " - Variants of interest" , "value" : "None", "disabled" : True} )
-    for i in voi:
+    for i in VOI:
         if i in values:
             return_dict.append( { "label" : i, "value" : i } )
 
     return_dict.append( {"label" : " - PANGO lineages" , "value" : "None", "disabled" : True} )
     for i in values:
-        if ( i not in voc ) & ( i not in voi ):
+        if ( i not in VOC ) & ( i not in VOI ):
             return_dict.append( { "label" : i, "value" : i } )
 
     return return_dict
+
+def get_summary_table( seqs ):
+    sg = {"textAlign" : "center" }
+    table = [html.Tr( [html.Th("Type"), html.Th( "Total", style=sg ), html.Th( "Last Month", style=sg )] ),
+             html.Tr( [html.Td( html.B( "Sequences" ) ), html.Td( len( seqs ), style=sg ), html.Td( len( seqs.loc[seqs['days_past'] < 30] ), style=sg )] ),
+             html.Tr(html.Td( "", colSpan=3 ) ),
+             html.Tr( html.Td( html.B( "Variants of concern" ), colSpan=3))]
+    for i in VOC:
+        if i in seqs["lineage"].unique():
+            table.append( html.Tr( [html.Td( html.I( i ) ), html.Td( len( seqs.loc[seqs['lineage']==i] ), style=sg ), html.Td( len( seqs.loc[(seqs['lineage']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
+
+    return table
+
+def get_provider_sequencer_values( seqs, value ):
+    labels = [{"label" : f"{i} ({j})", "value": i }for i, j in seqs[value].sort_values().value_counts().iteritems()]
+    labels = sorted( labels, key=lambda x: x["label"] )
+    return labels
