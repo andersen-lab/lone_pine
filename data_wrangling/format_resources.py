@@ -179,6 +179,7 @@ def get_lineage_values( seqs ):
 
 def get_summary_table( seqs ):
     sg = {"textAlign" : "center" }
+    sd2 = {"marginLeft" : "50px" }
     table = [html.Tr( [html.Th("Type"), html.Th( "Total", style=sg ), html.Th( "Last Month", style=sg )] ),
              html.Tr( [html.Td( html.B( "Sequences" ) ), html.Td( len( seqs ), style=sg ), html.Td( len( seqs.loc[seqs['days_past'] < 30] ), style=sg )] ),
              html.Tr(html.Td( "", colSpan=3 ) ),

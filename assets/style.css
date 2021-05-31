@@ -155,14 +155,8 @@ h5 {
     transform: translate(30px, 349px);
 }
 
-table {
-    width: 100%;
-    border-bottom: 0 solid white;
-    border-top: 0 solid white;
-}
-
 td {
-    padding: 2px 0;
+    padding: 5px 20px;
 }
 
 tr {
@@ -185,8 +179,10 @@ table.reversed tr:nth-child(even) {
 }
 
 table {
-  border-spacing: 0;
-  border-collapse: collapse;
+    width: 100%;
+    border-bottom: 0 solid white;
+    border-top: 0 solid white;
+    border-collapse: collapse;
 }
 td,
 th {
