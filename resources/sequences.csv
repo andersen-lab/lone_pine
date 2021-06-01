@@ -250,9 +250,9 @@ SEARCH-0609-SAN,2020-04-19,nan,2020-04-19,384,Andersen Lab,UCSD CALM Lab,B.1.1
 SEARCH-0611-SAN,2020-04-18,92101.0,2020-04-12,385,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0612-SAN,2020-04-20,nan,2020-04-19,383,Andersen Lab,UCSD CALM Lab,B.1.609
 SEARCH-0614-SAN,2020-04-04,nan,2020-03-29,399,Andersen Lab,UCSD CALM Lab,A.1
-SEARCH-0615-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1
+SEARCH-0615-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1.494
 SEARCH-0616-SAN,2020-04-07,nan,2020-04-05,396,Andersen Lab,UCSD CALM Lab,B.1
-SEARCH-0617-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1
+SEARCH-0617-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1.494
 SEARCH-0634-SAN,2020-04-20,92105.0,2020-04-19,383,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0637-SAN,2020-04-27,nan,2020-04-26,376,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0642-SAN,2020-04-23,92584.0,2020-04-19,380,Andersen Lab,UCSD CALM Lab,B.1.1.132
@@ -270,7 +270,7 @@ SEARCH-0687-SAN,2020-03-29,nan,2020-03-29,405,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0689-SAN,2020-03-27,nan,2020-03-22,407,Andersen Lab,UCSD CALM Lab,B.1.166
 SEARCH-0690-SAN,2020-03-27,nan,2020-03-22,407,Andersen Lab,UCSD CALM Lab,B.1.243
 SEARCH-0693-SAN,2020-03-27,nan,2020-03-22,407,Andersen Lab,UCSD CALM Lab,B.1
-SEARCH-0696-SAN,2020-03-29,nan,2020-03-29,405,Andersen Lab,UCSD CALM Lab,B.1.590
+SEARCH-0696-SAN,2020-03-29,nan,2020-03-29,405,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0697-SAN,2020-03-26,92103.0,2020-03-22,408,Andersen Lab,UCSD CALM Lab,B.1.166
 SEARCH-0698-SAN,2020-03-28,91902.0,2020-03-22,406,Andersen Lab,UCSD CALM Lab,A.2
 SEARCH-0699-SAN,2020-03-28,92103.0,2020-03-22,406,Andersen Lab,UCSD CALM Lab,B.1.267
@@ -302,8 +302,8 @@ SEARCH-0783-SAN,2020-04-07,99999.0,2020-04-05,396,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0787-SAN,2020-04-07,92158.0,2020-04-05,396,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0788-SAN,2020-04-07,nan,2020-04-05,396,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0789-SAN,2020-04-07,92117.0,2020-04-05,396,Andersen Lab,UCSD CALM Lab,B.1.1
-SEARCH-0790-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1
-SEARCH-0792-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1
+SEARCH-0790-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1.494
+SEARCH-0792-SAN,2020-04-06,nan,2020-04-05,397,Andersen Lab,UCSD CALM Lab,B.1.494
 SEARCH-0794-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,UCSD CALM Lab,B.1
 SEARCH-0795-SAN,2020-04-04,92110.0,2020-03-29,399,Andersen Lab,UCSD CALM Lab,B.1.166
 SEARCH-0797-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,UCSD CALM Lab,B.1
@@ -689,8 +689,8 @@ SEARCH-1653-SAN,2020-04-01,nan,2020-03-29,402,Andersen Lab,SD County Public Heal
 SEARCH-1654-SAN,2020-03-24,nan,2020-03-22,410,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1657-SAN,2020-04-01,nan,2020-03-29,402,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1658-SAN,2020-04-01,nan,2020-03-29,402,Andersen Lab,SD County Public Health Laboratory,B.1
-SEARCH-1660-SAN,2020-03-20,nan,2020-03-15,414,Andersen Lab,SD County Public Health Laboratory,B.1.610
-SEARCH-1661-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1.590
+SEARCH-1660-SAN,2020-03-20,nan,2020-03-15,414,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-1661-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1662-SAN,2020-03-25,nan,2020-03-22,409,Andersen Lab,SD County Public Health Laboratory,B.1.166
 SEARCH-1663-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1664-SAN,2020-04-01,nan,2020-03-29,402,Andersen Lab,SD County Public Health Laboratory,B.1
@@ -699,7 +699,7 @@ SEARCH-1667-SAN,2020-03-24,nan,2020-03-22,410,Andersen Lab,SD County Public Heal
 SEARCH-1668-SAN,2020-03-24,nan,2020-03-22,410,Andersen Lab,SD County Public Health Laboratory,B
 SEARCH-1669-SAN,2020-03-20,nan,2020-03-15,414,Andersen Lab,SD County Public Health Laboratory,B.1.320
 SEARCH-1670-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1
-SEARCH-1671-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1.590
+SEARCH-1671-SAN,2020-04-02,nan,2020-03-29,401,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1672-SAN,2020-03-24,nan,2020-03-22,410,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1673-SAN,2020-03-19,nan,2020-03-15,415,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1674-SAN,2020-03-20,nan,2020-03-15,414,Andersen Lab,SD County Public Health Laboratory,B.1
@@ -782,7 +782,7 @@ SEARCH-1880-SAN,2020-05-20,92105.0,2020-05-17,353,Andersen Lab,SD County Public 
 SEARCH-1887-SAN,2020-05-20,92102.0,2020-05-17,353,Andersen Lab,SD County Public Health Laboratory,B.1.1
 SEARCH-1888-SAN,2020-05-20,92102.0,2020-05-17,353,Andersen Lab,SD County Public Health Laboratory,B.1.1
 SEARCH-1889-SAN,2020-05-20,92105.0,2020-05-17,353,Andersen Lab,SD County Public Health Laboratory,B.1
-SEARCH-1894-SAN,2020-04-22,91910.0,2020-04-19,381,Andersen Lab,SD County Public Health Laboratory,B.1.313
+SEARCH-1894-SAN,2020-04-22,91910.0,2020-04-19,381,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-1898-SAN,2020-04-22,92173.0,2020-04-19,381,Andersen Lab,SD County Public Health Laboratory,B.1.239
 SEARCH-1899-SAN,2020-04-22,91950.0,2020-04-19,381,Andersen Lab,SD County Public Health Laboratory,B.1.243
 SEARCH-1900-SAN,2020-04-22,91911.0,2020-04-19,381,Andersen Lab,SD County Public Health Laboratory,B.1
@@ -1488,7 +1488,7 @@ SEARCH-3437-SAN,2020-05-31,92173.0,2020-05-31,342,Andersen Lab,SD County Public 
 SEARCH-3439-SAN,2020-06-01,91977.0,2020-05-31,341,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-3441-SAN,2020-09-16,92056.0,2020-09-13,234,Andersen Lab,SD County Public Health Laboratory,B.1.556
 SEARCH-3442-SAN,2020-09-15,92128.0,2020-09-13,235,Andersen Lab,SD County Public Health Laboratory,B.1
-SEARCH-3443-SAN,2020-09-16,91977.0,2020-09-13,234,Andersen Lab,SD County Public Health Laboratory,B.1.596
+SEARCH-3443-SAN,2020-09-16,91977.0,2020-09-13,234,Andersen Lab,SD County Public Health Laboratory,B.1.2
 SEARCH-3445-SAN,2020-09-17,92103.0,2020-09-13,233,Andersen Lab,SD County Public Health Laboratory,B.1.1
 SEARCH-3448-SAN,2020-08-12,92083.0,2020-08-09,269,Andersen Lab,SD County Public Health Laboratory,B.1.1.158
 SEARCH-3451-SAN,2020-09-17,91977.0,2020-09-13,233,Andersen Lab,SD County Public Health Laboratory,B.1
@@ -1555,7 +1555,7 @@ SEARCH-3581-SAN,2020-06-24,92021.0,2020-06-21,318,Andersen Lab,SD County Public 
 SEARCH-3582-SAN,2020-06-25,92021.0,2020-06-21,317,Andersen Lab,SD County Public Health Laboratory,B.1.239
 SEARCH-3583-SAN,2020-06-25,92020.0,2020-06-21,317,Andersen Lab,SD County Public Health Laboratory,B.1.239
 SEARCH-3585-SAN,2020-06-24,92115.0,2020-06-21,318,Andersen Lab,SD County Public Health Laboratory,B.1.229
-SEARCH-3589-SAN,2020-06-16,92130.0,2020-06-14,326,Andersen Lab,SD County Public Health Laboratory,B.1.590
+SEARCH-3589-SAN,2020-06-16,92130.0,2020-06-14,326,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-3592-SAN,2020-06-26,92120.0,2020-06-21,316,Andersen Lab,SD County Public Health Laboratory,B.1.1.93
 SEARCH-3593-SAN,2020-06-26,92105.0,2020-06-21,316,Andersen Lab,SD County Public Health Laboratory,B.1.240
 SEARCH-3595-SAN,2020-06-25,91945.0,2020-06-21,317,Andersen Lab,SD County Public Health Laboratory,B.1.556
@@ -1700,7 +1700,7 @@ SEARCH-3863-SAN,2020-07-02,92019.0,2020-06-28,310,Andersen Lab,SD County Public 
 SEARCH-3868-SAN,2020-06-30,92115.0,2020-06-28,312,Andersen Lab,SD County Public Health Laboratory,B.1.240
 SEARCH-3870-SAN,2020-07-01,92105.0,2020-06-28,311,Andersen Lab,SD County Public Health Laboratory,B.1.243
 SEARCH-3872-SAN,2020-06-29,91911.0,2020-06-28,313,Andersen Lab,SD County Public Health Laboratory,B.1.243
-SEARCH-3873-SAN,2020-06-11,91911.0,2020-06-07,331,Andersen Lab,SD County Public Health Laboratory,B.1.287
+SEARCH-3873-SAN,2020-06-11,91911.0,2020-06-07,331,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-3875-SAN,2020-06-11,91932.0,2020-06-07,331,Andersen Lab,SD County Public Health Laboratory,B.1.245
 SEARCH-3877-SAN,2020-07-16,92078.0,2020-07-12,296,Andersen Lab,SD County Public Health Laboratory,B.1.336
 SEARCH-3879-SAN,2020-06-30,nan,2020-06-28,312,Andersen Lab,SD County Public Health Laboratory,B.1.240
@@ -3122,7 +3122,7 @@ SEARCH-6681,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.427
 SEARCH-6682,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.429
 SEARCH-6683,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.429
 SEARCH-6684,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.2
-SEARCH-6685,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.1.28
+SEARCH-6685,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,P.2
 SEARCH-6686,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.551
 SEARCH-6687,2021-01-18,nan,2021-01-17,110,Andersen Lab,Sharp Health,B.1
 SEARCH-6688,2021-01-19,nan,2021-01-17,109,Andersen Lab,Sharp Health,B.1.427
@@ -4288,7 +4288,7 @@ SEARCH-8270,2021-03-06,92071.0,2021-02-28,63,Andersen Lab,Sharp Health,B.1.1.7
 SEARCH-8271,2021-03-05,92111.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.561
 SEARCH-8272,2021-03-06,92028.0,2021-02-28,63,Andersen Lab,Sharp Health,B.1.1.7
 SEARCH-8273,2021-03-05,92026.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.427
-SEARCH-8274,2021-03-05,92071.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.1
+SEARCH-8274,2021-03-05,92071.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.1.7
 SEARCH-8275,2021-03-05,92120.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.561
 SEARCH-8277,2021-03-05,92102.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.429
 SEARCH-8278,2021-03-05,92118.0,2021-02-28,64,Andersen Lab,Sharp Health,B.1.2
@@ -4886,12 +4886,12 @@ SEARCH-9197,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health La
 SEARCH-9198,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.561
 SEARCH-9199,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.561
 SEARCH-9200,2020-11-23,92108.0,2020-11-22,166,Andersen Lab,SD County Public Health Laboratory,B.1.241
-SEARCH-9201,2021-04-05,nan,2021-04-04,33,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-9201,2021-04-05,nan,2021-04-04,33,Andersen Lab,SD County Public Health Laboratory,P.1.2
 SEARCH-9202,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-9203,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1.241
 SEARCH-9204,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-9206,2020-11-23,92108.0,2020-11-22,166,Andersen Lab,SD County Public Health Laboratory,B.1.241
-SEARCH-9208,2021-04-05,nan,2021-04-04,33,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-9208,2021-04-05,nan,2021-04-04,33,Andersen Lab,SD County Public Health Laboratory,P.1.2
 SEARCH-9209,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-9210,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1
 SEARCH-9211,2021-03-29,nan,2021-03-28,40,Andersen Lab,SD County Public Health Laboratory,B.1
@@ -7808,7 +7808,7 @@ SEARCH-14123,2021-01-07,92111,2021-01-03,121,UCSD EXCITE Lab,Helix,B.1.2
 SEARCH-11104,2021-02-05,92127,2021-01-31,92,UCSD EXCITE Lab,Helix,B.1.429
 SEARCH-15626,2021-01-13,92069,2021-01-10,115,UCSD EXCITE Lab,Helix,B.1.177
 SEARCH-12156,2020-12-28,92139,2020-12-27,131,UCSD EXCITE Lab,UCSD CALM Lab,B.1.429
-SEARCH-10545,2021-02-01,92115,2021-01-31,96,UCSD EXCITE Lab,Helix,B.1.351
+SEARCH-10545,2021-02-01,92115,2021-01-31,96,UCSD EXCITE Lab,Helix,B.1.351.3
 SEARCH-10845,2021-01-28,92054,2021-01-24,100,UCSD EXCITE Lab,Helix,B.1.427
 SEARCH-15523,2021-01-12,91978,2021-01-10,116,UCSD EXCITE Lab,Helix,B.1.2
 SEARCH-15560,2021-01-11,92071,2021-01-10,117,UCSD EXCITE Lab,Helix,B.1.2
@@ -11239,317 +11239,317 @@ SEARCH-100753,2020-12-22,92139.0,2020-12-20,137,Andersen Lab,Sharp Health,B.1.56
 SEARCH-100754,2021-04-26,92113.0,2021-04-25,12,Andersen Lab,Sharp Health,B.1.1.7
 SEARCH-100755,2021-04-26,92102.0,2021-04-25,12,Andersen Lab,Sharp Health,B.1.1.7
 SEARCH-100756,2021-04-28,92102.0,2021-04-25,10,Andersen Lab,Sharp Health,B.1.1.7
-SEARCH-100867,2020-12-04,91977.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100869,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100871,2020-12-04,92127.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100874,2020-12-04,92028.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100875,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100879,2020-12-04,92116.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100880,2020-12-04,91977.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100882,2020-12-04,92102.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100884,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100885,2020-12-04,92119.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100886,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100888,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100889,2020-12-04,92101.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100891,2020-12-04,92126.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100893,2020-12-04,92008.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100894,2020-12-04,nan,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100897,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100898,2020-12-04,92067.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100902,2020-12-04,92102.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100906,2020-12-04,91945.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100907,2020-12-04,92061.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100908,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100909,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100910,2020-12-04,92130.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100917,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100918,2020-12-04,92025.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100922,2020-12-04,92014.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100924,2020-12-04,92064.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100925,2020-12-04,92126.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100928,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100929,2020-12-04,92040.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100930,2020-12-04,92108.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100933,2020-12-04,92021.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100935,2020-12-04,92111.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100938,2020-12-04,92139.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100940,2020-12-04,92118.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100941,2020-12-04,92129.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100943,2020-12-04,92021.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100944,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100945,2020-12-04,91911.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100947,2020-12-04,91915.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100948,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100949,2020-12-04,92027.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100950,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100951,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100952,2020-12-04,92114.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100953,2020-12-04,92027.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100954,2020-12-04,92131.0,2020-11-29,155,Andersen Lab,Sharp Health,
-SEARCH-100956,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100957,2021-01-01,92130.0,2020-12-27,127,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100958,2020-12-11,92020.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100959,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100960,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100961,2020-11-17,92173.0,2020-11-15,172,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100962,2020-11-30,92020.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100963,2020-12-16,nan,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100964,2020-12-11,92020.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100965,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100966,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100967,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100968,2020-12-11,92101.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100969,2020-12-17,92011.0,2020-12-13,142,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100970,2020-12-11,92123.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100971,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100972,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100973,2020-12-04,94609.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100974,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100975,2020-12-07,92108.0,2020-12-06,152,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100976,2020-12-16,92154.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100977,2020-12-11,92123.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100978,2021-05-03,91911.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100979,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100980,2020-12-04,91911.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100981,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100982,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100983,2020-12-16,nan,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100984,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100985,2021-05-03,91911.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100987,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100988,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100989,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100990,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100991,2021-05-03,92139.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100992,2021-01-05,91977.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100993,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100995,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100996,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100997,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100999,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101000,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101001,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101002,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101003,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101004,2021-05-03,91910.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101005,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101007,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101008,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101009,2020-12-19,nan,2020-12-13,140,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101010,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101012,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101013,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101014,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101015,2020-12-10,92154.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101016,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101017,2020-12-30,92173.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101018,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101019,2020-12-04,92173.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101020,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101022,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101023,2020-12-10,92158.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101024,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101025,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101026,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101027,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101028,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101029,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101030,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101031,2020-12-10,92158.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101032,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101033,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101034,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101035,2021-01-05,92115.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101036,2021-01-04,92118.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101037,2021-01-04,92118.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101038,2021-01-04,91950.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101039,2021-01-05,91941.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101040,2021-01-05,91942.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101043,2021-01-05,92119.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101047,2021-01-05,92020.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101050,2021-01-03,91932.0,2021-01-03,125,Andersen Lab,Sharp Health,
-SEARCH-101051,2021-01-04,92115.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101052,2021-01-05,92008.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101055,2021-01-05,92130.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101057,2021-01-04,91910.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101058,2021-01-04,92037.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101059,2021-01-04,91915.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101060,2021-01-05,91914.0,2021-01-03,123,Andersen Lab,Sharp Health,
-SEARCH-101061,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101063,2021-05-07,92040.0,2021-05-02,1,Andersen Lab,Sharp Health,
-SEARCH-101065,2021-05-08,92019.0,2021-05-02,0,Andersen Lab,Sharp Health,
-SEARCH-101066,2021-05-08,91903.0,2021-05-02,0,Andersen Lab,Sharp Health,
-SEARCH-101070,2021-05-07,92154.0,2021-05-02,1,Andersen Lab,Sharp Health,
-SEARCH-101072,2021-05-07,92154.0,2021-05-02,1,Andersen Lab,Sharp Health,
-SEARCH-101073,2021-05-07,92064.0,2021-05-02,1,Andersen Lab,Sharp Health,
-SEARCH-101074,2021-05-07,92025.0,2021-05-02,1,Andersen Lab,Sharp Health,
-SEARCH-101075,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,
-SEARCH-101077,2021-05-05,92025.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101079,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,
-SEARCH-101080,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,
-SEARCH-101081,2021-05-02,91977.0,2021-05-02,6,Andersen Lab,Sharp Health,
-SEARCH-101082,2021-05-02,92021.0,2021-05-02,6,Andersen Lab,Sharp Health,
-SEARCH-101084,2021-05-03,92071.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101086,2021-05-05,92116.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101088,2021-05-06,92101.0,2021-05-02,2,Andersen Lab,Sharp Health,
-SEARCH-101091,2021-05-03,91913.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101092,2021-05-03,92037.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101093,2021-05-04,91945.0,2021-05-02,4,Andersen Lab,Sharp Health,
-SEARCH-101096,2021-01-04,92119.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101097,2021-01-04,91911.0,2021-01-03,124,Andersen Lab,Sharp Health,
-SEARCH-101098,2021-05-03,92154.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101100,2021-05-03,92154.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101101,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101102,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101103,2021-05-06,92126.0,2021-05-02,2,Andersen Lab,Sharp Health,
-SEARCH-101104,2021-05-05,92014.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101105,2021-05-05,92020.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101106,2021-05-05,92127.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101110,2021-05-05,92115.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101111,2021-05-05,92020.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101112,2021-05-06,92021.0,2021-05-02,2,Andersen Lab,Sharp Health,
-SEARCH-101113,2021-05-05,91911.0,2021-05-02,3,Andersen Lab,Sharp Health,
-SEARCH-101114,2021-05-03,91913.0,2021-05-02,5,Andersen Lab,Sharp Health,
-SEARCH-101115,2021-05-06,92019.0,2021-05-02,2,Andersen Lab,Sharp Health,
-SEARCH-101119,2021-01-03,92127.0,2021-01-03,125,Andersen Lab,Sharp Health,
-SEARCH-101121,2021-01-14,92019.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101122,2021-01-15,92102.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101123,2020-09-02,60035.0,2020-08-30,248,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101124,2020-11-30,92104.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101125,2021-05-04,92102.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101126,2021-01-11,91911.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101127,2021-01-11,92102.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101130,2020-08-04,92113.0,2020-08-02,277,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101131,2020-11-30,92019.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101134,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101135,2021-01-15,nan,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101136,2021-01-13,92122.0,2021-01-10,115,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101138,2020-11-30,92019.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101139,2021-05-04,91911.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101140,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101141,2021-01-14,92127.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101142,2020-09-02,92115.0,2020-08-30,248,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101143,2020-08-26,91910.0,2020-08-23,255,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101144,2020-11-30,91950.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101146,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101147,2021-01-11,nan,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101148,2021-01-18,92110.0,2021-01-17,110,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101149,2021-01-14,91901.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101150,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101151,2020-08-04,91915.0,2020-08-02,277,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101152,2020-11-30,91910.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101153,2021-05-04,92102.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101154,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101155,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101156,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101157,2020-08-26,92102.0,2020-08-23,255,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101158,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101161,2021-01-11,91911.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101162,2021-01-15,92173.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101163,2020-09-05,92110.0,2020-08-30,245,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101164,2020-09-04,92154.0,2020-08-30,246,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101165,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101167,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101169,2021-01-14,91977.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101170,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101171,2020-08-28,91950.0,2020-08-23,253,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101172,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101173,2021-05-06,92021.0,2021-05-02,2,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101174,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101175,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101177,2020-08-31,92115.0,2020-08-30,250,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101178,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101179,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101181,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101182,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101183,2021-01-14,92021.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101184,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101185,2020-09-04,92120.0,2020-08-30,246,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101186,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101187,2021-05-03,92111.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101188,2021-05-07,91977.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101189,2020-12-31,92021.0,2020-12-27,128,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101190,2021-01-11,92154.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101191,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101192,2021-01-15,92154.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101193,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101195,2021-05-03,92105.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101196,2021-05-07,91902.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101198,2021-01-11,93101.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101199,2021-01-15,nan,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101200,2021-01-15,92102.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101202,2020-11-30,92113.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101203,2021-05-03,91910.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-101204,2021-05-07,92019.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100028,2021-04-15,92102.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100029,2021-04-16,92102.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100030,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100032,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100033,2021-04-13,92154.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100034,2021-04-16,92113.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100035,2021-04-15,91977.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100037,2020-07-07,92108.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100039,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100040,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100041,2021-04-07,91977.0,2021-04-04,31,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100042,2021-04-16,92101.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100043,2021-04-13,92105.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100044,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100045,2020-07-07,92025.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100046,2020-06-03,92105.0,2020-05-31,339,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100047,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100048,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100051,2021-04-13,91910.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100052,2021-04-18,92154.0,2021-04-18,20,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100053,2020-07-09,92115.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100054,2020-06-02,92025.0,2020-05-31,340,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100055,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100056,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100058,2021-04-12,91942.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100059,2021-04-16,92101.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100060,2020-07-09,92020.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100062,2020-06-02,92065.0,2020-05-31,340,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100063,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100064,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100065,2021-04-06,92107.0,2021-04-04,32,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100067,2020-08-10,92123.0,2020-08-09,271,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100068,2020-06-10,92024.0,2020-06-07,332,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100069,2020-06-03,92154.0,2020-05-31,339,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100070,2020-06-20,92021.0,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100071,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100072,2021-04-08,91977.0,2021-04-04,30,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100073,2021-04-06,91950.0,2021-04-04,32,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100074,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100075,2020-07-07,91977.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100077,2020-06-19,92117.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100078,2020-06-20,92102.0,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100080,2021-04-09,91945.0,2021-04-04,29,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100081,2021-04-12,92102.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100083,2020-07-07,91915.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100085,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100088,2021-04-12,92129.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100089,2021-04-12,91914.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100090,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100092,2020-06-19,92109.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100093,2020-09-19,91914.0,2020-09-13,231,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100094,2021-04-19,92084.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100096,2021-04-12,92020.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100098,2020-07-09,91910.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100099,2020-06-18,nan,2020-06-14,324,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100100,2020-06-19,92071.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100101,2020-09-20,91913.0,2020-09-20,230,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100102,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100104,2021-04-15,91942.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100105,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100106,2020-07-09,92139.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100107,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100108,2021-04-11,92154.0,2021-04-11,27,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100109,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100110,2021-04-15,92102.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100111,2021-04-15,91977.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100113,2020-07-09,92116.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100114,2021-04-23,91910.0,2021-04-18,15,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100115,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100116,2021-04-12,92108.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,
-SEARCH-100117,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,
+SEARCH-100867,2020-12-04,91977.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100869,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.416
+SEARCH-100871,2020-12-04,92127.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.243
+SEARCH-100874,2020-12-04,92028.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100875,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.577
+SEARCH-100879,2020-12-04,92116.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.577
+SEARCH-100880,2020-12-04,91977.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.453
+SEARCH-100882,2020-12-04,92102.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.232
+SEARCH-100884,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100885,2020-12-04,92119.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100886,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100888,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100889,2020-12-04,92101.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.222
+SEARCH-100891,2020-12-04,92126.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100893,2020-12-04,92008.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.135
+SEARCH-100894,2020-12-04,nan,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100897,2020-12-04,91913.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.432
+SEARCH-100898,2020-12-04,92067.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.577
+SEARCH-100902,2020-12-04,92102.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.416
+SEARCH-100906,2020-12-04,91945.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100907,2020-12-04,92061.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100908,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100909,2020-12-04,92020.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.609
+SEARCH-100910,2020-12-04,92130.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.135
+SEARCH-100917,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.1.222
+SEARCH-100918,2020-12-04,92025.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100922,2020-12-04,92014.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.232
+SEARCH-100924,2020-12-04,92064.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.565
+SEARCH-100925,2020-12-04,92126.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.232
+SEARCH-100928,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.561
+SEARCH-100929,2020-12-04,92040.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100930,2020-12-04,92108.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.243
+SEARCH-100933,2020-12-04,92021.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.429
+SEARCH-100935,2020-12-04,92111.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100938,2020-12-04,92139.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100940,2020-12-04,92118.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100941,2020-12-04,92129.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.595
+SEARCH-100943,2020-12-04,92021.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.369
+SEARCH-100944,2020-12-04,92071.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100945,2020-12-04,91911.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.2
+SEARCH-100947,2020-12-04,91915.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100948,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.126
+SEARCH-100949,2020-12-04,92027.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1
+SEARCH-100950,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.427
+SEARCH-100951,2020-12-04,92019.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.232
+SEARCH-100952,2020-12-04,92114.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.429
+SEARCH-100953,2020-12-04,92027.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.234
+SEARCH-100954,2020-12-04,92131.0,2020-11-29,155,Andersen Lab,Sharp Health,B.1.126
+SEARCH-100956,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100957,2021-01-01,92130.0,2020-12-27,127,Andersen Lab,SD County Public Health Laboratory,B.1.177.60
+SEARCH-100958,2020-12-11,92020.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100959,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100960,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-100961,2020-11-17,92173.0,2020-11-15,172,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100962,2020-11-30,92020.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.577
+SEARCH-100963,2020-12-16,nan,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-100964,2020-12-11,92020.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-100965,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100966,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100967,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1.1
+SEARCH-100968,2020-12-11,92101.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100969,2020-12-17,92011.0,2020-12-13,142,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100970,2020-12-11,92123.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100971,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100972,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100973,2020-12-04,94609.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-100974,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1.1
+SEARCH-100975,2020-12-07,92108.0,2020-12-06,152,Andersen Lab,SD County Public Health Laboratory,B.1.1.362
+SEARCH-100976,2020-12-16,92154.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-100977,2020-12-11,92123.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100978,2021-05-03,91911.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100979,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100980,2020-12-04,91911.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100981,2020-12-01,92083.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1.1
+SEARCH-100982,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100983,2020-12-16,nan,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-100984,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-100985,2021-05-03,91911.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100987,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-100988,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100989,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100990,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100991,2021-05-03,92139.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100992,2021-01-05,91977.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-100993,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100995,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.1.362
+SEARCH-100996,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100997,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-100999,2020-12-04,92154.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.1.416
+SEARCH-101000,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-101001,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.551
+SEARCH-101002,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.551
+SEARCH-101003,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101004,2021-05-03,91910.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101005,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101007,2020-12-21,92101.0,2020-12-20,138,Andersen Lab,SD County Public Health Laboratory,B.1.1.362
+SEARCH-101008,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101009,2020-12-19,nan,2020-12-13,140,Andersen Lab,SD County Public Health Laboratory,B.1.1.222
+SEARCH-101010,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101012,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-101013,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101014,2020-12-16,92084.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.551
+SEARCH-101015,2020-12-10,92154.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,B.1.1.222
+SEARCH-101016,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101017,2020-12-30,92173.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101018,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101019,2020-12-04,92173.0,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101020,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101022,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.609
+SEARCH-101023,2020-12-10,92158.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101024,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101025,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101026,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101027,2020-12-04,nan,2020-11-29,155,Andersen Lab,SD County Public Health Laboratory,B.1.1.222
+SEARCH-101028,2020-12-01,92020.0,2020-11-29,158,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-101029,2020-12-16,92158.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101030,2020-12-16,92082.0,2020-12-13,143,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101031,2020-12-10,92158.0,2020-12-06,149,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101032,2020-12-11,92158.0,2020-12-06,148,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101033,2021-01-05,92123.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101034,2021-01-05,92021.0,2021-01-03,123,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101035,2021-01-05,92115.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.429
+SEARCH-101036,2021-01-04,92118.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101037,2021-01-04,92118.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.561
+SEARCH-101038,2021-01-04,91950.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101039,2021-01-05,91941.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101040,2021-01-05,91942.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.241
+SEARCH-101043,2021-01-05,92119.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101047,2021-01-05,92020.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.561
+SEARCH-101050,2021-01-03,91932.0,2021-01-03,125,Andersen Lab,Sharp Health,B.1.243
+SEARCH-101051,2021-01-04,92115.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.1.10
+SEARCH-101052,2021-01-05,92008.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1
+SEARCH-101055,2021-01-05,92130.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101057,2021-01-04,91910.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.429
+SEARCH-101058,2021-01-04,92037.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.596
+SEARCH-101059,2021-01-04,91915.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.429
+SEARCH-101060,2021-01-05,91914.0,2021-01-03,123,Andersen Lab,Sharp Health,B.1.427
+SEARCH-101061,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,P.1
+SEARCH-101063,2021-05-07,92040.0,2021-05-02,1,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101065,2021-05-08,92019.0,2021-05-02,0,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101066,2021-05-08,91903.0,2021-05-02,0,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101070,2021-05-07,92154.0,2021-05-02,1,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101072,2021-05-07,92154.0,2021-05-02,1,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101073,2021-05-07,92064.0,2021-05-02,1,Andersen Lab,Sharp Health,B.1
+SEARCH-101074,2021-05-07,92025.0,2021-05-02,1,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101075,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101077,2021-05-05,92025.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101079,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101080,2021-05-02,92020.0,2021-05-02,6,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101081,2021-05-02,91977.0,2021-05-02,6,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101082,2021-05-02,92021.0,2021-05-02,6,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101084,2021-05-03,92071.0,2021-05-02,5,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101086,2021-05-05,92116.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101088,2021-05-06,92101.0,2021-05-02,2,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101091,2021-05-03,91913.0,2021-05-02,5,Andersen Lab,Sharp Health,B.1.429
+SEARCH-101092,2021-05-03,92037.0,2021-05-02,5,Andersen Lab,Sharp Health,P.1
+SEARCH-101093,2021-05-04,91945.0,2021-05-02,4,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101096,2021-01-04,92119.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.2
+SEARCH-101097,2021-01-04,91911.0,2021-01-03,124,Andersen Lab,Sharp Health,B.1.241
+SEARCH-101098,2021-05-03,92154.0,2021-05-02,5,Andersen Lab,Sharp Health,P.1
+SEARCH-101100,2021-05-03,92154.0,2021-05-02,5,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101101,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,P.1
+SEARCH-101102,2021-05-05,92037.0,2021-05-02,3,Andersen Lab,Sharp Health,P.1
+SEARCH-101103,2021-05-06,92126.0,2021-05-02,2,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101104,2021-05-05,92014.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101105,2021-05-05,92020.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101106,2021-05-05,92127.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101110,2021-05-05,92115.0,2021-05-02,3,Andersen Lab,Sharp Health,P.1
+SEARCH-101111,2021-05-05,92020.0,2021-05-02,3,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101112,2021-05-06,92021.0,2021-05-02,2,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101113,2021-05-05,91911.0,2021-05-02,3,Andersen Lab,Sharp Health,P.1
+SEARCH-101114,2021-05-03,91913.0,2021-05-02,5,Andersen Lab,Sharp Health,P.1
+SEARCH-101115,2021-05-06,92019.0,2021-05-02,2,Andersen Lab,Sharp Health,B.1.1.7
+SEARCH-101119,2021-01-03,92127.0,2021-01-03,125,Andersen Lab,Sharp Health,B.1.429
+SEARCH-101121,2021-01-14,92019.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101122,2021-01-15,92102.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101123,2020-09-02,60035.0,2020-08-30,248,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101124,2020-11-30,92104.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101125,2021-05-04,92102.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101126,2021-01-11,91911.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101127,2021-01-11,92102.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-101130,2020-08-04,92113.0,2020-08-02,277,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101131,2020-11-30,92019.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.577
+SEARCH-101134,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101135,2021-01-15,nan,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101136,2021-01-13,92122.0,2021-01-10,115,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101138,2020-11-30,92019.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.577
+SEARCH-101139,2021-05-04,91911.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101140,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101141,2021-01-14,92127.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101142,2020-09-02,92115.0,2020-08-30,248,Andersen Lab,SD County Public Health Laboratory,B.1.2
+SEARCH-101143,2020-08-26,91910.0,2020-08-23,255,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-101144,2020-11-30,91950.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101146,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101147,2021-01-11,nan,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101148,2021-01-18,92110.0,2021-01-17,110,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101149,2021-01-14,91901.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-101150,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101151,2020-08-04,91915.0,2020-08-02,277,Andersen Lab,SD County Public Health Laboratory,B.1.509
+SEARCH-101152,2020-11-30,91910.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.551
+SEARCH-101153,2021-05-04,92102.0,2021-05-02,4,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101154,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101155,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-101156,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101157,2020-08-26,92102.0,2020-08-23,255,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101158,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101161,2021-01-11,91911.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101162,2021-01-15,92173.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101163,2020-09-05,92110.0,2020-08-30,245,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101164,2020-09-04,92154.0,2020-08-30,246,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101165,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101167,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101169,2021-01-14,91977.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101170,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101171,2020-08-28,91950.0,2020-08-23,253,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101172,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101173,2021-05-06,92021.0,2021-05-02,2,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101174,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101175,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101177,2020-08-31,92115.0,2020-08-30,250,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101178,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101179,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101181,2020-12-30,92158.0,2020-12-27,129,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101182,2021-01-11,92173.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101183,2021-01-14,92021.0,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.234
+SEARCH-101184,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101185,2020-09-04,92120.0,2020-08-30,246,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101186,2020-11-30,92158.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.561
+SEARCH-101187,2021-05-03,92111.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101188,2021-05-07,91977.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101189,2020-12-31,92021.0,2020-12-27,128,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-101190,2021-01-11,92154.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.1
+SEARCH-101191,2021-01-14,nan,2021-01-10,114,Andersen Lab,SD County Public Health Laboratory,B.1.1.519
+SEARCH-101192,2021-01-15,92154.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.427
+SEARCH-101193,2020-09-03,92115.0,2020-08-30,247,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-101195,2021-05-03,92105.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101196,2021-05-07,91902.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101198,2021-01-11,93101.0,2021-01-10,117,Andersen Lab,SD County Public Health Laboratory,B.1.232
+SEARCH-101199,2021-01-15,nan,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.577
+SEARCH-101200,2021-01-15,92102.0,2021-01-10,113,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-101202,2020-11-30,92113.0,2020-11-29,159,Andersen Lab,SD County Public Health Laboratory,B.1.1.222
+SEARCH-101203,2021-05-03,91910.0,2021-05-02,5,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-101204,2021-05-07,92019.0,2021-05-02,1,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100028,2021-04-15,92102.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100029,2021-04-16,92102.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100030,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100032,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1.239
+SEARCH-100033,2021-04-13,92154.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100034,2021-04-16,92113.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100035,2021-04-15,91977.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,B.1.1.519
+SEARCH-100037,2020-07-07,92108.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,B.1.1.8
+SEARCH-100039,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100040,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100041,2021-04-07,91977.0,2021-04-04,31,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100042,2021-04-16,92101.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100043,2021-04-13,92105.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,B.1.429
+SEARCH-100044,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100045,2020-07-07,92025.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,B.1.397
+SEARCH-100046,2020-06-03,92105.0,2020-05-31,339,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100047,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100048,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100051,2021-04-13,91910.0,2021-04-11,25,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100052,2021-04-18,92154.0,2021-04-18,20,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100053,2020-07-09,92115.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,B.1.556
+SEARCH-100054,2020-06-02,92025.0,2020-05-31,340,Andersen Lab,SD County Public Health Laboratory,B.1.163
+SEARCH-100055,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100056,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100058,2021-04-12,91942.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,B.1.1.519
+SEARCH-100059,2021-04-16,92101.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100060,2020-07-09,92020.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,B.1.239
+SEARCH-100062,2020-06-02,92065.0,2020-05-31,340,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100063,2020-06-19,92129.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100064,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100065,2021-04-06,92107.0,2021-04-04,32,Andersen Lab,SD County Public Health Laboratory,B.1.596
+SEARCH-100067,2020-08-10,92123.0,2020-08-09,271,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100068,2020-06-10,92024.0,2020-06-07,332,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-100069,2020-06-03,92154.0,2020-05-31,339,Andersen Lab,SD County Public Health Laboratory,B.1.1.128
+SEARCH-100070,2020-06-20,92021.0,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1.1.93
+SEARCH-100071,2021-04-16,92108.0,2021-04-11,22,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100072,2021-04-08,91977.0,2021-04-04,30,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100073,2021-04-06,91950.0,2021-04-04,32,Andersen Lab,SD County Public Health Laboratory,B.1.311
+SEARCH-100074,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100075,2020-07-07,91977.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-100077,2020-06-19,92117.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1.1
+SEARCH-100078,2020-06-20,92102.0,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1.241
+SEARCH-100080,2021-04-09,91945.0,2021-04-04,29,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100081,2021-04-12,92102.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100083,2020-07-07,91915.0,2020-07-05,305,Andersen Lab,SD County Public Health Laboratory,B.1.243
+SEARCH-100085,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100088,2021-04-12,92129.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100089,2021-04-12,91914.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100090,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100092,2020-06-19,92109.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100093,2020-09-19,91914.0,2020-09-13,231,Andersen Lab,SD County Public Health Laboratory,B.1.1.316
+SEARCH-100094,2021-04-19,92084.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100096,2021-04-12,92020.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100098,2020-07-09,91910.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100099,2020-06-18,nan,2020-06-14,324,Andersen Lab,SD County Public Health Laboratory,B.1.556
+SEARCH-100100,2020-06-19,92071.0,2020-06-14,323,Andersen Lab,SD County Public Health Laboratory,B.1.556
+SEARCH-100101,2020-09-20,91913.0,2020-09-20,230,Andersen Lab,SD County Public Health Laboratory,B.1.1.316
+SEARCH-100102,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100104,2021-04-15,91942.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100105,2021-04-19,92108.0,2021-04-18,19,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100106,2020-07-09,92139.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,B.1.400
+SEARCH-100107,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100108,2021-04-11,92154.0,2021-04-11,27,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100109,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100110,2021-04-15,92102.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,P.1
+SEARCH-100111,2021-04-15,91977.0,2021-04-11,23,Andersen Lab,SD County Public Health Laboratory,B.1.1.7
+SEARCH-100113,2020-07-09,92116.0,2020-07-05,303,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100114,2021-04-23,91910.0,2021-04-18,15,Andersen Lab,SD County Public Health Laboratory,B.1.1.519
+SEARCH-100115,2020-06-20,nan,2020-06-14,322,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100116,2021-04-12,92108.0,2021-04-11,26,Andersen Lab,SD County Public Health Laboratory,B.1
+SEARCH-100117,2021-04-21,92154.0,2021-04-18,17,Andersen Lab,SD County Public Health Laboratory,P.1

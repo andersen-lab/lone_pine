@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import dash_html_components as html
 
-VOC = sorted( ["B.1.1.7", "B.1.351", "P.1", "B.1.427", "B.1.429"] )
-VOI = ["B.1.526", "B.1.526.1", "B.1.526.2", "B.1.525", "P.2", "B.1.617", "B.1.617.2" ]
+VOC = sorted( ["B.1.1.7", "B.1.351", "B.1.617.2", "P.1"] )
+VOI = ["B.1.427", "B.1.429", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3", "P.2"]
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
