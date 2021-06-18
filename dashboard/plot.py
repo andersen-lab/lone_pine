@@ -6,7 +6,7 @@ from epiweeks import Week
 
 
 def _add_date_formating( fig ):
-    for i in range( 2, 18, 2 ):
+    for i in range( 2, 19, 2 ):
         year1 = 2020
         year2 = 2020
         month1 = i
