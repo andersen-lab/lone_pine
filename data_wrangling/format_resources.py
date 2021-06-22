@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import dash_html_components as html
 
-VOC = sorted( ["B.1.1.7", "B.1.351", "B.1.617.2", "P.1"] )
-VOI = ["B.1.427", "B.1.429", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3", "P.2"]
+VOC = sorted( ["B.1.1.7", "B.1.351", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
+VOI = sorted( ["B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3", "P.2", "B.1.1.318", "P.3", "C.36.3", "C.37"] )
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
@@ -180,13 +180,13 @@ def get_lineage_values( seqs ):
 def get_summary_table( seqs ):
     sg = {"textAlign" : "center" }
     sd2 = {"marginLeft" : "50px" }
-    table = [html.Tr( [html.Th("Type"), html.Th( "Total", style=sg ), html.Th( "Last Month", style=sg )] ),
-             html.Tr( [html.Td( html.B( "Sequences" ) ), html.Td( len( seqs ), style=sg ), html.Td( len( seqs.loc[seqs['days_past'] < 30] ), style=sg )] ),
+    table = [html.Tr( [html.Th( "Type", style={"marginLeft" : "20px" } ), html.Th( "Total", style=sg ), html.Th( "Last Month", style=sg )] ),
+             html.Tr( [html.Td( html.B( "Sequences", style={"marginLeft" : "10px" } ) ), html.Td( len( seqs ), style=sg ), html.Td( len( seqs.loc[seqs['days_past'] < 30] ), style=sg )] ),
              html.Tr(html.Td( "", colSpan=3 ) ),
-             html.Tr( html.Td( html.B( "Variants of concern" ), colSpan=3))]
+             html.Tr( html.Td( html.B( "Variants of concern", style={"marginLeft" : "10px" } ), colSpan=3))]
     for i in VOC:
         if i in seqs["lineage"].unique():
-            table.append( html.Tr( [html.Td( html.I( i ) ), html.Td( len( seqs.loc[seqs['lineage']==i] ), style=sg ), html.Td( len( seqs.loc[(seqs['lineage']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
+            table.append( html.Tr( [html.Td( html.I( i, style={"marginLeft" : "20px" } ) ), html.Td( len( seqs.loc[seqs['lineage']==i] ), style=sg ), html.Td( len( seqs.loc[(seqs['lineage']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
 
     return table
 

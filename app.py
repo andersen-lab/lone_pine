@@ -28,7 +28,7 @@ GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/61
 [Andersen Lab Github repository](https://github.com/andersen-lab/HCoV-19-Genomics).
 '''
 
-format_data.get_provider_sequencer_values( sequences, "sequencer" )
+#format_data.get_provider_sequencer_values( sequences, "sequencer" )
 
 app.layout = html.Div( children=[
     html.Div( [dcc.Markdown( markdown_text ),
@@ -312,4 +312,4 @@ def update_lineage_value( clickData ):
 
 
 if __name__ == '__main__':
-    app.run_server( debug=False )
+    app.run_server( debug=True )
