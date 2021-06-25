@@ -15,6 +15,8 @@ def load_sequences( window=None ):
     sequences["collection_date"] = pd.to_datetime( sequences["collection_date"] ).dt.tz_localize( None )
     sequences["collection_date"] = sequences["collection_date"].dt.normalize()
 
+    sequences["zipcode"] = sequences["zipcode"].apply( lambda x: f"{x:.0f}" )
+
     if window is not None:
         sequences = sequences.loc[sequences["days_past"] <= window].copy()
 
