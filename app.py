@@ -19,17 +19,9 @@ cases_whole = cases_whole.loc[cases_whole["ziptext"]!="None"]
 
 register_callbacks( app, sequences, cases_whole )
 
-markdown_text = '''
-To gain insights into the emergence, spread, and transmission of COVID-19 in our community, we are working with a large 
-number of partners to sequence SARS-CoV-2 samples from patients in San Diego. This dashboard provides up-to-date 
-information on the number and locations of our sequencing within San Diego County. Consensus sequences are deposited on 
-GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/612578), and the 
-[Andersen Lab Github repository](https://github.com/andersen-lab/HCoV-19-Genomics).
-'''
-
 app.layout = html.Div( children=[
     dcc.Location(id='url', refresh=False),
-    html.Div( [dcc.Markdown( markdown_text ),
+    html.Div( [dcc.Markdown( id="markdown-stuff" ),
                html.P() ] ),
     html.Div( [html.Table( id="summary-table" )], style={"width" : "30em",
                                                          "marginLeft" : "auto",
@@ -40,7 +32,6 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "ZIP code", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'zip-drop',
-                              options=[{"label" : i, "value": i } for i in cases_whole["ziptext"].sort_values().unique()],
                               multi=False,
                               placeholder="All",
                               style={"margin" : "1%"}
@@ -67,7 +58,6 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "Sequencing Lab", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'sequencer-drop',
-                              options=format_data.get_provider_sequencer_values( sequences, "sequencer"),
                               multi=False,
                               placeholder="All",
                               style={"margin" : "1%"}
@@ -77,7 +67,6 @@ app.layout = html.Div( children=[
             html.Div( [
                 html.H5( "Provider", style={ "color" : "#F8F9FA", "margin" : "1%" } ),
                 dcc.Dropdown( id = 'provider-drop',
-                              options=format_data.get_provider_sequencer_values( sequences, "provider"),
                               multi=False,
                               clearable=True,
                               searchable=True,

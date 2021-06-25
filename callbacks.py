@@ -25,6 +25,64 @@ def register_callbacks( app, sequences, cases_whole ):
         return new_cases
 
     @app.callback(
+        Output( "markdown-stuff", "children" ),
+        Input( "url", "pathname" )
+    )
+    def update_markdown( path ):
+        if path == "/bajacalifornia":
+            place = "Baja California"
+        else:
+            place = "San Diego County"
+
+        markdown_text = f'''
+        To gain insights into the emergence, spread, and transmission of COVID-19 in our community, we are working with a large 
+        number of partners to sequence SARS-CoV-2 samples from patients in San Diego and Baja California. This dashboard provides up-to-date 
+        information on the number and locations of our sequencing within {place}. Consensus sequences are deposited on 
+        GISAID, NCBI under the [BioProjectID](https://www.ncbi.nlm.nih.gov/bioproject/612578), and the 
+        [Andersen Lab Github repository](https://github.com/andersen-lab/HCoV-19-Genomics).
+        '''
+
+        return markdown_text
+
+    @app.callback(
+        Output( "zip-drop", "options" ),
+        Input( "hidden-div", "children" )   # Will eventually take the URL as an option.
+    )
+    def update_zip_drop( _ ):
+        return [{"label" : i, "value": i } for i in cases_whole["ziptext"].sort_values().unique()]
+
+    @app.callback(
+        Output( "sequencer-drop", "options" ),
+        [Input( "recency-drop", "value" ),
+         Input( 'provider-drop', "value" ),
+         Input( "zip-drop", "value")]
+    )
+    def update_sequencer_drop( window, provider, zip_f ):
+        new_sequences = get_sequences( sequences, window, provider, None, zip_f )
+        return format_data.get_provider_sequencer_values( new_sequences, "sequencer" )
+
+    @app.callback(
+        Output( "provider-drop", "options" ),
+        [Input( "recency-drop", "value" ),
+         Input( 'sequencer-drop', "value" ),
+         Input( "zip-drop", "value")]
+    )
+    def update_sequencer_drop( window, sequencer, zip_f ):
+        new_sequences = get_sequences( sequences, window, None, sequencer, zip_f )
+        return format_data.get_provider_sequencer_values( new_sequences, "provider" )
+
+    @app.callback(
+        Output( "lineage-drop", "options" ),
+        [Input( "recency-drop", "value" ),
+         Input( "zip-drop", "value" ),
+         Input( "provider-drop", "value"),
+         Input( 'sequencer-drop', "value")]
+    )
+    def update_lineage_drop( window, zip_f, provider, sequencer ):
+        new_sequences = get_sequences( sequences, window, provider, sequencer, zip_f )
+        return format_data.get_lineage_values( new_sequences )
+
+    @app.callback(
         Output( "summary-table", "children"),
         [Input( "provider-drop", "value"),
          Input( "sequencer-drop", "value"),
@@ -46,7 +104,9 @@ def register_callbacks( app, sequences, cases_whole ):
         return dashplot.plot_zips( format_data.format_zip_summary( new_cases, new_sequences ) )
 
     @app.callback(
-        Output( "cum-graph", "figure" ),
+        [Output( "cum-graph", "figure" ),
+         Output( "daily-graph", "figure" ),
+         Output( "fraction-graph", "figure" )],
         [Input( "recency-drop", "value" ),
          Input( "zip-drop", "value" ),
          Input( "provider-drop", "value"),
@@ -56,33 +116,11 @@ def register_callbacks( app, sequences, cases_whole ):
         new_sequences = get_sequences( sequences, window, provider, sequencer )
         new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
 
-        return dashplot.plot_cummulative_cases_seqs( new_seqs_per_case )
+        return_plots = [dashplot.plot_cummulative_cases_seqs( new_seqs_per_case ),
+                        dashplot.plot_daily_cases_seqs( new_seqs_per_case ),
+                        dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )]
 
-    @app.callback(
-        Output( "daily-graph", "figure" ),
-        [Input( "recency-drop", "value" ),
-         Input( "zip-drop", "value" ),
-         Input( "provider-drop", "value"),
-         Input( 'sequencer-drop', "value")]
-    )
-    def update_daily_graph( window, zip_f, provider, sequencer ):
-        new_sequences = get_sequences( sequences, window, provider, sequencer )
-        new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
-
-        return dashplot.plot_daily_cases_seqs( new_seqs_per_case )
-
-    @app.callback(
-        Output( "fraction-graph", "figure" ),
-        [Input( "recency-drop", "value" ),
-         Input( "zip-drop", "value" ),
-         Input( "provider-drop", "value"),
-         Input( 'sequencer-drop', "value")]
-    )
-    def update_fraction_graph( window, zip_f, provider, sequencer ):
-        new_sequences = get_sequences( sequences, window, provider, sequencer )
-        new_seqs_per_case = format_data.get_seqs_per_case( get_cases( cases_whole, window ), new_sequences, zip_f=zip_f )
-
-        return dashplot.plot_cummulative_sampling_fraction( new_seqs_per_case )
+        return return_plots
 
     @app.callback(
         Output( "lineage-graph", "figure" ),
@@ -92,7 +130,8 @@ def register_callbacks( app, sequences, cases_whole ):
          Input( 'sequencer-drop', "value")]
     )
     def update_lineages_graph( window, zip_f, provider, sequencer ):
-        return dashplot.plot_lineages( sequences, window, zip_f, provider, sequencer )
+        new_sequences = get_sequences( sequences, window, provider, sequencer, zip_f )
+        return dashplot.plot_lineages( new_sequences )
 
     @app.callback(
         Output( "lineage-time-graph", "figure" ),
@@ -104,13 +143,13 @@ def register_callbacks( app, sequences, cases_whole ):
          Input( 'sequencer-drop', "value")]
     )
     def update_lineage_time_graph( window, zip_f, lineage, provider, scaleby, sequencer ):
-        return dashplot.plot_lineages_time( sequences, lineage, window, zip_f, provider, scaleby, sequencer )
+        new_sequences = get_sequences( sequences, window, provider, sequencer, zip_f )
+        return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
 
     @app.callback(
         Output('zip-drop', 'value'),
         Input('zip-graph', 'clickData'))
     def update_figures_after_click( clickData ):
-
         if clickData is None:
             return None
         else:
