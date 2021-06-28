@@ -61,7 +61,9 @@ def download_search():
                                              "CALM" : "UCSD CALM Lab",
                                              "HELIX" : "Helix",
                                              "San Diego Fire-Rescue Department" : "SD Fire-Rescue Department",
-                                             "SASEA" : "UCSD Safer at School Early Action" } )
+                                             "SASEA" : "UCSD Safer at School Early Action",
+                                             "Instituto de Diagnostico y Referencia Epidemiologicos (InDRE)": "InDRE" } )
+    #print( md["provider"].value_counts() )
     md.loc[md["provider"].isna(),"provider"] = md["sequencer"]
 
     # Add pangolin lineage information
@@ -186,8 +188,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
