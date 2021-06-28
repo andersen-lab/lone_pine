@@ -158,6 +158,8 @@ def download_bc_cases():
     bc["population"] = 3648100
     bc["days_past"] = ( today - bc["updatedate"] ).dt.days
 
+    bc = bc.loc[bc["case_count"] > 0]
+
     return bc
 
 def download_shapefile():
@@ -184,8 +186,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

@@ -13,9 +13,9 @@ app.scripts.config.serve_locally = True
 app.title = "San Diego sequencing dashboard"
 
 sequences = format_data.load_sequences()
-sequences = sequences.loc[sequences["state"]=="San Diego"]
+#sequences = sequences.loc[sequences["state"]=="San Diego"]
 cases_whole = format_data.load_cases()
-cases_whole = cases_whole.loc[cases_whole["ziptext"]!="None"]
+#cases_whole = cases_whole.loc[cases_whole["ziptext"]!="None"]
 
 register_callbacks( app, sequences, cases_whole )
 
@@ -122,7 +122,6 @@ app.layout = html.Div( children=[
         html.H4( "PANGO Lineages" ),
         html.Div(
             dcc.Dropdown( id = 'lineage-drop',
-                          options=format_data.get_lineage_values( sequences ),
                           multi=False,
                           placeholder="All lineages"
                           ),
@@ -167,6 +166,7 @@ app.layout = html.Div( children=[
             config={"displayModeBar" : False},
             style={ "height"  : "25em" }
         ) ],
+        id="zip-div",
         className="pretty_container",
         style={ "marginLeft" : "auto",
                 "marginRight" : "auto" }
