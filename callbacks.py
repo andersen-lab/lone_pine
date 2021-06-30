@@ -179,7 +179,11 @@ def register_callbacks( app, sequences, cases_whole ):
     )
     def update_lineage_time_graph( url, window, zip_f, lineage, provider, scaleby, sequencer ):
         new_sequences = get_sequences( sequences, url, window, provider, sequencer, zip_f )
-        return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
+
+        if lineage == "all-voc":
+            return dashplot.plot_voc( new_sequences, scaleby )
+        else:
+            return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
 
     @app.callback(
         Output('zip-drop', 'value'),
@@ -199,6 +203,7 @@ def register_callbacks( app, sequences, cases_whole ):
             return None
         else:
             return clickData["points"][0]["x"]
+
 
     @app.callback(
         Output( "zip-div", "hidden" ),

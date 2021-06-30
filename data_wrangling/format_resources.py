@@ -14,6 +14,8 @@ def load_sequences( window=None ):
     # Convert to dates correctly.
     sequences["collection_date"] = pd.to_datetime( sequences["collection_date"] ).dt.tz_localize( None )
     sequences["collection_date"] = sequences["collection_date"].dt.normalize()
+    sequences["epiweek"] = pd.to_datetime( sequences["epiweek"] ).dt.tz_localize( None )
+    sequences["epiweek"] = sequences["epiweek"].dt.normalize()
 
     sequences["zipcode"] = sequences["zipcode"].apply( lambda x: f"{x:.0f}" )
 
@@ -157,12 +159,12 @@ def format_zip_summary( cases, seqs ):
 
 
 def get_lineage_values( seqs ):
-
-
     values = seqs["lineage"].dropna()
     values = values.sort_values().unique()
 
-    return_dict = [{"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
+
+    return_dict = [{"label" : "All variants of concern", "value" : "all-voc" },
+                   {"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
     for i in VOC:
         if i in values:
             return_dict.append( { "label" : i, "value" : i } )
