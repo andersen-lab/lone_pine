@@ -210,5 +210,4 @@ def register_callbacks( app, sequences, cases_whole ):
         Input( "url", "pathname" )
     )
     def enable_zip_graph( url ):
-        print( url=="/bajacalifornia" )
         return url=="/bajacalifornia"

@@ -225,7 +225,6 @@ def plot_voc( df, scaleby="fractions" ):
     included_voc = [i for i in VOC if i in df["lineage"].unique()]
 
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 )
-    print( plot_df.reset_index()["epiweek"].head() )
     voc_df = plot_df[included_voc]
     voc_df = voc_df.reindex( columns=voc_df.sum().sort_values( ascending=False ).index )
     other_df = plot_df[plot_df.columns.difference( included_voc )]
