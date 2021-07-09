@@ -14,6 +14,11 @@ def load_excite_providers() :
     return excite["source"].to_dict()
 
 
+def load_sdphl_sequences():
+    with open( "resources/sdphl_sequences.txt", "r" ) as seqs:
+        return [line.strip() for line in seqs]
+
+
 def download_search():
     """ Downloads the metadata from the SEARCH github repository. Removes entries with very wrong dates.
     Returns
@@ -54,6 +59,7 @@ def download_search():
 
     md["sequencer"] = "Andersen Lab"
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
+    md.loc[md["ID"].isin(load_sdphl_sequences() ),"sequencer"] = "SD County Public Health Laboratory"
 
     md["provider"] = md["originating_lab"]
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab", "provider"] = md["ID"].map( excite_providers )
@@ -63,7 +69,6 @@ def download_search():
                                              "San Diego Fire-Rescue Department" : "SD Fire-Rescue Department",
                                              "SASEA" : "UCSD Safer at School Early Action",
                                              "Instituto de Diagnostico y Referencia Epidemiologicos (InDRE)": "InDRE" } )
-    #print( md["provider"].value_counts() )
     md.loc[md["provider"].isna(),"provider"] = md["sequencer"]
 
     # Add pangolin lineage information

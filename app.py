@@ -60,7 +60,7 @@ app.layout = html.Div( children=[
                 dcc.Dropdown( id = 'sequencer-drop',
                               multi=False,
                               placeholder="All",
-                              style={"margin" : "1%"}
+                              style={"margin" : "1%", "font-size" : "85%" }
                               )
             ],
                 style={ "float" : "left", "width" : "25%" } ),

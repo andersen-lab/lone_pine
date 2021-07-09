@@ -4105,7 +4105,7 @@ SEARCH-7642,2021-01-31,92113.0,2021-01-31,137,Andersen Lab,Sharp Health,B.1.561,
 SEARCH-7643,2021-01-31,91945.0,2021-01-31,137,Andersen Lab,Sharp Health,B.1.561,San Diego
 SEARCH-7645,2021-01-31,91977.0,2021-01-31,137,Andersen Lab,Sharp Health,B.1.429,San Diego
 SEARCH-7646,2021-01-31,92113.0,2021-01-31,137,Andersen Lab,Sharp Health,B.1.561,San Diego
-SEARCH-7944,2021-03-11,nan,2021-03-07,98,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-7944,2021-03-11,nan,2021-03-07,98,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
 SEARCH-7648,2021-01-27,92113.0,2021-01-24,141,Andersen Lab,Sharp Health,B.1.561,San Diego
 SEARCH-7649,2021-01-27,91913.0,2021-01-24,141,Andersen Lab,Sharp Health,B.1.1.519,San Diego
 SEARCH-7650,2021-01-27,92026.0,2021-01-24,141,Andersen Lab,Sharp Health,B.1.429,San Diego
@@ -4328,12 +4328,12 @@ SEARCH-7936,2021-01-27,22130.0,2021-01-24,141,Andersen Lab,"Genomica Lab Molecul
 SEARCH-7937,2021-01-26,22245.0,2021-01-24,142,Andersen Lab,"Genomica Lab Molecular, México",B.1.427,Baja California
 SEARCH-7938,2021-02-03,22030.0,2021-01-31,134,Andersen Lab,"Genomica Lab Molecular, México",B.1.429,Baja California
 SEARCH-7939,2021-02-16,22000.0,2021-02-14,121,Andersen Lab,"Genomica Lab Molecular, México",B.1.429,Baja California
-SEARCH-7940,2020-12-15,nan,2020-12-13,184,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-7941,2021-01-15,92123.0,2021-01-10,153,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-7942,2021-03-09,91915.0,2021-03-07,100,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-7943,2021-03-09,92113.0,2021-03-07,100,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-7946,2021-03-12,92123.0,2021-03-07,97,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-7948,2021-03-12,92019.0,2021-03-07,97,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-7940,2020-12-15,nan,2020-12-13,184,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-7941,2021-01-15,92123.0,2021-01-10,153,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-7942,2021-03-09,91915.0,2021-03-07,100,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-7943,2021-03-09,92113.0,2021-03-07,100,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-7946,2021-03-12,92123.0,2021-03-07,97,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-7948,2021-03-12,92019.0,2021-03-07,97,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
 SEARCH-7951,2021-03-07,91902.0,2021-03-07,102,Andersen Lab,Sharp Health,B.1.429,San Diego
 SEARCH-7952,2021-03-08,92113.0,2021-03-07,101,Andersen Lab,Sharp Health,B.1,San Diego
 SEARCH-7953,2021-03-08,92113.0,2021-03-07,101,Andersen Lab,Sharp Health,B.1,San Diego
@@ -4890,64 +4890,64 @@ SEARCH-8628,2020-12-22,92123.0,2020-12-20,177,Andersen Lab,SD County Public Heal
 SEARCH-8629,2020-12-23,91963.0,2020-12-20,176,Andersen Lab,SD County Public Health Laboratory,B.1.1.331,San Diego
 SEARCH-8630,2020-12-23,92009.0,2020-12-20,176,Andersen Lab,SD County Public Health Laboratory,B.1.609,San Diego
 SEARCH-8631,2020-12-23,92027.0,2020-12-20,176,Andersen Lab,SD County Public Health Laboratory,B.1.565,San Diego
-SEARCH-9366,2021-03-22,91911.0,2021-03-21,87,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-9367,2021-03-21,nan,2021-03-21,88,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-9368,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9369,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9370,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9371,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9372,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9373,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9374,2021-03-02,91910.0,2021-02-28,107,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-9375,2021-03-18,92173.0,2021-03-14,91,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-9376,2021-03-18,92008.0,2021-03-14,91,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9377,2021-03-19,92108.0,2021-03-14,90,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9378,2021-03-19,92108.0,2021-03-14,90,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9379,2021-03-19,92108.0,2021-03-14,90,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9380,2021-03-19,92101.0,2021-03-14,90,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9381,2021-03-21,nan,2021-03-21,88,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-9382,2021-03-21,nan,2021-03-21,88,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9383,2021-03-21,nan,2021-03-21,88,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9384,2021-03-22,92108.0,2021-03-21,87,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9385,2021-03-22,92108.0,2021-03-21,87,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9386,2021-03-23,nan,2021-03-21,86,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9387,2021-03-24,nan,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9388,2021-03-24,nan,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9389,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9390,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9391,2021-03-24,92110.0,2021-03-21,85,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9392,2021-03-25,92040.0,2021-03-21,84,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-9393,2021-03-26,nan,2021-03-21,83,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9394,2021-03-26,nan,2021-03-21,83,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9395,2021-03-27,nan,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-9397,2021-03-27,nan,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-9398,2021-03-27,nan,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-9399,2021-03-27,nan,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,B.1.1.306,San Diego
-SEARCH-9400,2021-03-27,nan,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-9401,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9402,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9403,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9404,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9405,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-9406,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9407,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9408,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9409,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9410,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9411,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9412,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9413,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9414,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9415,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9416,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9417,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9418,2021-03-29,92108.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9419,2021-03-31,92108.0,2021-03-28,78,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9420,2021-03-31,92108.0,2021-03-28,78,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9421,2021-03-31,92108.0,2021-03-28,78,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
-SEARCH-9422,2021-04-05,91901.0,2021-04-04,73,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-9423,2021-04-05,92108.0,2021-04-04,73,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-9424,2021-04-06,92123.0,2021-04-04,72,Andersen Lab,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9366,2021-03-22,91911.0,2021-03-21,87,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-9367,2021-03-21,nan,2021-03-21,88,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-9368,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9369,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9370,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9371,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9372,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9373,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9374,2021-03-02,91910.0,2021-02-28,107,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-9375,2021-03-18,92173.0,2021-03-14,91,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-9376,2021-03-18,92008.0,2021-03-14,91,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9377,2021-03-19,92108.0,2021-03-14,90,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9378,2021-03-19,92108.0,2021-03-14,90,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9379,2021-03-19,92108.0,2021-03-14,90,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9380,2021-03-19,92101.0,2021-03-14,90,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9381,2021-03-21,nan,2021-03-21,88,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-9382,2021-03-21,nan,2021-03-21,88,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9383,2021-03-21,nan,2021-03-21,88,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9384,2021-03-22,92108.0,2021-03-21,87,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9385,2021-03-22,92108.0,2021-03-21,87,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9386,2021-03-23,nan,2021-03-21,86,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9387,2021-03-24,nan,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9388,2021-03-24,nan,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9389,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9390,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9391,2021-03-24,92110.0,2021-03-21,85,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9392,2021-03-25,92040.0,2021-03-21,84,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-9393,2021-03-26,nan,2021-03-21,83,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9394,2021-03-26,nan,2021-03-21,83,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9395,2021-03-27,nan,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-9397,2021-03-27,nan,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-9398,2021-03-27,nan,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-9399,2021-03-27,nan,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.306,San Diego
+SEARCH-9400,2021-03-27,nan,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-9401,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9402,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9403,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9404,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9405,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-9406,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9407,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9408,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9409,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9410,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9411,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9412,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9413,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9414,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9415,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9416,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9417,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9418,2021-03-29,92108.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9419,2021-03-31,92108.0,2021-03-28,78,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9420,2021-03-31,92108.0,2021-03-28,78,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9421,2021-03-31,92108.0,2021-03-28,78,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
+SEARCH-9422,2021-04-05,91901.0,2021-04-04,73,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-9423,2021-04-05,92108.0,2021-04-04,73,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-9424,2021-04-06,92123.0,2021-04-04,72,SD County Public Health Laboratory,SD County Public Health Laboratory,P.2,San Diego
 SEARCH-8632,2020-12-15,92105.0,2020-12-13,184,Andersen Lab,Scripps Health,B.1.400,San Diego
 SEARCH-8633,2020-12-11,92069.0,2020-12-06,188,Andersen Lab,Scripps Health,B.1.243,San Diego
 SEARCH-8634,2020-12-11,92081.0,2020-12-06,188,Andersen Lab,Scripps Health,B.1.427,San Diego
@@ -12608,63 +12608,63 @@ SEARCH-101618,2020-12-31,91910.0,2020-12-27,168,Andersen Lab,SD County Public He
 SEARCH-101619,2020-12-31,92020.0,2020-12-27,168,Andersen Lab,SD County Public Health Laboratory,B.1.1.222,San Diego
 SEARCH-101621,2021-01-01,nan,2020-12-27,167,Andersen Lab,SD County Public Health Laboratory,B.1.551,San Diego
 SEARCH-101622,2021-01-04,nan,2021-01-03,164,Andersen Lab,SD County Public Health Laboratory,B.1.2,San Diego
-SEARCH-101623,2021-04-22,92154.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-101624,2021-04-20,91945.0,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101625,2021-04-23,91977.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101626,2021-04-23,91977.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-101627,2021-04-22,92021.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101628,2021-04-20,91977.0,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101629,2021-04-22,92113.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101630,2021-04-20,91977.0,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-101631,2021-04-19,91950.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101632,2021-04-19,92126.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101633,2021-04-22,92021.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101634,2021-04-22,92021.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101635,2021-04-22,91977.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101636,2021-04-23,91977.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101637,2021-04-21,92126.0,2021-04-18,57,Andersen Lab,SD County Public Health Laboratory,B.1.526,San Diego
-SEARCH-101638,2021-04-23,91977.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101639,2021-04-20,91977.0,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-101640,2021-04-22,92021.0,2021-04-18,56,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101641,2021-04-21,nan,2021-04-18,57,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101642,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,B.1.1.222,San Diego
-SEARCH-101643,2021-04-24,nan,2021-04-18,54,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101644,2021-04-27,84020.0,2021-04-25,51,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101645,2021-04-29,92101.0,2021-04-25,49,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101646,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101647,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-101648,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101649,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101650,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101651,2021-04-23,nan,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101652,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-101653,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101654,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101655,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-101656,2021-04-25,nan,2021-04-25,53,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101657,2021-04-05,92071.0,2021-04-04,73,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101658,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101659,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101660,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101661,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,B.1.526,San Diego
-SEARCH-101662,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101663,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101664,2021-05-02,nan,2021-05-02,46,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-101665,2021-04-19,92101.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101666,2021-04-19,92101.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101667,2021-04-19,92101.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101668,2021-04-19,92101.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101669,2021-04-19,92101.0,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-101670,2021-04-29,92101.0,2021-04-25,49,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-101671,2021-04-26,nan,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101672,2021-04-26,nan,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101673,2021-04-27,nan,2021-04-25,51,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101674,2021-04-27,nan,2021-04-25,51,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101675,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101676,2021-04-28,nan,2021-04-25,50,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101677,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-101678,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-101679,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101623,2021-04-22,92154.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-101624,2021-04-20,91945.0,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101625,2021-04-23,91977.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101626,2021-04-23,91977.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-101627,2021-04-22,92021.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101628,2021-04-20,91977.0,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101629,2021-04-22,92113.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101630,2021-04-20,91977.0,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-101631,2021-04-19,91950.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101632,2021-04-19,92126.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101633,2021-04-22,92021.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101634,2021-04-22,92021.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101635,2021-04-22,91977.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101636,2021-04-23,91977.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101637,2021-04-21,92126.0,2021-04-18,57,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.526,San Diego
+SEARCH-101638,2021-04-23,91977.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101639,2021-04-20,91977.0,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-101640,2021-04-22,92021.0,2021-04-18,56,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101641,2021-04-21,nan,2021-04-18,57,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101642,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.222,San Diego
+SEARCH-101643,2021-04-24,nan,2021-04-18,54,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101644,2021-04-27,84020.0,2021-04-25,51,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101645,2021-04-29,92101.0,2021-04-25,49,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101646,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101647,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-101648,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101649,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101650,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101651,2021-04-23,nan,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101652,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-101653,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101654,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101655,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-101656,2021-04-25,nan,2021-04-25,53,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101657,2021-04-05,92071.0,2021-04-04,73,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101658,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101659,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101660,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101661,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.526,San Diego
+SEARCH-101662,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101663,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101664,2021-05-02,nan,2021-05-02,46,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-101665,2021-04-19,92101.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101666,2021-04-19,92101.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101667,2021-04-19,92101.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101668,2021-04-19,92101.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101669,2021-04-19,92101.0,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-101670,2021-04-29,92101.0,2021-04-25,49,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-101671,2021-04-26,nan,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101672,2021-04-26,nan,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101673,2021-04-27,nan,2021-04-25,51,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101674,2021-04-27,nan,2021-04-25,51,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101675,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101676,2021-04-28,nan,2021-04-25,50,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101677,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-101678,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-101679,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
 SEARCH-101681,2021-01-04,91910.0,2021-01-03,164,Andersen Lab,SD County Public Health Laboratory,B.1.2,San Diego
 SEARCH-101682,2021-01-04,nan,2021-01-03,164,Andersen Lab,SD County Public Health Laboratory,B.1.2,San Diego
 SEARCH-101683,2020-07-28,91911.0,2020-07-26,324,Andersen Lab,SD County Public Health Laboratory,B.1.400,San Diego
@@ -12957,112 +12957,112 @@ SEARCH-102203,2021-01-05,92082.0,2021-01-03,163,Andersen Lab,SD County Public He
 SEARCH-102205,2021-01-06,91913.0,2021-01-03,162,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
 SEARCH-102207,2020-11-18,92173.0,2020-11-15,211,Andersen Lab,SD County Public Health Laboratory,B.1.1.222,San Diego
 SEARCH-102210,2021-01-04,92024.0,2021-01-03,164,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-102213,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102214,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,A.2.5.1,San Diego
-SEARCH-102215,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102216,2021-04-30,nan,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-102217,2021-04-30,92078.0,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102218,2021-05-01,nan,2021-04-25,47,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-102219,2021-05-03,91915.0,2021-05-02,45,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102220,2021-05-04,nan,2021-05-02,44,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102222,2021-04-30,92173.0,2021-04-25,48,Andersen Lab,SD County Public Health Laboratory,B.1.623,San Diego
-SEARCH-102223,2021-05-03,92108.0,2021-05-02,45,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102224,2020-12-14,91950.0,2020-12-13,185,Andersen Lab,SD County Public Health Laboratory,B.1.243,San Diego
-SEARCH-102225,2021-04-20,nan,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102226,2021-04-19,nan,2021-04-18,59,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102227,2021-04-08,nan,2021-04-04,70,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102228,2021-04-15,nan,2021-04-11,63,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102229,2021-04-13,92154.0,2021-04-11,65,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102230,2021-04-20,92154.0,2021-04-18,58,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102231,2021-04-21,92154.0,2021-04-18,57,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102232,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102233,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102234,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102235,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102236,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102237,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102238,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102239,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102240,2021-04-23,92101.0,2021-04-18,55,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102241,2021-04-26,91911.0,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102242,2021-04-26,92108.0,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102243,2021-04-26,92108.0,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,P.1.2,San Diego
-SEARCH-102244,2021-04-26,92108.0,2021-04-25,52,Andersen Lab,SD County Public Health Laboratory,B.1.621,San Diego
-SEARCH-102245,2020-12-29,92021.0,2020-12-27,170,Andersen Lab,SD County Public Health Laboratory,B.1.401,San Diego
-SEARCH-102246,2020-12-22,92123.0,2020-12-20,177,Andersen Lab,SD County Public Health Laboratory,B.1.2,San Diego
-SEARCH-102247,2021-01-11,91942.0,2021-01-10,157,Andersen Lab,SD County Public Health Laboratory,B.1.429,San Diego
-SEARCH-102248,2020-11-17,92102.0,2020-11-15,212,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102249,2020-11-17,91910.0,2020-11-15,212,Andersen Lab,SD County Public Health Laboratory,B.1.551,San Diego
-SEARCH-102250,2020-11-17,92113.0,2020-11-15,212,Andersen Lab,SD County Public Health Laboratory,B.1.1.316,San Diego
-SEARCH-102251,2020-11-17,92114.0,2020-11-15,212,Andersen Lab,SD County Public Health Laboratory,B.1.243,San Diego
-SEARCH-102252,2020-11-17,91950.0,2020-11-15,212,Andersen Lab,SD County Public Health Laboratory,B.1.243,San Diego
-SEARCH-102253,2021-01-06,91951.0,2021-01-03,162,Andersen Lab,SD County Public Health Laboratory,B.1.232,San Diego
-SEARCH-102254,2021-01-06,92113.0,2021-01-03,162,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102255,2021-05-15,nan,2021-05-09,33,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-102256,2021-03-29,92127.0,2021-03-28,80,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102257,2021-03-27,92124.0,2021-03-21,82,Andersen Lab,SD County Public Health Laboratory,A.2.5.2,San Diego
-SEARCH-102258,2020-12-16,92158.0,2020-12-13,183,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102259,2021-05-04,nan,2021-05-02,44,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102260,2021-05-05,nan,2021-05-02,43,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102261,2021-05-06,nan,2021-05-02,42,Andersen Lab,SD County Public Health Laboratory,B.1.561,San Diego
-SEARCH-102262,2021-05-06,nan,2021-05-02,42,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102263,2021-05-06,nan,2021-05-02,42,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102264,2021-05-06,nan,2021-05-02,42,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102265,2021-05-06,92105.0,2021-05-02,42,Andersen Lab,SD County Public Health Laboratory,B.1.617.2,San Diego
-SEARCH-102266,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102267,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-102268,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102269,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102270,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102271,2021-05-07,nan,2021-05-02,41,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-102272,2021-05-08,nan,2021-05-02,40,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102273,2021-05-08,nan,2021-05-02,40,Andersen Lab,SD County Public Health Laboratory,A.2.5.2,San Diego
-SEARCH-102274,2021-05-08,nan,2021-05-02,40,Andersen Lab,SD County Public Health Laboratory,A.2.5,San Diego
-SEARCH-102275,2021-05-08,nan,2021-05-02,40,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102276,2021-05-09,nan,2021-05-09,39,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102277,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1.526,San Diego
-SEARCH-102278,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-102279,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102280,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-102281,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1.427,San Diego
-SEARCH-102282,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102283,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102284,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102285,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-102286,2021-05-10,92173.0,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-102287,2021-05-10,nan,2021-05-09,38,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102288,2021-05-12,nan,2021-05-09,36,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102289,2021-05-12,nan,2021-05-09,36,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102290,2021-05-12,nan,2021-05-09,36,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102291,2021-05-12,nan,2021-05-09,36,Andersen Lab,SD County Public Health Laboratory,C.37,San Diego
-SEARCH-102292,2021-05-12,nan,2021-05-09,36,Andersen Lab,SD County Public Health Laboratory,C.37,San Diego
-SEARCH-102293,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102294,2021-05-11,nan,2021-05-09,37,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-102295,2021-05-13,nan,2021-05-09,35,Andersen Lab,SD County Public Health Laboratory,B.1.1.519,San Diego
-SEARCH-102296,2021-05-14,nan,2021-05-09,34,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102297,2021-05-14,nan,2021-05-09,34,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102298,2021-05-14,nan,2021-05-09,34,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102299,2021-05-17,nan,2021-05-16,31,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102300,2021-05-17,nan,2021-05-16,31,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102301,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102302,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102303,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102304,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102305,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,P.1,San Diego
-SEARCH-102306,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102307,2021-05-18,nan,2021-05-16,30,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
-SEARCH-102308,2021-05-20,nan,2021-05-16,28,Andersen Lab,SD County Public Health Laboratory,B.1.241,San Diego
-SEARCH-102309,2021-05-21,nan,2021-05-16,27,Andersen Lab,SD County Public Health Laboratory,B.1.240,San Diego
-SEARCH-102310,2021-05-21,nan,2021-05-16,27,Andersen Lab,SD County Public Health Laboratory,B.1.243,San Diego
-SEARCH-102311,2021-05-25,nan,2021-05-23,23,Andersen Lab,SD County Public Health Laboratory,B.1.239,San Diego
-SEARCH-102312,2021-05-22,92154.0,2021-05-16,26,Andersen Lab,SD County Public Health Laboratory,B.1,San Diego
-SEARCH-102313,2021-05-24,92107.0,2021-05-23,24,Andersen Lab,SD County Public Health Laboratory,B.1.595,San Diego
-SEARCH-102314,2021-05-19,92020.0,2021-05-16,29,Andersen Lab,SD County Public Health Laboratory,B.1.556,San Diego
-SEARCH-102315,2021-05-20,92115.0,2021-05-16,28,Andersen Lab,SD County Public Health Laboratory,B.1.509,San Diego
-SEARCH-102316,2021-05-21,92104.0,2021-05-16,27,Andersen Lab,SD County Public Health Laboratory,B.1.240,San Diego
-SEARCH-102317,2021-05-24,92118.0,2021-05-23,24,Andersen Lab,SD County Public Health Laboratory,B.1.369,San Diego
-SEARCH-102318,2021-05-24,92118.0,2021-05-23,24,Andersen Lab,SD County Public Health Laboratory,B.1.2,San Diego
-SEARCH-102319,2021-05-13,91941.0,2021-05-09,35,Andersen Lab,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102213,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102214,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5.1,San Diego
+SEARCH-102215,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102216,2021-04-30,nan,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-102217,2021-04-30,92078.0,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102218,2021-05-01,nan,2021-04-25,47,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-102219,2021-05-03,91915.0,2021-05-02,45,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102220,2021-05-04,nan,2021-05-02,44,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102222,2021-04-30,92173.0,2021-04-25,48,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.623,San Diego
+SEARCH-102223,2021-05-03,92108.0,2021-05-02,45,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102224,2020-12-14,91950.0,2020-12-13,185,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.243,San Diego
+SEARCH-102225,2021-04-20,nan,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102226,2021-04-19,nan,2021-04-18,59,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102227,2021-04-08,nan,2021-04-04,70,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102228,2021-04-15,nan,2021-04-11,63,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102229,2021-04-13,92154.0,2021-04-11,65,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102230,2021-04-20,92154.0,2021-04-18,58,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102231,2021-04-21,92154.0,2021-04-18,57,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102232,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102233,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102234,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102235,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102236,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102237,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102238,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102239,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102240,2021-04-23,92101.0,2021-04-18,55,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102241,2021-04-26,91911.0,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102242,2021-04-26,92108.0,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102243,2021-04-26,92108.0,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1.2,San Diego
+SEARCH-102244,2021-04-26,92108.0,2021-04-25,52,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.621,San Diego
+SEARCH-102245,2020-12-29,92021.0,2020-12-27,170,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.401,San Diego
+SEARCH-102246,2020-12-22,92123.0,2020-12-20,177,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.2,San Diego
+SEARCH-102247,2021-01-11,91942.0,2021-01-10,157,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.429,San Diego
+SEARCH-102248,2020-11-17,92102.0,2020-11-15,212,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102249,2020-11-17,91910.0,2020-11-15,212,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.551,San Diego
+SEARCH-102250,2020-11-17,92113.0,2020-11-15,212,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.316,San Diego
+SEARCH-102251,2020-11-17,92114.0,2020-11-15,212,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.243,San Diego
+SEARCH-102252,2020-11-17,91950.0,2020-11-15,212,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.243,San Diego
+SEARCH-102253,2021-01-06,91951.0,2021-01-03,162,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.232,San Diego
+SEARCH-102254,2021-01-06,92113.0,2021-01-03,162,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102255,2021-05-15,nan,2021-05-09,33,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-102256,2021-03-29,92127.0,2021-03-28,80,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102257,2021-03-27,92124.0,2021-03-21,82,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5.2,San Diego
+SEARCH-102258,2020-12-16,92158.0,2020-12-13,183,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102259,2021-05-04,nan,2021-05-02,44,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102260,2021-05-05,nan,2021-05-02,43,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102261,2021-05-06,nan,2021-05-02,42,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.561,San Diego
+SEARCH-102262,2021-05-06,nan,2021-05-02,42,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102263,2021-05-06,nan,2021-05-02,42,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102264,2021-05-06,nan,2021-05-02,42,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102265,2021-05-06,92105.0,2021-05-02,42,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.617.2,San Diego
+SEARCH-102266,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102267,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-102268,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102269,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102270,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102271,2021-05-07,nan,2021-05-02,41,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-102272,2021-05-08,nan,2021-05-02,40,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102273,2021-05-08,nan,2021-05-02,40,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5.2,San Diego
+SEARCH-102274,2021-05-08,nan,2021-05-02,40,SD County Public Health Laboratory,SD County Public Health Laboratory,A.2.5,San Diego
+SEARCH-102275,2021-05-08,nan,2021-05-02,40,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102276,2021-05-09,nan,2021-05-09,39,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102277,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.526,San Diego
+SEARCH-102278,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-102279,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102280,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-102281,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.427,San Diego
+SEARCH-102282,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102283,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102284,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102285,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-102286,2021-05-10,92173.0,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-102287,2021-05-10,nan,2021-05-09,38,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102288,2021-05-12,nan,2021-05-09,36,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102289,2021-05-12,nan,2021-05-09,36,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102290,2021-05-12,nan,2021-05-09,36,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102291,2021-05-12,nan,2021-05-09,36,SD County Public Health Laboratory,SD County Public Health Laboratory,C.37,San Diego
+SEARCH-102292,2021-05-12,nan,2021-05-09,36,SD County Public Health Laboratory,SD County Public Health Laboratory,C.37,San Diego
+SEARCH-102293,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102294,2021-05-11,nan,2021-05-09,37,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-102295,2021-05-13,nan,2021-05-09,35,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.519,San Diego
+SEARCH-102296,2021-05-14,nan,2021-05-09,34,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102297,2021-05-14,nan,2021-05-09,34,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102298,2021-05-14,nan,2021-05-09,34,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102299,2021-05-17,nan,2021-05-16,31,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102300,2021-05-17,nan,2021-05-16,31,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102301,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102302,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102303,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102304,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102305,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,P.1,San Diego
+SEARCH-102306,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102307,2021-05-18,nan,2021-05-16,30,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
+SEARCH-102308,2021-05-20,nan,2021-05-16,28,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.241,San Diego
+SEARCH-102309,2021-05-21,nan,2021-05-16,27,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.240,San Diego
+SEARCH-102310,2021-05-21,nan,2021-05-16,27,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.243,San Diego
+SEARCH-102311,2021-05-25,nan,2021-05-23,23,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.239,San Diego
+SEARCH-102312,2021-05-22,92154.0,2021-05-16,26,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1,San Diego
+SEARCH-102313,2021-05-24,92107.0,2021-05-23,24,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.595,San Diego
+SEARCH-102314,2021-05-19,92020.0,2021-05-16,29,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.556,San Diego
+SEARCH-102315,2021-05-20,92115.0,2021-05-16,28,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.509,San Diego
+SEARCH-102316,2021-05-21,92104.0,2021-05-16,27,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.240,San Diego
+SEARCH-102317,2021-05-24,92118.0,2021-05-23,24,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.369,San Diego
+SEARCH-102318,2021-05-24,92118.0,2021-05-23,24,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.2,San Diego
+SEARCH-102319,2021-05-13,91941.0,2021-05-09,35,SD County Public Health Laboratory,SD County Public Health Laboratory,B.1.1.7,San Diego
 SEARCH-102320,2021-01-19,91913.0,2021-01-17,149,Andersen Lab,Sharp Health,B.1,San Diego
 SEARCH-102321,2021-01-19,91914.0,2021-01-17,149,Andersen Lab,Sharp Health,B.1.427,San Diego
 SEARCH-102322,2021-01-19,92119.0,2021-01-17,149,Andersen Lab,Sharp Health,B.1.1,San Diego
