@@ -74,8 +74,16 @@ def download_search():
     # Add pangolin lineage information
     pango_loc = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/lineage_report.csv"
     pango = pd.read_csv( pango_loc, usecols=["taxon", "lineage"] )
+    pango["num"] = pango["taxon"].str.extract( "SEARCH-([0-9]+)" )
+    pango.loc[pango["num"].isna(),"num"] = pango["taxon"]
+    pango = pango[["num", "lineage"]]
 
-    md = md.merge( pango, left_on="ID", right_on="taxon", how="left" )
+
+    md["num"] = md["ID"].str.extract( "SEARCH-([0-9]+)" )
+    md.loc[md["num"].isna(),"num"] = md["ID"]
+
+
+    md = md.merge( pango, left_on="num", right_on="num", how="left", validate="one_to_one" )
 
     md = md[["ID","collection_date", "zipcode", "epiweek", "days_past", "sequencer", "provider", "lineage", "state"]]
 
@@ -193,8 +201,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
