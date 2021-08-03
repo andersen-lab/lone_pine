@@ -162,7 +162,6 @@ def get_lineage_values( seqs ):
     values = seqs["lineage"].dropna()
     values = values.sort_values().unique()
 
-
     return_dict = [{"label" : "All variants of concern", "value" : "all-voc" },
                    {"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
     for i in VOC:

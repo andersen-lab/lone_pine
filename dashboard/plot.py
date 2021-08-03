@@ -42,6 +42,9 @@ def get_date_limits( series ):
     # Max
     year = series.max().year
     month = series.max().month + 1
+    if month == 13:
+        month = 1
+        year += 1
     day = 1
     max_lim = pd.to_datetime( f"{year}-{month}-{day}" )
 
@@ -53,6 +56,7 @@ def get_date_limits( series ):
     return [min_lim, max_lim]
 
 def plot_daily_cases_seqs( df ):
+    df.to_csv( "/Users/natem/Downloads/temp_presentation/daily_cases.csv" )
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
                                  mode='markers',
@@ -72,6 +76,7 @@ def plot_daily_cases_seqs( df ):
     return fig
 
 def plot_cummulative_cases_seqs( df ):
+    df.to_csv( "/Users/natem/Downloads/temp_presentation/cum_cases.csv" )
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["cases"],
                                mode='lines',
@@ -96,6 +101,8 @@ def plot_cummulative_sampling_fraction( df ):
     plot_df = plot_df.loc[plot_df["new_sequences"]>0]
     plot_df["fraction"] = plot_df["new_sequences"] / plot_df["new_cases"]
     plot_df = plot_df.reset_index()
+
+    plot_df.to_csv( "/Users/natem/Downloads/temp_presentation/sampling_fraction.csv" )
 
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=plot_df["epiweek"], y=plot_df["fraction"],
@@ -151,6 +158,9 @@ def plot_choropleth( sf, colorby="fraction" ):
 
 def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
 
+    #print( df.head() )
+    #print( df.columns )
+
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="ID", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
 
@@ -163,7 +173,6 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
     max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
 
     fig = go.Figure()
-
     if lineage is not None:
         focus_df = plot_df[lineage]
         plot_df = plot_df.drop( columns=lineage )
@@ -182,6 +191,8 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
     fig.update_layout(barmode='stack')
     fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0,max_lim] )
+
+    print( get_date_limits( df["collection_date"] ) )
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig )
 
