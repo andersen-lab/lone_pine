@@ -56,7 +56,7 @@ def get_date_limits( series ):
     return [min_lim, max_lim]
 
 def plot_daily_cases_seqs( df ):
-    df.to_csv( "/Users/natem/Downloads/temp_presentation/daily_cases.csv" )
+    #df.to_csv( "/Users/natem/Downloads/temp_presentation/daily_cases.csv" )
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
                                  mode='markers',
@@ -76,7 +76,7 @@ def plot_daily_cases_seqs( df ):
     return fig
 
 def plot_cummulative_cases_seqs( df ):
-    df.to_csv( "/Users/natem/Downloads/temp_presentation/cum_cases.csv" )
+    #df.to_csv( "/Users/natem/Downloads/temp_presentation/cum_cases.csv" )
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=df["date"], y=df["cases"],
                                mode='lines',
@@ -102,7 +102,7 @@ def plot_cummulative_sampling_fraction( df ):
     plot_df["fraction"] = plot_df["new_sequences"] / plot_df["new_cases"]
     plot_df = plot_df.reset_index()
 
-    plot_df.to_csv( "/Users/natem/Downloads/temp_presentation/sampling_fraction.csv" )
+    #plot_df.to_csv( "/Users/natem/Downloads/temp_presentation/sampling_fraction.csv" )
 
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=plot_df["epiweek"], y=plot_df["fraction"],
