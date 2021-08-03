@@ -29,6 +29,7 @@ def download_search():
 
     search_md = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv"
     md = pd.read_csv( search_md, usecols=["ID", "collection_date", "location", "authors", "originating_lab", "zipcode"] )
+    md = md.loc[md["ID"]!="SEARCH-104076"]
     md = md.loc[(md["location"]=="USA/California/San Diego")|(md["location"].str.startswith( "Mexico/Baja California" ))]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
