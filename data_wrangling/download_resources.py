@@ -13,11 +13,9 @@ def load_excite_providers() :
     excite = excite.set_index( "search_id" )
     return excite["source"].to_dict()
 
-
-def load_sdphl_sequences():
-    with open( "resources/sdphl_sequences.txt", "r" ) as seqs:
-        return [line.strip() for line in seqs]
-
+def load_file_as_list( loc ):
+    with open( loc, "r" ) as open_file:
+        return [line.strip() for line in open_file]
 
 def download_search():
     """ Downloads the metadata from the SEARCH github repository. Removes entries with very wrong dates.
@@ -29,7 +27,13 @@ def download_search():
 
     search_md = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv"
     md = pd.read_csv( search_md, usecols=["ID", "collection_date", "location", "authors", "originating_lab", "zipcode"] )
+
+    # Filter out incorrect samples or wastewater
     md = md.loc[md["ID"]!="SEARCH-104076"]
+    print( md.shape )
+    md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
+    print( md.shape )
+
     md = md.loc[(md["location"]=="USA/California/San Diego")|(md["location"].str.startswith( "Mexico/Baja California" ))]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
@@ -60,7 +64,7 @@ def download_search():
 
     md["sequencer"] = "Andersen Lab"
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
-    md.loc[md["ID"].isin(load_sdphl_sequences() ),"sequencer"] = "SD County Public Health Laboratory"
+    md.loc[md["ID"].isin( load_file_as_list( "resources/sdphl_sequences.txt" ) ),"sequencer"] = "SD County Public Health Laboratory"
 
     md["provider"] = md["originating_lab"]
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab", "provider"] = md["ID"].map( excite_providers )
@@ -202,8 +206,8 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
