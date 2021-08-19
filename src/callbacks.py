@@ -1,7 +1,6 @@
-#Input('url', 'pathname')
-import dashboard.plot as dashplot
+import src.plot as dashplot
+import src.format_resources as format_data
 from dash.dependencies import Input, Output
-import data_wrangling.format_resources as format_data
 
 def register_url_sequences( df, url ):
     if url == "/bajacalifornia":

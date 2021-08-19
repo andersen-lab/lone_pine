@@ -1,13 +1,12 @@
-import os
-
 import geopandas as gpd
 import numpy as np
 import pandas as pd
 import dash_html_components as html
+from src.variants import VOC, VOI
 
-VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
-VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
-      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
+#VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
+#VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
+#      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
@@ -36,10 +35,10 @@ def load_cases( window = None ):
         cases = cases.loc[cases["days_past"] <= window].copy()
     return cases
 
-def format_cases_timeseries( cases_df, window=None ):
-    return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
+#def format_cases_timeseries( cases_df, window=None ):
+#    return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
 
-def format_cases_total( cases_df, window=None ):
+def format_cases_total( cases_df ):
     return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).first()
     return_df = return_df.reset_index()
     return return_df.drop( columns=["days_past"] )
@@ -157,20 +156,18 @@ def format_zip_summary( cases, seqs ):
 
     return cumulative_seqs
 
-
-
 def get_lineage_values( seqs ):
     values = seqs["lineage"].dropna()
     values = values.sort_values().unique()
 
     return_dict = [{"label" : "All variants of concern", "value" : "all-voc" },
                    {"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
-    for i in VOC:
+    for i in sorted( VOC.keys() ):
         if i in values:
             return_dict.append( { "label" : i, "value" : i } )
 
     return_dict.append( {"label" : " - Variants of interest" , "value" : "None", "disabled" : True} )
-    for i in VOI:
+    for i in sorted( VOI.keys() ):
         if i in values:
             return_dict.append( { "label" : i, "value" : i } )
 

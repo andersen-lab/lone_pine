@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import dash_core_components as dcc
 import dash_html_components as html
-import data_wrangling.format_resources as format_data
+import src.format_resources as format_data
 import dash
-from callbacks import register_callbacks
+from src.callbacks import register_callbacks
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )

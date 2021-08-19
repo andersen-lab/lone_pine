@@ -3,21 +3,20 @@ import plotly.express as px
 import numpy as np
 import pandas as pd
 from epiweeks import Week
-
-VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
-VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
-      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
+from src.variants import VOC, VOI
 
 
-def _add_date_formating( fig, min, max ):
-    min_date = pd.to_datetime( f"{min.year}-{min.month}-01" )
-    max += pd.DateOffset( months=1 )
-    max_date = pd.to_datetime( f"{max.year}-{max.month}-01" )
+#VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
+#VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
+#      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
 
-    print( f"{min_date} - {max_date}" )
+
+def _add_date_formating( fig, minimum, maximum ):
+    min_date = pd.to_datetime( f"{minimum.year}-{minimum.month}-01" )
+    maximum += pd.DateOffset( months=1 )
+    max_date = pd.to_datetime( f"{maximum.year}-{maximum.month}-01" )
 
     intervals = pd.interval_range(start=pd.to_datetime( min_date ), end=pd.to_datetime( max_date ), freq="M" )
-
 
     for i in intervals[::2]:
         fig.add_vrect( x0=i.left, x1=i.right, fillcolor="#EFEFEF", opacity=1, layer="below" )
@@ -64,7 +63,7 @@ def plot_daily_cases_seqs( df ):
                                name='Daily Sequences',
                                marker={ "color" : "#DFB377"} ) )
 
-    _add_date_formating( fig, min=df["date"].min(), max=df["date"].max() )
+    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max() )
     min_lim = np.floor( np.log10( 0.75 ) )
     max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
@@ -84,7 +83,7 @@ def plot_cummulative_cases_seqs( df ):
                              name='Sequenced',
                              line={ "color" : "#DFB377", "width" : 4 } ) )
 
-    _add_date_formating( fig, min=df["date"].min(), max=df["date"].max() )
+    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max() )
     min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
@@ -107,15 +106,12 @@ def plot_cummulative_sampling_fraction( df ):
                                  name='Fraction',
                                  line={ "color" : '#767676', "width" : 4 } ) )
 
-    _add_date_formating( fig, min=plot_df["epiweek"].min(), max=plot_df["epiweek"].max() )
+    _add_date_formating( fig, minimum=plot_df["epiweek"].min(), maximum=plot_df["epiweek"].max() )
 
     fig.update_layout( yaxis_tickformat='.1%' )
 
-    cleaned_array = np.log10( plot_df.loc[plot_df["fraction"] > 0, "fraction"] )
-    cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
-
-    min_lim = np.floor( cleaned_array.min() )
-    max_lim = np.ceil( cleaned_array.max() )
+    #cleaned_array = np.log10( plot_df.loc[plot_df["fraction"] > 0, "fraction"] )
+    #cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
 
     fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>" )
     fig.update_xaxes( range=get_date_limits( plot_df["epiweek"] ) )
@@ -154,10 +150,6 @@ def plot_choropleth( sf, colorby="fraction" ):
     return fig
 
 def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
-
-    #print( df.head() )
-    #print( df.columns )
-
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="ID", aggfunc="count" )
     plot_df = plot_df.fillna( 0 )
 
@@ -182,17 +174,58 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
         plot_df.columns = ["epiweek", "all"]
         plot_df = plot_df.set_index( "epiweek" )
 
-    if scaleby == "fraction":
-        fig.update_layout( yaxis_tickformat='.1%' )
-
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
     fig.update_layout(barmode='stack')
     fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0,max_lim] )
 
-    #print( get_date_limits( df["collection_date"] ) )
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
-    _add_date_formating( fig, min=plot_df.index.min(), max=plot_df.index.max() )
+    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
 
+    if scaleby == "fraction":
+        fig.update_layout( yaxis_tickformat='.1%',
+                           legend=dict( bgcolor="white" ) )
+
+    return fig
+
+def plot_voc( df, scaleby="fractions" ):
+    plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 ).T
+    plot_df["VOC"] = plot_df.index.map( VOC )
+    plot_df.loc[plot_df["VOC"].isna(),"VOC"] = "Other"
+    plot_df = plot_df.groupby( "VOC" ).agg( "sum" ).T
+
+    order = plot_df.sum().sort_values( ascending=False ).index.to_list()
+    order.remove( "Other" )
+    order.append( "Other" )
+
+    plot_df = plot_df.reindex( columns=order )
+
+    yaxis_label = "Sequences"
+    if scaleby == "fraction":
+        plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1 )
+        yaxis_label += " (%)"
+
+    max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
+
+    fig = go.Figure()
+    for i, j in enumerate( plot_df ):
+        if j == "Other":
+            color = "#767676"
+        else:
+            color = px.colors.colorbrewer.Set1[i]
+
+        fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
+
+
+
+    fig.update_layout( barmode='stack' )
+    fig.update_yaxes( showgrid=False, title=f"<b>Sequences (%)</b>", range=[0, max_lim] )
+    fig.update_xaxes( range=get_date_limits( plot_df.index ) )
+    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
+    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
+
+    if scaleby == "fraction":
+        fig.update_layout( yaxis_tickformat='.1%',
+                           legend=dict( bgcolor="white" ) )
     return fig
 
 def plot_lineages( df ):
@@ -201,9 +234,9 @@ def plot_lineages( df ):
 
     colors = list()
     for i in plot_df["index"]:
-        if i in VOI:
+        if i in sorted( VOI.keys() ):
             colors.append( "#4977CE" )
-        elif i in VOC:
+        elif i in sorted( VOC.keys() ):
             colors.append( "#AC6D41" )
         else:
             colors.append( "#767676" )
@@ -228,45 +261,6 @@ def plot_lineages( df ):
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
     return fig
-
-def plot_voc( df, scaleby="fractions" ):
-    included_voc = [i for i in VOC if i in df["lineage"].unique()]
-
-    plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 )
-    voc_df = plot_df[included_voc]
-    voc_df = voc_df.reindex( columns=voc_df.sum().sort_values( ascending=False ).index )
-    other_df = plot_df[plot_df.columns.difference( included_voc )]
-    other_df = other_df.sum( axis=1 )
-    other_df.name = "Other"
-    plot_df = voc_df.merge( other_df, left_index=True, right_index=True )
-
-    yaxis_label = "Sequences"
-    if scaleby == "fraction":
-        plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1 )
-        yaxis_label += " (%)"
-
-    max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
-
-    fig = go.Figure()
-    for i, j in enumerate( plot_df ):
-        if j == "Other":
-            color = "#767676"
-        else:
-            color = px.colors.colorbrewer.Set1[i]
-
-        fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
-
-    if scaleby == "fraction":
-        fig.update_layout( yaxis_tickformat='.1%' )
-
-    fig.update_layout( barmode='stack' )
-    fig.update_yaxes( showgrid=False, title=f"<b>Sequences (%)</b>", range=[0, max_lim] )
-    fig.update_xaxes( range=get_date_limits( plot_df.index ) )
-    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
-    _add_date_formating( fig, min=plot_df.index.min(), max=plot_df.index.max() )
-
-    return fig
-
 
 def plot_zips( df, colorby="sequences" ):
     fig = go.Figure()
