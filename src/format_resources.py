@@ -185,9 +185,13 @@ def get_summary_table( seqs ):
              html.Tr( [html.Td( html.B( "Sequences", style={"marginLeft" : "10px" } ) ), html.Td( len( seqs ), style=sg ), html.Td( len( seqs.loc[seqs['days_past'] < 30] ), style=sg )] ),
              html.Tr(html.Td( "", colSpan=3 ) ),
              html.Tr( html.Td( html.B( "Variants of concern", style={"marginLeft" : "10px" } ), colSpan=3))]
-    for i in VOC:
-        if i in seqs["lineage"].unique():
-            table.append( html.Tr( [html.Td( html.I( i, style={"marginLeft" : "20px" } ) ), html.Td( len( seqs.loc[seqs['lineage']==i] ), style=sg ), html.Td( len( seqs.loc[(seqs['lineage']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
+
+    vocs = seqs.copy()
+    vocs["VOC"] = vocs["lineage"].map( VOC )
+    vocs = vocs.loc[~vocs["VOC"].isna()]
+
+    for i in vocs["VOC"].sort_values().unique():
+        table.append( html.Tr( [html.Td( html.I( i, style={"marginLeft" : "20px" } ) ), html.Td( len( vocs.loc[vocs['VOC']==i] ), style=sg ), html.Td( len( vocs.loc[(vocs['VOC']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
 
     return table
 
