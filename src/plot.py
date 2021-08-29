@@ -108,7 +108,7 @@ def plot_cummulative_sampling_fraction( df ):
 
     _add_date_formating( fig, minimum=plot_df["epiweek"].min(), maximum=plot_df["epiweek"].max() )
 
-    fig.update_layout( yaxis_tickformat='.1%' )
+    fig.update_layout(  yaxis_tickformat='.1%' )
 
     #cleaned_array = np.log10( plot_df.loc[plot_df["fraction"] > 0, "fraction"] )
     #cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
