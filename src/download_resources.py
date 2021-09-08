@@ -54,7 +54,9 @@ def download_search():
                                                             "Andersen lab at Scripps Research" : "SD County Public Health Laboratory",
                                                             "San Diego County Public Health Laboratory" : "SD County Public Health Laboratory",
                                                             "Sharp HealthCare Laboratory" : "Sharp Health",
-                                                            "Scripps Medical Laboratory" : "Scripps Health" } )
+                                                            "Scripps Medical Laboratory" : "Scripps Health",
+                                                            "Rady Children's Hospital - San Diego" : "Rady Children's Hospital",
+                                                            "Rady Children’s Hospital" : "Rady Children's Hospital"} )
 
     excite_providers = load_excite_providers()
 
