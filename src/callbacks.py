@@ -64,7 +64,7 @@ def register_callbacks( app, sequences, cases_whole ):
 
     @app.callback(
         Output( "zip-drop", "options" ),
-        Input( "url", "pathname" )   # Will eventually take the URL as an option.
+        Input( "url", "pathname" )
     )
     def update_zip_drop( url ):
         new_cases = get_cases( cases_whole, url, None )
@@ -72,7 +72,7 @@ def register_callbacks( app, sequences, cases_whole ):
 
     @app.callback(
         Output( "zip-drop", "disabled" ),
-        Input( "url", "pathname" )   # Will eventually take the URL as an option.
+        Input( "url", "pathname" )
     )
     def enable_zip_drop( url ):
         return url == "/bajacalifornia"

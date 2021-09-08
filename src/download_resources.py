@@ -127,6 +127,12 @@ def download_sd_cases():
         dataframe["population"] = dataframe["ziptext"].map( pop )
         return dataframe
 
+    def _add_missing_cases( entry ):
+        entry = entry.set_index( "updatedate" ).reindex( pd.date_range( entry["updatedate"].min(), entry["updatedate"].max() ) ).rename_axis( "updatedate" ).reset_index()
+        indexer = pd.api.indexers.FixedForwardWindowIndexer(window_size=7)
+        entry["new_cases"] = entry.rolling( window=indexer, min_periods=1 )["new_cases"].apply( lambda x: x.max() / 7 )
+        return entry
+
     cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
     sd = gpd.read_file( cases_loc )
     sd = sd[["ziptext","case_count", "updatedate"]]
@@ -142,6 +148,15 @@ def download_sd_cases():
     sd["new_cases"] = sd.groupby( "ziptext" )["case_count"].diff()
     sd["new_cases"] = sd["new_cases"].fillna( sd["case_count"] )
     sd.loc[sd["new_cases"]<0, "new_cases"] = 0
+
+    # Brief hack because SD stopped reporting daily cases and instead reports weekly cases after 2021-06-29.
+    sdprob = sd.loc[sd["updatedate"]>"2021-06-28"]
+    sdprob = sdprob.groupby( "ziptext" ).apply( _add_missing_cases )
+    sdprob = sdprob.drop( columns="ziptext" ).reset_index()
+    sdprob = sdprob.drop( columns="level_1" )
+
+    sd = sd.loc[sd["updatedate"]<="2021-06-28"]
+    sd = pd.concat( [sd,sdprob] )
 
     sd["days_past"] = ( datetime.datetime.today() - sd["updatedate"] ).dt.days
 
