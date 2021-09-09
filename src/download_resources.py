@@ -62,6 +62,7 @@ def download_search():
 
     md["sequencer"] = "Andersen Lab"
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
+    md.loc[md["authors"]=="Helix","sequencer"] = "Helix"
     md.loc[md["ID"].isin( load_file_as_list( "resources/sdphl_sequences.txt" ) ),"sequencer"] = "SD County Public Health Laboratory"
 
     md["provider"] = md["originating_lab"]
@@ -87,6 +88,9 @@ def download_search():
 
 
     md = md.merge( pango, left_on="num", right_on="num", how="left", validate="one_to_one" )
+
+    # Filter sequences which failed lineage calling. These sequences are likely incomplete/erroneous.
+    md = md.loc[md["lineage"]!="None"]
 
     md = md[["ID","collection_date", "zipcode", "epiweek", "days_past", "sequencer", "provider", "lineage", "state"]]
 
