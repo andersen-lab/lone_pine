@@ -25,6 +25,7 @@ def download_search():
 
     search_md = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv"
     md = pd.read_csv( search_md, usecols=["ID", "collection_date", "location", "authors", "originating_lab", "zipcode"] )
+    md["collection_date"] = md["collection_date"].astype( str )
 
     # Filter out incorrect samples or wastewater
     md = md.loc[md["ID"]!="SEARCH-104076"]
@@ -35,6 +36,7 @@ def download_search():
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
     md = md.loc[~md["collection_date"].str.contains( "/" )]
     md = md.loc[md["collection_date"] != "NaT"]
+    md = md.loc[md["collection_date"] != "nan"]
 
     # Generate an identifiable location column
     md["state"] = "Baja California"
