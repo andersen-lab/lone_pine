@@ -31,7 +31,7 @@ def download_search():
     md = md.loc[md["ID"]!="SEARCH-104076"]
     md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
 
-    md = md.loc[(md["location"]=="USA/California/San Diego")|(md["location"].str.startswith( "Mexico/Baja California" ))]
+    md = md.loc[(md["location"]=="North America/USA/California/San Diego")|(md["location"].str.startswith( "North America/Mexico/Baja California" ))]
     md = md.loc[md["collection_date"]!='Unknown']
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
     md = md.loc[~md["collection_date"].str.contains( "/" )]
@@ -40,7 +40,7 @@ def download_search():
 
     # Generate an identifiable location column
     md["state"] = "Baja California"
-    md.loc[md["location"]=="USA/California/San Diego","state"] = "San Diego"
+    md.loc[md["location"]=="North America/USA/California/San Diego","state"] = "San Diego"
 
     #clean up zipcode
     md["zipcode"] = md["zipcode"].astype( "str" )
