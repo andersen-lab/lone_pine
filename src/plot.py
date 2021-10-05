@@ -212,13 +212,10 @@ def plot_voc( df, scaleby="fractions" ):
             color = "#767676"
         else:
             color = px.colors.colorbrewer.Set1[i]
-
         fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
 
-
-
     fig.update_layout( barmode='stack' )
-    fig.update_yaxes( showgrid=False, title=f"<b>Sequences (%)</b>", range=[0, max_lim] )
+    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0, max_lim] )
     fig.update_xaxes( range=get_date_limits( plot_df.index ) )
     fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
     _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
