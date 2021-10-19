@@ -17,7 +17,8 @@ def load_sequences( window=None ):
     sequences["epiweek"] = pd.to_datetime( sequences["epiweek"] ).dt.tz_localize( None )
     sequences["epiweek"] = sequences["epiweek"].dt.normalize()
 
-    sequences["zipcode"] = sequences["zipcode"].apply( lambda x: f"{x:.0f}" )
+    sequences["zipcode"] = sequences["zipcode"].replace(r'^\s*$', np.nan, regex=True)
+    sequences["zipcode"] = sequences["zipcode"].apply( lambda x: f"{float( x ):.0f}" )
 
     if window is not None:
         sequences = sequences.loc[sequences["days_past"] <= window].copy()
