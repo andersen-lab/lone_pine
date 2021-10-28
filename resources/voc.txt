@@ -1,70 +1,72 @@
-B.1.1.7,Alpha (B.1.1.7-like)
-Q.1,Alpha (B.1.1.7-like)
-Q.2,Alpha (B.1.1.7-like)
-Q.3,Alpha (B.1.1.7-like)
-Q.4,Alpha (B.1.1.7-like)
-B.1.351,Beta (B.1.351-like)
-B.1.351.1,Beta (B.1.351-like)
-B.1.351.2,Beta (B.1.351-like)
-B.1.351.3,Beta (B.1.351-like)
-B.1.617.2,Delta (B.1.617.2-like)
-AY.1,Delta (B.1.617.2-like)
-AY.2,Delta (B.1.617.2-like)
-AY.3,Delta (B.1.617.2-like)
-AY.3.1,Delta (B.1.617.2-like)
-AY.4,Delta (B.1.617.2-like)
-AY.5,Delta (B.1.617.2-like)
-AY.5.1,Delta (B.1.617.2-like)
-AY.5.2,Delta (B.1.617.2-like)
-AY.6,Delta (B.1.617.2-like)
-AY.7,Delta (B.1.617.2-like)
-AY.7.1,Delta (B.1.617.2-like)
-AY.7.2,Delta (B.1.617.2-like)
-AY.8,Delta (B.1.617.2-like)
-AY.9,Delta (B.1.617.2-like)
-AY.10,Delta (B.1.617.2-like)
-AY.11,Delta (B.1.617.2-like)
-AY.12,Delta (B.1.617.2-like)
-AY.13,Delta (B.1.617.2-like)
-AY.14,Delta (B.1.617.2-like)
-AY.15,Delta (B.1.617.2-like)
-AY.16,Delta (B.1.617.2-like)
-AY.17,Delta (B.1.617.2-like)
-AY.18,Delta (B.1.617.2-like)
-AY.19,Delta (B.1.617.2-like)
-AY.20,Delta (B.1.617.2-like)
-AY.21,Delta (B.1.617.2-like)
-AY.22,Delta (B.1.617.2-like)
-AY.23,Delta (B.1.617.2-like)
-AY.24,Delta (B.1.617.2-like)
-AY.25,Delta (B.1.617.2-like)
-AY.26,Delta (B.1.617.2-like)
-AY.27,Delta (B.1.617.2-like)
-AY.28,Delta (B.1.617.2-like)
-AY.29,Delta (B.1.617.2-like)
-AY.29.1,Delta (B.1.617.2-like)
-AY.30,Delta (B.1.617.2-like)
-AY.31,Delta (B.1.617.2-like)
-AY.32,Delta (B.1.617.2-like)
-AY.33,Delta (B.1.617.2-like)
-AY.34,Delta (B.1.617.2-like)
-AY.35,Delta (B.1.617.2-like)
-AY.37,Delta (B.1.617.2-like)
-AY.36,Delta (B.1.617.2-like)
-AY.38,Delta (B.1.617.2-like)
-AY.39,Delta (B.1.617.2-like)
-AY.39.1,Delta (B.1.617.2-like)
-AY.41,Delta (B.1.617.2-like)
-P.1,Gamma (P.1-like)
-P.1.1,Gamma (P.1-like)
-P.1.2,Gamma (P.1-like)
-P.1.3,Gamma (P.1-like)
-P.1.4,Gamma (P.1-like)
-P.1.5,Gamma (P.1-like)
-P.1.6,Gamma (P.1-like)
-P.1.7,Gamma (P.1-like)
-P.1.8,Gamma (P.1-like)
-P.1.9,Gamma (P.1-like)
-P.1.10,Gamma (P.1-like)
-P.1.10.1,Gamma (P.1-like)
-P.1.10.2,Gamma (P.1-like)
+B.1.1.7,Alpha-like
+Q.1,Alpha-like
+Q.2,Alpha-like
+Q.3,Alpha-like
+Q.4,Alpha-like
+B.1.351,Beta-like
+B.1.351.1,Beta-like
+B.1.351.2,Beta-like
+B.1.351.3,Beta-like
+B.1.617.2,Delta-like
+AY.1,Delta-like
+AY.2,Delta-like
+AY.3,Delta-like
+AY.3.1,Delta-like
+AY.4,Delta-like
+AY.4.1,Delta-like
+AY.4.2,Delta-like
+AY.5,Delta-like
+AY.5.1,Delta-like
+AY.5.2,Delta-like
+AY.6,Delta-like
+AY.7,Delta-like
+AY.7.1,Delta-like
+AY.7.2,Delta-like
+AY.8,Delta-like
+AY.9,Delta-like
+AY.10,Delta-like
+AY.11,Delta-like
+AY.12,Delta-like
+AY.13,Delta-like
+AY.14,Delta-like
+AY.15,Delta-like
+AY.16,Delta-like
+AY.17,Delta-like
+AY.18,Delta-like
+AY.19,Delta-like
+AY.20,Delta-like
+AY.21,Delta-like
+AY.22,Delta-like
+AY.23,Delta-like
+AY.24,Delta-like
+AY.25,Delta-like
+AY.26,Delta-like
+AY.27,Delta-like
+AY.28,Delta-like
+AY.29,Delta-like
+AY.29.1,Delta-like
+AY.30,Delta-like
+AY.31,Delta-like
+AY.32,Delta-like
+AY.33,Delta-like
+AY.34,Delta-like
+AY.35,Delta-like
+AY.37,Delta-like
+AY.36,Delta-like
+AY.38,Delta-like
+AY.39,Delta-like
+AY.39.1,Delta-like
+AY.41,Delta-like
+P.1,Gamma-like
+P.1.1,Gamma-like
+P.1.2,Gamma-like
+P.1.3,Gamma-like
+P.1.4,Gamma-like
+P.1.5,Gamma-like
+P.1.6,Gamma-like
+P.1.7,Gamma-like
+P.1.8,Gamma-like
+P.1.9,Gamma-like
+P.1.10,Gamma-like
+P.1.10.1,Gamma-like
+P.1.10.2,Gamma-like
