@@ -57,6 +57,15 @@ AY.38,Delta-like
 AY.39,Delta-like
 AY.39.1,Delta-like
 AY.41,Delta-like
+AY.42,Delta-like
+AY.43,Delta-like
+AY.44,Delta-like
+AY.45,Delta-like
+AY.46,Delta-like
+AY.46.1,Delta-like
+AY.46.4,Delta-like
+AY.46.6,Delta-like
+AY.47,Delta-like
 P.1,Gamma-like
 P.1.1,Gamma-like
 P.1.2,Gamma-like
