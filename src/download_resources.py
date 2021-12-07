@@ -75,7 +75,9 @@ def download_search():
                                              "HELIX" : "Helix",
                                              "San Diego Fire-Rescue Department" : "SD Fire-Rescue Department",
                                              "SASEA" : "UCSD Safer at School Early Action",
-                                             "Instituto de Diagnostico y Referencia Epidemiologicos (InDRE)": "InDRE" } )
+                                             "Instituto de Diagnostico y Referencia Epidemiologicos (InDRE)": "InDRE",
+                                             "Delta" : "Helix",
+                                              "DeltaAmplicon" : "Helix"} )
     md.loc[md["provider"].isna(),"provider"] = md["sequencer"]
 
     # Add pangolin lineage information
