@@ -194,6 +194,11 @@ def get_summary_table( seqs ):
     for i in vocs["VOC"].sort_values().unique():
         table.append( html.Tr( [html.Td( html.I( i, style={"marginLeft" : "20px" } ) ), html.Td( len( vocs.loc[vocs['VOC']==i] ), style=sg ), html.Td( len( vocs.loc[(vocs['VOC']==i)&(seqs['days_past']<30)] ), style=sg )] ) )
 
+    # Brief hack to get Omicron in table
+    table.append( html.Tr(
+        [html.Td( html.I( "Omicron-like", style={ "marginLeft": "20px" } ) ), html.Td( 0, style=sg ),
+         html.Td( 0, style=sg )] ) )
+
     return table
 
 def get_provider_sequencer_values( seqs, value ):
