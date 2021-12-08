@@ -29,7 +29,7 @@ def download_search():
 
     # Filter out incorrect samples or wastewater
     md = md.loc[md["ID"]!="SEARCH-104076"]
-    md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
+    #md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
 
     md = md.loc[(md["location"]=="North America/USA/California/San Diego")|(md["location"].str.startswith( "North America/Mexico/Baja California" ))]
     md = md.loc[md["collection_date"]!='Unknown']
@@ -63,10 +63,12 @@ def download_search():
 
     excite_providers = load_excite_providers()
 
+    # Correct some sequencer problems
     md["sequencer"] = "Andersen Lab"
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
     md.loc[md["authors"]=="Helix","sequencer"] = "Helix"
     md.loc[md["ID"].isin( load_file_as_list( "resources/sdphl_sequences.txt" ) ),"sequencer"] = "SD County Public Health Laboratory"
+    md.loc[md['ID'].str.startswith( "CA-SDCPHL-" ),"sequencer"] = "SD County Public Health Laboratory"
 
     md["provider"] = md["originating_lab"]
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab", "provider"] = md["ID"].map( excite_providers )

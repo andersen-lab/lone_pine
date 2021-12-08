@@ -33,7 +33,7 @@ def register_callbacks( app, sequences, cases_whole ):
 
         return new_seqs
 
-    def get_cases( cases, url, window ):
+    def get_cases( cases, url, window=None ):
         new_cases = cases.copy()
 
         new_cases = register_url_cases( new_cases, url )
