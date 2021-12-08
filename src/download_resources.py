@@ -121,7 +121,6 @@ def download_cases():
 
     return c
 
-
 def download_sd_cases():
     """
     Returns
