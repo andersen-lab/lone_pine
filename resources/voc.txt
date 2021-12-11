@@ -113,3 +113,5 @@ P.1.10,Gamma-like
 P.1.10.1,Gamma-like
 P.1.10.2,Gamma-like
 B.1.1.529,Omicron-like
+BA.1,Omicron-like
+BA.2,Omicron-like
