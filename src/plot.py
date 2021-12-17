@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 import numpy as np
 import pandas as pd
 from epiweeks import Week
@@ -287,4 +288,65 @@ def plot_zips( df, colorby="sequences" ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
+    return fig
+
+
+def plot_sgtf( sgtf_data ):
+    plot_df = sgtf_data[0]
+    max_lim = np.round( plot_df[["sgtf_likely","total_positive"]].sum( axis=1 ).max() * 1.05 )
+
+    fig = make_subplots( specs=[[{"secondary_y" : True}]] )
+    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_likely"], name="SGTF", marker_color="#DFB377" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["total_positive"] - plot_df["sgtf_likely"], name="Total positive", marker_color='#767676' ), secondary_y=False )
+    fig.add_trace( go.Scattergl( x=plot_df["Date"], y=plot_df["percent"],
+                                 mode='lines',
+                                 name='SGTF (%)',
+                                 showlegend=False,
+                                 line={ "color" : "#000000", "width" : 2, "dash" : "dash"} ), secondary_y=True )
+    fig.update_layout( barmode='stack' )
+    fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
+    fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True )
+
+    fig.update_xaxes( dtick="W1", tickformat="%b\n%d", mirror=True )
+    fig.update_yaxes( mirror=True, secondary_y=False )
+    fig.update_layout( template="simple_white",
+                       hovermode="closest",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":0,"l":0,"b":0},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)" ) )
+
+    return fig
+
+
+def plot_sgtf_estiamte( sgtf_data ):
+    plot_df = sgtf_data[1]
+
+    fig = go.Figure()
+    fig.add_trace( go.Scattergl( x=sgtf_data[0]["Date"], y=sgtf_data[0]["percent_filter"],
+                                 mode='markers',
+                                 name='SGTF (%)',
+                                 marker={ "color" : "#56B4E9", "size" : 12 } ) )
+    fig.add_trace( go.Scattergl( x=plot_df["date"], y=plot_df["fit_y"],
+                                 mode='lines',
+                                 name='SGTF (%)',
+                                 showlegend=False,
+                                 line={ "color" : "#000000", "width" : 2} ) )
+    fig.add_trace( go.Scatter( x=plot_df["date"], y=plot_df["fit_lower"],
+                                 mode='lines',
+                                 fillcolor="#969696",
+                                 line_color='indigo' ) )
+    fig.add_trace( go.Scatter( x=plot_df["date"], y=plot_df["fit_upper"],
+                                 mode='lines',
+                                 fill="tonextx",
+                                 fillcolor="#969696",
+                                 line_color='indigo') )
+
+
+    fig.update_xaxes( range=["2021-11-25", "2022-01-21"] )
+
     return fig

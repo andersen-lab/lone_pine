@@ -1,7 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import src.plot as dashplot
 
-def get_layout():
+def get_layout( sgtf_data ):
     markdown = """
     To gain insights in the spread of the Omicron variant in out community, we are working with a large number of 
     partners to track S-gene target failures (SGTFs). SGTFs are a feature of the TaqPath PCR assay that fails to detect
@@ -20,7 +21,8 @@ def get_layout():
                     #html.H4( "S Gene Target Failure" ),
                     html.Div(
                         dcc.Graph(
-                            id="tests-graph",
+                            figure=dashplot.plot_sgtf( sgtf_data ),
+                            id="sgtf-graph",
                             style={"height" : "25em"}
                         ),
                         className="six columns",
@@ -28,7 +30,8 @@ def get_layout():
                     ),
                     html.Div(
                         dcc.Graph(
-                            id="sgtf-graph",
+                            figure=dashplot.plot_sgtf_estiamte( sgtf_data ),
+                            id="sgtf-estimate",
                             style={ "height" : "25em" }
                         ),
                         className="six columns",

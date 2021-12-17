@@ -16,13 +16,14 @@ sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
 sgtf_data = format_data.load_sgtf_data()
 
-register_callbacks( app, sequences, cases_whole )
+register_callbacks( app, sequences, cases_whole, sgtf_data )
 
 app.layout = html.Div( children=[
     dcc.Location(id='url', refresh=False),
     html.Div( [html.P( "Loading..." )],
         id="page-contents"
-    )
+    ),
+    html.Div( id="hidden-div", children=[], hidden=True )
 ],
     style={ "marginLeft" : "auto",
             "marginRight" : "auto",

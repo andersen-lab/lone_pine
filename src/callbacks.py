@@ -17,7 +17,7 @@ def register_url_cases( df, url ):
         return df.loc[df["ziptext"]!="None"]
 
 
-def register_callbacks( app, sequences, cases_whole ):
+def register_callbacks( app, sequences, cases_whole, sgtf_data ):
 
     def get_sequences( seqs, url, window=None, provider=None, sequencer=None, zip_f=None ):
         new_seqs = seqs.copy()
@@ -50,7 +50,7 @@ def register_callbacks( app, sequences, cases_whole ):
     )
     def generate_page_content( path ):
         if path == "/sgtf":
-            return sgtfpage.get_layout()
+            return sgtfpage.get_layout( sgtf_data )
         else:
             return mainpage.get_layout()
 
@@ -220,11 +220,4 @@ def register_callbacks( app, sequences, cases_whole ):
         Input( "url", "pathname" )
     )
     def enable_zip_graph( url ):
-        return url=="/bajacalifornia"
-
-    @app.callback(
-        Output( "sgtf-div", "hidden" ),
-        Input( "url", "pathname" )
-    )
-    def enable_sgtf_graphs( url ):
         return url=="/bajacalifornia"
