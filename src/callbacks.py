@@ -1,5 +1,7 @@
 import src.plot as dashplot
 import src.format_resources as format_data
+import src.mainpage as mainpage
+import src.sgtfpage as sgtfpage
 from dash.dependencies import Input, Output
 
 def register_url_sequences( df, url ):
@@ -41,6 +43,16 @@ def register_callbacks( app, sequences, cases_whole ):
         if window:
             new_cases = cases.loc[cases["days_past"] <= window]
         return new_cases
+
+    @app.callback(
+        Output( "page-contents", "children" ),
+        Input( "url", "pathname")
+    )
+    def generate_page_content( path ):
+        if path == "/sgtf":
+            return sgtfpage.get_layout()
+        else:
+            return mainpage.get_layout()
 
     @app.callback(
         Output( "markdown-stuff", "children" ),
@@ -203,10 +215,16 @@ def register_callbacks( app, sequences, cases_whole ):
         else:
             return clickData["points"][0]["x"]
 
-
     @app.callback(
         Output( "zip-div", "hidden" ),
         Input( "url", "pathname" )
     )
     def enable_zip_graph( url ):
+        return url=="/bajacalifornia"
+
+    @app.callback(
+        Output( "sgtf-div", "hidden" ),
+        Input( "url", "pathname" )
+    )
+    def enable_sgtf_graphs( url ):
         return url=="/bajacalifornia"

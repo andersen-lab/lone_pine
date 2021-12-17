@@ -205,3 +205,7 @@ def get_provider_sequencer_values( seqs, value ):
     labels = [{"label" : f"{i} ({j})", "value": i }for i, j in seqs[value].sort_values().value_counts().iteritems()]
     labels = sorted( labels, key=lambda x: x["label"] )
     return labels
+
+
+def load_sgtf_data():
+
