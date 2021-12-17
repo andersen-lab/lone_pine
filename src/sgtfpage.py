@@ -48,7 +48,7 @@ def get_layout( sgtf_data ):
             className="row" ),
         html.Br(),
         html.Br(),
-        html.P( html.I( "Updated on December 17th @ 11:21 AM PST" ), style={"width":"80em", 'textAlign': 'center' })
+        html.P( html.I( "Updated on December 17th @ 11:21 AM PST" ), style={ 'textAlign': 'center' })
     ]
 
     return layout
