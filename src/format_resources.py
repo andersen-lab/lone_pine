@@ -210,5 +210,5 @@ def get_provider_sequencer_values( seqs, value ):
 def load_sgtf_data():
     tests = pd.read_csv( "resources/tests.csv", parse_dates=["Date"] )
     fit = pd.read_csv( "resources/fit.csv", parse_dates=["date"] )
-    estimates = pd.read_csv( "resources/estimates.csv", index_col=0 )
+    estimates = pd.read_csv( "resources/estimates.csv", index_col=0, parse_dates=["date"] )
     return tests, fit, estimates
