@@ -43,8 +43,12 @@ def get_layout( sgtf_data ):
                     className="pretty_container",
                     style={ "marginLeft" : "auto",
                             "marginRight" : "auto" }
-                )
-            ] )
+                ),
+            ],
+            className="row" ),
+        html.Br(),
+        html.Br(),
+        html.P( html.I( "Updated on December 17th @ 11:21 AM PST" ), style={"width":"80em", 'textAlign': 'center' })
     ]
 
     return layout
