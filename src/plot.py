@@ -385,3 +385,42 @@ def plot_sgtf_estiamte( sgtf_data ):
     fig.add_annotation( x="2021-12-21", y=0.1, text=transmission_str, showarrow=False, xanchor="left" )
 
     return fig
+
+def plot_wastewater( ww ):
+    fig = make_subplots( specs=[[{"secondary_y" : True}]] )
+    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies"],
+                                 name="Viral load in wastewater",
+                                 mode="markers",
+                                 marker={"color" : "#56B4E9", "size" : 8 } ), secondary_y=False )
+    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies_rolling"],
+                                 showlegend=False,
+                                 name="Viral load in wastewater",
+                                 mode="lines",
+                                 line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
+    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
+                                 name="Reported cases",
+                                 mode="markers",
+                                 marker={"color" : "#D55E00", "size" : 8 } ), secondary_y=True )
+    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases_rolling"],
+                                 name="Reported cases",
+                                 mode="lines",
+                                 showlegend=False,
+                                 line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
+
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", secondary_y=False, showline=False, ticks="" )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported Cases</b>", secondary_y=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
+
+    fig.update_layout( template="simple_white",
+                       hovermode="closest",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":0,"l":0,"b":0},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)",
+                                    itemsizing='constant') )
+
+    return fig

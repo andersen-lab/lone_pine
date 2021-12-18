@@ -15,8 +15,9 @@ app.title = "San Diego sequencing dashboard"
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
 sgtf_data = format_data.load_sgtf_data()
+wastewater_data = format_data.load_wastewater_data()
 
-register_callbacks( app, sequences, cases_whole, sgtf_data )
+register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data )
 
 app.layout = html.Div( children=[
     dcc.Location(id='url', refresh=False),
@@ -31,4 +32,4 @@ app.layout = html.Div( children=[
 )
 
 if __name__ == '__main__':
-    app.run_server( debug=False )
+    app.run_server( debug=True )

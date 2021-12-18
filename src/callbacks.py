@@ -1,7 +1,8 @@
 import src.plot as dashplot
 import src.format_resources as format_data
-import src.mainpage as mainpage
-import src.sgtfpage as sgtfpage
+import src.pages.mainpage as mainpage
+import src.pages.sgtfpage as sgtfpage
+import src.pages.wastewaterpage as wastepage
 from dash.dependencies import Input, Output
 
 def register_url_sequences( df, url ):
@@ -17,7 +18,7 @@ def register_url_cases( df, url ):
         return df.loc[df["ziptext"]!="None"]
 
 
-def register_callbacks( app, sequences, cases_whole, sgtf_data ):
+def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
 
     def get_sequences( seqs, url, window=None, provider=None, sequencer=None, zip_f=None ):
         new_seqs = seqs.copy()
@@ -51,6 +52,8 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data ):
     def generate_page_content( path ):
         if path == "/sgtf":
             return sgtfpage.get_layout( sgtf_data )
+        elif path == "/wastewater":
+            return wastepage.get_layout( wastewater_data )
         else:
             return mainpage.get_layout()
 

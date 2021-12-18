@@ -212,3 +212,10 @@ def load_sgtf_data():
     fit = pd.read_csv( "resources/fit.csv", parse_dates=["date"] )
     estimates = pd.read_csv( "resources/estimates.csv", index_col=0, parse_dates=["date"] )
     return tests, fit, estimates
+
+def load_wastewater_data():
+    return_df = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv", parse_dates=["Sample_Date"] )
+    return_df.columns = ["date", "gene_copies", "reported_cases"]
+    return_df["gene_copies_rolling"] = return_df["gene_copies"].rolling( 7, min_periods=0 ).mean()
+    return_df["reported_cases_rolling"] = return_df["reported_cases"].rolling( 7, min_periods=0 ).mean()
+    return return_df
