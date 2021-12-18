@@ -269,8 +269,8 @@ def estimate_sgtf():
     estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    seqs_md = download_search()
-    seqs_md.to_csv( "resources/sequences.csv", index=False )
+    #seqs_md = download_search()
+    #seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     estimate_sgtf()
 
