@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import dash_html_components as html
 from src.variants import VOC, VOI
+from scipy.signal import savgol_filter
 
 #VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
 #VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
@@ -216,6 +217,6 @@ def load_sgtf_data():
 def load_wastewater_data():
     return_df = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv", parse_dates=["Sample_Date"] )
     return_df.columns = ["date", "gene_copies", "reported_cases"]
-    return_df["gene_copies_rolling"] = return_df["gene_copies"].rolling( 7, min_periods=0 ).mean()
-    return_df["reported_cases_rolling"] = return_df["reported_cases"].rolling( 7, min_periods=0 ).mean()
+    return_df.loc[~return_df["gene_copies"].isna(),"gene_copies_rolling"] = savgol_filter( return_df["gene_copies"].dropna(), window_length=11, polyorder=2 )
+    return_df.loc[~return_df["reported_cases"].isna(),"reported_cases_rolling"] = savgol_filter( return_df["reported_cases"].dropna(), window_length=7, polyorder=2 )
     return return_df

@@ -28,7 +28,7 @@ def get_layout( wastewater_data ):
         ),
         html.Br(),
         html.Br(),
-        #html.P( html.I( "Updated on December 18th @ 12:42 PM PST" ), style={ 'textAlign': 'center' })
+        #html.P( html.I( "Updated on December 18th @ 12:42 PM PST" ), style={ 'textAlign': 'center' } )
     ]
 
     return layout

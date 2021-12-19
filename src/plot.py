@@ -401,7 +401,7 @@ def plot_wastewater( ww ):
                                  name="Reported cases",
                                  mode="markers",
                                  marker={"color" : "#D55E00", "size" : 8 } ), secondary_y=True )
-    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases_rolling"],
+    fig.add_trace( go.Scattergl( x=ww.dropna()["date"], y=ww.dropna()["reported_cases_rolling"],
                                  name="Reported cases",
                                  mode="lines",
                                  showlegend=False,
