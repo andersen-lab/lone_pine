@@ -269,13 +269,13 @@ def estimate_sgtf():
     estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    #seqs_md = download_search()
-    #seqs_md.to_csv( "resources/sequences.csv", index=False )
+    seqs_md = download_search()
+    seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     estimate_sgtf()
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
