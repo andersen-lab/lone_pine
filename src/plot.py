@@ -309,7 +309,7 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True )
 
-    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="6.048e+8",      tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
