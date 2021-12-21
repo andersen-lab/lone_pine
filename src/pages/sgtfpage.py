@@ -1,6 +1,15 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import src.plot as dashplot
+import requests
+from datetime import datetime, timezone, timedelta
+
+def get_last_commit_date():
+    last_commit_url = "https://api.github.com/repos/andersen-lab/SARS-CoV-2_SGTF_San-Diego/git/refs/heads/main"
+    last_commit = requests.get( last_commit_url ).json()["object"]["url"]
+    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
+    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
+    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
 
 def get_layout( sgtf_data ):
     markdown = """
@@ -13,6 +22,8 @@ def get_layout( sgtf_data ):
     More information on Omicron and other estimates of its prevalence in San Diego and elsewhere can be found at 
     [Outbreak.info](https://outbreak.info/).
     """
+
+    commit_date = get_last_commit_date()
 
     layout = [
         html.Div(
@@ -49,7 +60,7 @@ def get_layout( sgtf_data ):
             className="row" ),
         html.Br(),
         html.Br(),
-        html.P( html.I( "Updated on December 21th @ 11:35 AM PST" ), style={ 'textAlign': 'center' })
+        html.P( html.I( f"Updated on {commit_date}" ), style={ 'textAlign': 'center' })
     ]
 
     return layout

@@ -3,7 +3,9 @@ import numpy as np
 import pandas as pd
 import dash_html_components as html
 from src.variants import VOC, VOI
+from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
+from numpy import exp, sqrt, diagonal, log
 
 #VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
 #VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
@@ -209,10 +211,42 @@ def get_provider_sequencer_values( seqs, value ):
 
 
 def load_sgtf_data():
-    tests = pd.read_csv( "resources/tests.csv", parse_dates=["Date"] )
-    fit = pd.read_csv( "resources/fit.csv", parse_dates=["date"] )
-    estimates = pd.read_csv( "resources/estimates.csv", index_col=0, parse_dates=["date"] )
-    return tests, fit, estimates
+    def lgm( ndays, x0, r ):
+        return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
+
+    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego.csv", parse_dates=["Collection date"] )
+    tests.columns = ["Date", "sgtf_likely", "total_positive", "percent"]
+    tests["percent"] = tests["sgtf_likely"] / tests["total_positive"]
+    tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
+    tests["ndays"] = tests.index
+
+    fit, covar = curve_fit( lgm, tests["ndays"], tests["percent_filter"], [0.001, 0.008] )
+    sigma_ab = sqrt( diagonal( covar ) )
+
+    days_sim = 300
+
+    fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
+    fit_df["ndays"] = fit_df.index
+    fit_df["fit_y"] = [lgm(i, fit[0], fit[1]) for i in range( days_sim )]
+    fit_df["fit_lower"] = [lgm(i, fit[0]-sigma_ab[0], fit[1]-sigma_ab[1]) for i in range( days_sim )]
+    fit_df["fit_upper"] = [lgm(i, fit[0]+sigma_ab[0], max(0, fit[1]+sigma_ab[1]) ) for i in range( days_sim )]
+
+    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.5,"date"].min()
+    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.5,"date"].min()
+    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.5,"date"].min()
+
+    growth_rate = fit[1]
+    serial_interval = 5.5
+
+    estimates = pd.DataFrame( {
+        "estimate" : [above_50,growth_rate],
+        "lower" : [above_50_lower,growth_rate - sigma_ab[1]],
+        "upper" : [above_50_upper,growth_rate + sigma_ab[1]] }, index=["date", "growth_rate"] )
+    estimates = estimates.T
+    estimates["doubling_time"] = log(2) / estimates["growth_rate"]
+    estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
+
+    return tests, fit_df, estimates
 
 def load_wastewater_data():
     return_df = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv", parse_dates=["Sample_Date"] )

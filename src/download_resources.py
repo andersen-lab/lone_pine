@@ -228,52 +228,52 @@ def download_shapefile():
 
     return zip_area
 
-def estimate_sgtf():
-    # Function representing the logistic growth model
-    def lgm( ndays, x0, r ):
-        return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
-
-    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego.csv", parse_dates=["Collection date"] )
-    tests.columns = ["Date", "sgtf_likely", "total_positive", "percent"]
-    tests["percent"] = tests["sgtf_likely"] / tests["total_positive"]
-    tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
-    tests["ndays"] = tests.index
-
-    fit, covar = curve_fit( lgm, tests["ndays"], tests["percent_filter"], [0.001, 0.008] )
-    sigma_ab = sqrt( diagonal( covar ) )
-
-    days_sim = 300
-
-    fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
-    fit_df["ndays"] = fit_df.index
-    fit_df["fit_y"] = [lgm(i, fit[0], fit[1]) for i in range( days_sim )]
-    fit_df["fit_lower"] = [lgm(i, fit[0]-sigma_ab[0], fit[1]-sigma_ab[1]) for i in range( days_sim )]
-    fit_df["fit_upper"] = [lgm(i, fit[0]+sigma_ab[0], max(0, fit[1]+sigma_ab[1]) ) for i in range( days_sim )]
-
-    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.5,"date"].min()
-    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.5,"date"].min()
-    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.5,"date"].min()
-
-    growth_rate = fit[1]
-    serial_interval = 5.5
-
-    estimates = pd.DataFrame( {
-        "estimate" : [above_50,growth_rate],
-        "lower" : [above_50_lower,growth_rate - sigma_ab[1]],
-        "upper" : [above_50_upper,growth_rate + sigma_ab[1]] }, index=["date", "growth_rate"] )
-    estimates = estimates.T
-    estimates["doubling_time"] = log(2) / estimates["growth_rate"]
-    estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
-
-    tests.to_csv( "resources/tests.csv", index=False )
-    fit_df.to_csv( "resources/fit.csv", index=False )
-    estimates.to_csv( "resources/estimates.csv" )
+#def estimate_sgtf():
+#    # Function representing the logistic growth model
+#    def lgm( ndays, x0, r ):
+#        return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
+#
+#    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego.csv", parse_dates=["Collection date"] )
+#    tests.columns = ["Date", "sgtf_likely", "total_positive", "percent"]
+#    tests["percent"] = tests["sgtf_likely"] / tests["total_positive"]
+#    tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
+#    tests["ndays"] = tests.index
+#
+#    fit, covar = curve_fit( lgm, tests["ndays"], tests["percent_filter"], [0.001, 0.008] )
+#    sigma_ab = sqrt( diagonal( covar ) )
+#
+#    days_sim = 300
+#
+#    fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
+#    fit_df["ndays"] = fit_df.index
+#    fit_df["fit_y"] = [lgm(i, fit[0], fit[1]) for i in range( days_sim )]
+#    fit_df["fit_lower"] = [lgm(i, fit[0]-sigma_ab[0], fit[1]-sigma_ab[1]) for i in range( days_sim )]
+#    fit_df["fit_upper"] = [lgm(i, fit[0]+sigma_ab[0], max(0, fit[1]+sigma_ab[1]) ) for i in range( days_sim )]
+#
+#    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.5,"date"].min()
+#    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.5,"date"].min()
+#    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.5,"date"].min()
+#
+#    growth_rate = fit[1]
+#    serial_interval = 5.5
+#
+#    estimates = pd.DataFrame( {
+#        "estimate" : [above_50,growth_rate],
+#        "lower" : [above_50_lower,growth_rate - sigma_ab[1]],
+#        "upper" : [above_50_upper,growth_rate + sigma_ab[1]] }, index=["date", "growth_rate"] )
+#    estimates = estimates.T
+#    estimates["doubling_time"] = log(2) / estimates["growth_rate"]
+#    estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
+#
+#    tests.to_csv( "resources/tests.csv", index=False )
+#    fit_df.to_csv( "resources/fit.csv", index=False )
+#    estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    #seqs_md = download_search()
-    #seqs_md.to_csv( "resources/sequences.csv", index=False )
+    seqs_md = download_search()
+    seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    estimate_sgtf()
+    #estimate_sgtf()
 
     #cases = download_cases()
     #cases.to_csv( "resources/cases.csv", index=False )
