@@ -231,9 +231,9 @@ def load_sgtf_data():
     fit_df["fit_lower"] = [lgm(i, fit[0]-sigma_ab[0], fit[1]-sigma_ab[1]) for i in range( days_sim )]
     fit_df["fit_upper"] = [lgm(i, fit[0]+sigma_ab[0], max(0, fit[1]+sigma_ab[1]) ) for i in range( days_sim )]
 
-    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.5,"date"].min()
-    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.5,"date"].min()
-    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.5,"date"].min()
+    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.999,"date"].min()
+    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.999,"date"].min()
+    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.999,"date"].min()
 
     growth_rate = fit[1]
     serial_interval = 5.5
