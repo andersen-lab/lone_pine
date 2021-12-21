@@ -233,7 +233,8 @@ def estimate_sgtf():
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
 
-    tests = pd.read_csv( "/Users/natem/Documents/sgtf_test.csv", parse_dates=["Date"] )
+    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego.csv", parse_dates=["Collection date"] )
+    tests.columns = ["Date", "sgtf_likely", "total_positive", "percent"]
     tests["percent"] = tests["sgtf_likely"] / tests["total_positive"]
     tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
     tests["ndays"] = tests.index
@@ -269,13 +270,13 @@ def estimate_sgtf():
     estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    seqs_md = download_search()
-    seqs_md.to_csv( "resources/sequences.csv", index=False )
+    #seqs_md = download_search()
+    #seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     estimate_sgtf()
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

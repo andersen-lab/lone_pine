@@ -1,6 +1,16 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import requests
+from datetime import datetime, timezone, timedelta
 import src.plot as dashplot
+
+
+def get_last_commit_date():
+    last_commit_url = "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master"
+    last_commit = requests.get( last_commit_url ).json()["object"]["url"]
+    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
+    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
+    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
 
 def get_layout( wastewater_data ):
     markdown = """
@@ -11,6 +21,8 @@ def get_layout( wastewater_data ):
     with San Diego County. The raw data for this dashboard can be found in our 
     [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego).
     """
+
+    commit_date = get_last_commit_date()
 
     layout = [
         html.Div(
@@ -28,7 +40,7 @@ def get_layout( wastewater_data ):
         ),
         html.Br(),
         html.Br(),
-        #html.P( html.I( "Updated on December 18th @ 12:42 PM PST" ), style={ 'textAlign': 'center' } )
+        html.P( html.I( f"Updated on {commit_date}" ), style={ 'textAlign': 'center' } )
     ]
 
     return layout
