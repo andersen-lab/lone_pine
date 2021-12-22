@@ -23,7 +23,7 @@ def get_layout( wastewater_data ):
     """
 
     #commit_date = get_last_commit_date()
-    commit_date = "December 22 @ 9:30 AM PST"
+    commit_date = "December 22 @ 1:07 PM PST"
 
     layout = [
         html.Div(
