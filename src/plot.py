@@ -380,9 +380,9 @@ def plot_sgtf_estiamte( sgtf_data ):
     fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
     fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
 
-    fig.add_annotation( x="2021-12-16", y=0.2, text=double_str, showarrow=False, xanchor="left" )
-    fig.add_annotation( x="2021-12-16", y=0.15, text=growth_str, showarrow=False, xanchor="left" )
-    fig.add_annotation( x="2021-12-16", y=0.1, text=transmission_str, showarrow=False, xanchor="left" )
+    fig.add_annotation( x="2021-12-16", y=0.2, text=double_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
+    fig.add_annotation( x="2021-12-16", y=0.15, text=growth_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
+    fig.add_annotation( x="2021-12-16", y=0.1, text=transmission_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
 
     return fig
 
