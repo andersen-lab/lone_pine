@@ -309,7 +309,7 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True )
 
-    fig.update_xaxes( dtick="6.048e+8",      tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
@@ -368,10 +368,10 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-02-01"] )
+    fig.update_xaxes( range=["2021-11-25", "2022-01-21"] )
 
     esti = sgtf_data[2]
-    date_str = f"{esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}-{esti['date'][2].strftime('%B %d')})"
+    date_str = f"99%: {esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}-{esti['date'][2].strftime('%B %d')})"
     double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][1]:.1f} - {esti['doubling_time'][2]:.1f})<br>"
     growth_str =  f"Daily growth rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%} - {esti['growth_rate'][2]:.1%})<br>"
     transmission_str =  f"Transmission increase: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%} - {esti['transmission_increase'][2]:.0%})<br>"
@@ -380,9 +380,9 @@ def plot_sgtf_estiamte( sgtf_data ):
     fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
     fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
 
-    fig.add_annotation( x="2021-12-21", y=0.2, text=double_str, showarrow=False, xanchor="left" )
-    fig.add_annotation( x="2021-12-21", y=0.15, text=growth_str, showarrow=False, xanchor="left" )
-    fig.add_annotation( x="2021-12-21", y=0.1, text=transmission_str, showarrow=False, xanchor="left" )
+    fig.add_annotation( x="2021-12-16", y=0.2, text=double_str, showarrow=False, xanchor="left" )
+    fig.add_annotation( x="2021-12-16", y=0.15, text=growth_str, showarrow=False, xanchor="left" )
+    fig.add_annotation( x="2021-12-16", y=0.1, text=transmission_str, showarrow=False, xanchor="left" )
 
     return fig
 
