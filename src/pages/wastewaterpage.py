@@ -22,7 +22,8 @@ def get_layout( wastewater_data ):
     [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego).
     """
 
-    commit_date = get_last_commit_date()
+    #commit_date = get_last_commit_date()
+    commit_date = "December 22 @ 9:30 AM PST"
 
     layout = [
         html.Div(

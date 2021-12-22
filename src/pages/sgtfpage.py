@@ -23,7 +23,8 @@ def get_layout( sgtf_data ):
     [Outbreak.info](https://outbreak.info/).
     """
 
-    commit_date = get_last_commit_date()
+    #commit_date = get_last_commit_date()
+    commit_date = "December 22 @ 9:30 AM PST"
 
     layout = [
         html.Div(
