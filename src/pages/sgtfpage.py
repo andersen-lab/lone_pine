@@ -24,7 +24,7 @@ def get_layout( sgtf_data ):
     """
 
     #commit_date = get_last_commit_date()
-    commit_date = "December 22 @ $:41 PM PST"
+    commit_date = "December 23 @ 10:37 AM PST"
 
     layout = [
         html.Div(
