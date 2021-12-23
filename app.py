@@ -14,8 +14,8 @@ app.title = "San Diego sequencing dashboard"
 
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
-sgtf_data = None #format_data.load_sgtf_data()
-wastewater_data = None #format_data.load_wastewater_data()
+sgtf_data = format_data.load_sgtf_data()
+wastewater_data = format_data.load_wastewater_data()
 
 register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data )
 
