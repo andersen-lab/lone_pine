@@ -51,9 +51,9 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
     )
     def generate_page_content( path ):
         if path == "/sgtf":
-            return sgtfpage.get_layout( sgtf_data )
+            return sgtfpage.get_layout( format_data.load_sgtf_data() )
         elif path == "/wastewater":
-            return wastepage.get_layout( wastewater_data )
+            return wastepage.get_layout( format_data.load_wastewater_data() )
         else:
             return mainpage.get_layout()
 
