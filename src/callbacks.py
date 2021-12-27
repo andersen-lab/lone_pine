@@ -4,6 +4,8 @@ import src.pages.mainpage as mainpage
 import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
 from dash.dependencies import Input, Output
+from datetime import datetime, timezone, timedelta
+import requests
 
 def register_url_sequences( df, url ):
     if url == "/bajacalifornia":
@@ -17,6 +19,13 @@ def register_url_cases( df, url ):
     else:
         return df.loc[df["ziptext"]!="None"]
 
+
+# TODO: Error handling needs to be performed. What date to return if can't find last commit?
+def get_last_commit_date( url ):
+    last_commit = requests.get( url ).json()["object"]["url"]
+    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
+    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
+    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
 
 def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
 
@@ -51,9 +60,11 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
     )
     def generate_page_content( path ):
         if path == "/sgtf":
-            return sgtfpage.get_layout( format_data.load_sgtf_data() )
+            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_SGTF_San-Diego/git/refs/heads/main" )
+            return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
         elif path == "/wastewater":
-            return wastepage.get_layout( format_data.load_wastewater_data() )
+            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
+            return wastepage.get_layout( format_data.load_wastewater_data(), commit_date )
         else:
             return mainpage.get_layout()
 

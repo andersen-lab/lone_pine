@@ -1,18 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
-import requests
-from datetime import datetime, timezone, timedelta
 import src.plot as dashplot
 
-
-def get_last_commit_date():
-    last_commit_url = "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master"
-    last_commit = requests.get( last_commit_url ).json()["object"]["url"]
-    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
-    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
-    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
-
-def get_layout( wastewater_data ):
+def get_layout( wastewater_data, commit_date ):
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Point 
     Loma Wastewater Treatment Plant, the main wastewater treatment facility for the city (serves roughly 2.3 million 
@@ -22,7 +12,7 @@ def get_layout( wastewater_data ):
     [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego).
     """
 
-    commit_date = get_last_commit_date()
+    #commit_date = get_last_commit_date()
     #commit_date = "December 22 @ 1:07 PM PST"
 
     layout = [

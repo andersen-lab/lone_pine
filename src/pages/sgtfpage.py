@@ -1,17 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import src.plot as dashplot
-import requests
-from datetime import datetime, timezone, timedelta
 
-def get_last_commit_date():
-    last_commit_url = "https://api.github.com/repos/andersen-lab/SARS-CoV-2_SGTF_San-Diego/git/refs/heads/main"
-    last_commit = requests.get( last_commit_url ).json()["object"]["url"]
-    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
-    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
-    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
-
-def get_layout( sgtf_data ):
+def get_layout( sgtf_data, commit_date ):
     markdown = """
     To gain insight into the spread of the Omicron variant in our community, we are working with a large number of 
     partners to track S-gene target failures (SGTFs). SGTFs are a feature of the TaqPath PCR assay that fails to detect
@@ -24,7 +15,7 @@ def get_layout( sgtf_data ):
     """
 
     #commit_date = get_last_commit_date()
-    commit_date = "December 23 @ 3:47 PM PST"
+    #commit_date = "December 23 @ 3:47 PM PST"
 
     layout = [
         html.Div(
