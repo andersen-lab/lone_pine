@@ -31,7 +31,7 @@ def download_search():
     md["collection_date"] = md["collection_date"].astype( str )
 
     # Filter out incorrect samples or wastewater
-    md = md.loc[md["ID"]!="SEARCH-104076"]
+    md = md.loc[~md["ID"].isin(["SEARCH-104076", "SEARCH-58367"])]
     #md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
 
     md = md.loc[(md["location"]=="North America/USA/California/San Diego")|(md["location"].str.startswith( "North America/Mexico/Baja California" ))]
