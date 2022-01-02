@@ -215,8 +215,8 @@ def load_sgtf_data():
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
 
-    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego.csv", parse_dates=["Collection date"] )
-    tests.columns = ["Date", "sgtf_likely", "total_positive", "percent"]
+    tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego_new.csv", parse_dates=["Date"] )
+    tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
     tests["percent"] = tests["sgtf_likely"] / tests["total_positive"]
     tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
     tests["ndays"] = tests.index
