@@ -299,8 +299,9 @@ def plot_sgtf( sgtf_data ):
     #print( plot_df[["sgtf_likely","total_positive"]].sum( axis=1 ) )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
-    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_likely"], name="SGTF", marker_color="#E69F00" ), secondary_y=False )
-    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["total_positive"] - plot_df["sgtf_likely"], name="Total positive", marker_color="#56B4E9" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_likely"], name="SGTF <=30 Ct", marker_color="#E69F00" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_unlikely"], name="SGTF >30 Ct", marker_color="#009E73" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["total_positive"] - plot_df["sgtf_likely"] - plot_df["sgtf_unlikely"], name="Total positive", marker_color="#56B4E9" ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=plot_df["Date"], y=plot_df["percent"],
                                  mode='lines',
                                  name='SGTF (%)',
