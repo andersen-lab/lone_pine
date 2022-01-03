@@ -295,7 +295,8 @@ def plot_zips( df, colorby="sequences" ):
 
 def plot_sgtf( sgtf_data ):
     plot_df = sgtf_data[0]
-    max_lim = np.round( plot_df[["sgtf_likely","total_positive"]].sum( axis=1 ).max() * 1.05 )
+    max_lim = np.round( plot_df["total_positive"].max() * 1.05 )
+    #print( plot_df[["sgtf_likely","total_positive"]].sum( axis=1 ) )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
     fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_likely"], name="SGTF", marker_color="#E69F00" ), secondary_y=False )
@@ -307,7 +308,7 @@ def plot_sgtf( sgtf_data ):
                                  line={ "color" : "#000000", "width" : 2, "dash" : "dash"} ), secondary_y=True )
     fig.update_layout( barmode='stack' )
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
-    fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True )
+    fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
 
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
