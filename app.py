@@ -9,7 +9,13 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
 app.config.suppress_callback_exceptions = True
-app.scripts.config.serve_locally = True
+app.scripts.config.serve_locally = False
+app.scripts.append_script( {
+    "external_url" : "https://www.googletagmanager.com/gtag/js?id=G-35P4705MP1"
+})
+app.scripts.append_script( {
+    "external_url" : "https://github.com/watronfire/lone_pine/blob/master/assets/gtag.js"
+})
 app.title = "San Diego sequencing dashboard"
 
 sequences = format_data.load_sequences()
