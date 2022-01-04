@@ -14,7 +14,7 @@ app.scripts.append_script( {
     "external_url" : "https://www.googletagmanager.com/gtag/js?id=G-35P4705MP1"
 })
 app.scripts.append_script( {
-    "external_url" : "https://github.com/watronfire/lone_pine/blob/master/assets/gtag.js"
+    "external_url" : "https://raw.githubusercontent.com/watronfire/lone_pine/master/assets/gtag.js"
 })
 app.title = "San Diego sequencing dashboard"
 
