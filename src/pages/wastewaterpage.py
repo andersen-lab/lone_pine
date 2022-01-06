@@ -2,7 +2,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import src.plot as dashplot
 
-def get_layout( wastewater_data, commit_date ):
+def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Point 
     Loma Wastewater Treatment Plant, the main wastewater treatment facility for the city (serves roughly 2.3 million 
@@ -26,6 +26,15 @@ def get_layout( wastewater_data, commit_date ):
                         config={"displayModeBar" : False},
                         style={"height" : "30em"}
                     ),
+                ),
+                html.Div(
+                    dcc.Graph(
+                        figure=dashplot.plot_wastewater_seqs( wastewater_seq_data ),
+                        id="wastewater-seq-graph",
+                        config={"displayModeBar" : False},
+                        style={"height" : "30em", "width" : "50em"}
+                    ),
+                    style={'width': '100%', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'}
                 )
             ]
         ),

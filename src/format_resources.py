@@ -254,4 +254,10 @@ def load_wastewater_data():
     return_df.columns = ["date", "gene_copies", "reported_cases"]
     return_df.loc[~return_df["gene_copies"].isna(),"gene_copies_rolling"] = savgol_filter( return_df["gene_copies"].dropna(), window_length=11, polyorder=2 )
     return_df.loc[~return_df["reported_cases"].isna(),"reported_cases_rolling"] = savgol_filter( return_df["reported_cases"].dropna(), window_length=7, polyorder=2 )
-    return return_df
+
+    seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"] )
+    seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]
+    seqs = seqs.dropna()
+    seqs
+
+    return return_df, seqs

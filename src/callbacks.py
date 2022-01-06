@@ -64,7 +64,7 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
             return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
-            return wastepage.get_layout( format_data.load_wastewater_data(), commit_date )
+            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date )
         else:
             return mainpage.get_layout()
 

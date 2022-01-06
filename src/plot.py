@@ -426,3 +426,51 @@ def plot_wastewater( ww ):
                                     itemsizing='constant') )
 
     return fig
+
+
+def plot_wastewater_seqs( seqs ):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=seqs["Date"], y=seqs["Omicron (%)"],
+        name="Omicron",
+        hovertemplate='%{y:.0f}%',
+        mode='lines',
+        line=dict(width=0.5, color='#56B4E9'),
+        stackgroup='one'
+    ))
+    fig.add_trace(go.Scatter(
+        x=seqs["Date"], y=seqs["Delta (%)"],
+        name="Delta",
+        hovertemplate='%{y:.0f}%',
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict(width=0.5, color='#E69F00'),
+        stackgroup='one'
+    ))
+    fig.add_trace(go.Scatter(
+        x=seqs["Date"], y=seqs["Other (%)"],
+        name="Other",
+        hovertemplate='%{y:.0f}%',
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict(width=0.5, color='#009E73'),
+        stackgroup='one'
+    ))
+    fig.update_yaxes( showgrid=True, title=f"<b>Proportion of reads</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="", showgrid=False )
+    fig.update_layout( template="simple_white",
+                       yaxis_range=(0,100),
+                       hovermode="x unified",
+                       xaxis=dict(
+                           tickformat='%B %d'
+                       ),
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":40,"l":0,"b":10},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(255,255,255,1)" ) )
+    fig.update_traces( mode="markers+lines" )
+    return fig
