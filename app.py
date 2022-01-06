@@ -6,7 +6,7 @@ import dash
 from src.callbacks import register_callbacks
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
+app = dash.Dash( __name__, external_stylesheets=external_stylesheets, title="San Diego sequencing dashboard" )
 server = app.server
 app.config.suppress_callback_exceptions = True
 app.scripts.config.serve_locally = False
@@ -16,7 +16,6 @@ app.scripts.append_script( {
 app.scripts.append_script( {
     "external_url" : "https://raw.githubusercontent.com/watronfire/lone_pine/master/assets/gtag.js"
 })
-app.title = "San Diego sequencing dashboard"
 
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()

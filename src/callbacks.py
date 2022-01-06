@@ -235,3 +235,22 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
     )
     def enable_zip_graph( url ):
         return url=="/bajacalifornia"
+
+    # This is I guess the way to change the title dynamically. Fingers crossed.
+    app.clientside_callback(
+        """
+        function(url) {
+            if (url === '/bajacalifornia') {
+                document.title = 'Baja California sequencing dashboard'
+            } else if (url === '/sgtf') {
+                document.title = 'San Diego Omicron dashboard'
+            } else if (url === '/wastewater' ) {
+                document.title = 'San Diego wastewater dashboard'
+            } else {
+                document.title = "San Diego sequencing dashboard"
+            }
+        }
+        """,
+        Output( "hidden-div", "children"),
+        Input( "url", "pathname" )
+    )
