@@ -393,28 +393,32 @@ def plot_wastewater( ww ):
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies"],
                                  name="Viral load in wastewater",
                                  mode="markers",
+                                 hoverinfo='skip',
                                  marker={"color" : "#56B4E9", "size" : 8 } ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies_rolling"],
                                  showlegend=False,
                                  name="Viral load in wastewater",
                                  mode="lines",
+                                 hovertemplate="%{y:,.0f}",
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
                                  name="Reported cases",
                                  mode="markers",
+                                 hoverinfo='skip',
                                  marker={"color" : "#D55E00", "size" : 8 } ), secondary_y=True )
     fig.add_trace( go.Scattergl( x=ww.dropna()["date"], y=ww.dropna()["reported_cases_rolling"],
                                  name="Reported cases",
                                  mode="lines",
+                                 hovertemplate="%{y:,.0f}",
                                  showlegend=False,
                                  line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", secondary_y=False, showline=False, ticks="" )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", secondary_y=True, showline=False, ticks="" )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", secondary_y=False, showline=False, ticks="", type="log" )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", secondary_y=True, showline=False, ticks="", type="log" )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
 
     fig.update_layout( template="simple_white",
-                       hovermode="closest",
+                       hovermode="x unified",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
@@ -429,9 +433,11 @@ def plot_wastewater( ww ):
 
 
 def plot_wastewater_seqs( seqs ):
+    seqs["Other (%)"] = 100 - seqs["Delta (%)"] - seqs["Omicron (%)"]
+    seqs = seqs.loc[~seqs["Other (%)"].isna()]
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=seqs["Date"], y=seqs["Omicron (%)"],
+        x=seqs.index, y=seqs["Omicron (%)"],
         name="Omicron",
         hovertemplate='%{y:.0f}%',
         mode='lines',
@@ -439,7 +445,7 @@ def plot_wastewater_seqs( seqs ):
         stackgroup='one'
     ))
     fig.add_trace(go.Scatter(
-        x=seqs["Date"], y=seqs["Delta (%)"],
+        x=seqs.index, y=seqs["Delta (%)"],
         name="Delta",
         hovertemplate='%{y:.0f}%',
         hoverinfo='x+y',
@@ -448,7 +454,7 @@ def plot_wastewater_seqs( seqs ):
         stackgroup='one'
     ))
     fig.add_trace(go.Scatter(
-        x=seqs["Date"], y=seqs["Other (%)"],
+        x=seqs.index, y=seqs["Other (%)"],
         name="Other",
         hovertemplate='%{y:.0f}%',
         hoverinfo='x+y',
@@ -471,3 +477,35 @@ def plot_wastewater_seqs( seqs ):
                                     bgcolor="rgba(255,255,255,1)" ) )
     fig.update_traces( mode="markers+lines" )
     return fig
+
+#def plot_wastewater_seqs( seqs ):
+#    df = seqs.drop( columns=['Delta (%)','Omicron (%)'] )
+#    df = df.dropna( axis = 0, how = 'all' ).fillna( 0 )
+#    df['Other'] = 100. - df.sum( axis=1 )
+#    interval='D'
+#    df = df.groupby( pd.Grouper( freq=interval ) ).mean()
+#    df = df.rolling( 14, center=True, min_periods=0 ).mean()
+#    df = df.reindex( columns=df.sum().sort_values(ascending=False ).index )
+#
+#    fig = go.Figure()
+#    for lin in df.columns:
+#        fig.add_trace( go.Scatter(
+#            x=df.index, y=df.loc[:,lin],
+#            hoverinfo='x+y',
+#            hovertemplate='%{y:.0f}%',
+#            mode='lines',
+#            name=lin,
+#            line=dict(width=0.5),
+#            stackgroup='one' # define stack group
+#        ) )
+#
+#    fig.update_yaxes( showgrid=True, title=f"<b>Lineage prevalence</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+#    fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
+#    fig.update_layout( template="simple_white",
+#                       #yaxis_range=(0,100),
+#                       hovermode="closest",
+#                       plot_bgcolor="#ffffff",
+#                       paper_bgcolor="#ffffff",
+#                       margin={"r":0,"t":40,"l":0,"b":10},
+#                       legend=dict( bgcolor="rgba(255,255,255,1)" ) )
+#    return fig
