@@ -257,7 +257,6 @@ def load_wastewater_data():
 
     seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"] )
     seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]
-    seqs = seqs.dropna()
-    seqs
+    seqs = seqs.loc[~seqs["Other (%)"].isna()]
 
     return return_df, seqs

@@ -410,7 +410,7 @@ def plot_wastewater( ww ):
                                  line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
 
     fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", secondary_y=False, showline=False, ticks="" )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported Cases</b>", secondary_y=True, showline=False, ticks="" )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", secondary_y=True, showline=False, ticks="" )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
 
     fig.update_layout( template="simple_white",
@@ -456,14 +456,11 @@ def plot_wastewater_seqs( seqs ):
         line=dict(width=0.5, color='#009E73'),
         stackgroup='one'
     ))
-    fig.update_yaxes( showgrid=True, title=f"<b>Proportion of reads</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
-    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="", showgrid=False )
+    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+    fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
     fig.update_layout( template="simple_white",
                        yaxis_range=(0,100),
                        hovermode="x unified",
-                       xaxis=dict(
-                           tickformat='%B %d'
-                       ),
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
                        margin={"r":0,"t":40,"l":0,"b":10},
