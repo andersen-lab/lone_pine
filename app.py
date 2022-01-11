@@ -6,7 +6,7 @@ import dash
 from src.callbacks import register_callbacks
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash( __name__, external_stylesheets=external_stylesheets, title="San Diego sequencing dashboard" )
+app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
 app.config.suppress_callback_exceptions = True
 app.scripts.config.serve_locally = False
@@ -37,4 +37,4 @@ app.layout = html.Div( children=[
 )
 
 if __name__ == '__main__':
-    app.run_server( debug=True )
+    app.run_server( debug=False )
