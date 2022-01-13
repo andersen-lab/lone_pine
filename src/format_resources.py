@@ -166,6 +166,7 @@ def get_lineage_values( seqs ):
     values = values.sort_values().unique()
 
     return_dict = [{"label" : "All variants of concern", "value" : "all-voc" },
+                   {"label" : "All Delta lineages", "value" : "all-delta" },
                    {"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
     for i in sorted( VOC.keys() ):
         if i in values:

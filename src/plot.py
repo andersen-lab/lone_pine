@@ -190,7 +190,7 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
 
     return fig
 
-def plot_voc( df, scaleby="fractions" ):
+def plot_voc( df, scaleby="fraction" ):
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 ).T
     plot_df["VOC"] = plot_df.index.map( VOC )
     plot_df.loc[plot_df["VOC"].isna(),"VOC"] = "Other"
@@ -227,6 +227,50 @@ def plot_voc( df, scaleby="fractions" ):
         fig.update_layout( yaxis_tickformat='.1%',
                            legend=dict( bgcolor="white" ) )
     return fig
+
+def plot_delta( df, scaleby="fraction" ):
+    plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 ).T
+    plot_df["VOC"] = plot_df.index.map( VOC )
+    plot_df.loc[plot_df["VOC"].isna(),"VOC"] = "Other"
+
+    other_df = plot_df.loc[~plot_df["VOC"].str.startswith( "Delta" )]
+    other_df = other_df.drop( columns="VOC" ).sum()
+    other_df.name = "Other"
+
+    delta_df = plot_df.loc[plot_df["VOC"].str.startswith( "Delta" )]
+    delta_df = delta_df.drop( columns="VOC" ).T
+    delta_df = delta_df.reindex( columns=delta_df.sum().sort_values( ascending=False ).index )
+    delta_top = delta_df.iloc[:,:5]
+    delta_bottom = delta_df.iloc[:,5:].sum( axis=1)
+    delta_bottom.name = "Other"
+    delta_df = pd.concat( [delta_top, delta_bottom], axis=1 )
+    delta_df = delta_df.rename(columns={"Other" : "Other Delta lineages"} )
+
+    plot_df = pd.concat( [delta_df,other_df], axis=1 )
+
+    yaxis_label = "Sequences"
+    if scaleby == "fraction":
+        plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1 )
+        yaxis_label += " (%)"
+
+    max_lim = np.round( plot_df.sum( axis=1 ).max() * 1.05 )
+
+    fig = go.Figure()
+    for i, j in enumerate( plot_df ):
+        if j == "Other":
+            color = "#767676"
+        else:
+            color = px.colors.colorbrewer.Set2[i]
+        fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
+
+    fig.update_layout( barmode='stack' )
+    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0, max_lim] )
+    fig.update_xaxes( range=get_date_limits( plot_df.index ))
+    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
+    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
+
+    return fig
+
 
 def plot_lineages( df ):
 

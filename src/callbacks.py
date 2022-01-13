@@ -22,10 +22,13 @@ def register_url_cases( df, url ):
 
 # TODO: Error handling needs to be performed. What date to return if can't find last commit?
 def get_last_commit_date( url ):
-    last_commit = requests.get( url ).json()["object"]["url"]
-    last_commit_date = requests.get( last_commit ).json()["author"]["date"]
-    last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
-    return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
+    try:
+        last_commit = requests.get( url ).json()["object"]["url"]
+        last_commit_date = requests.get( last_commit ).json()["author"]["date"]
+        last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
+        return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
+    except KeyError:
+        return "processing..."
 
 def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
 
@@ -207,6 +210,8 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
 
         if lineage == "all-voc":
             return dashplot.plot_voc( new_sequences, scaleby )
+        elif lineage == "all-delta":
+            return dashplot.plot_delta( new_sequences, scaleby )
         else:
             return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
 
