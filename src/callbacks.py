@@ -209,9 +209,9 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
         new_sequences = get_sequences( sequences, url, window, provider, sequencer, zip_f )
 
         if lineage == "all-voc":
-            return dashplot.plot_voc( new_sequences, scaleby )
+            return dashplot.plot_voc( new_sequences, scaleby, focus="VOC" )
         elif lineage == "all-delta":
-            return dashplot.plot_delta( new_sequences, scaleby )
+            return dashplot.plot_voc( new_sequences, scaleby, focus="Delta" )
         else:
             return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
 

@@ -190,17 +190,35 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
 
     return fig
 
-def plot_voc( df, scaleby="fraction" ):
+def plot_voc( df, scaleby="fraction", focus="VOC" ):
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="state", aggfunc="count", fill_value=0 ).T
     plot_df["VOC"] = plot_df.index.map( VOC )
     plot_df.loc[plot_df["VOC"].isna(),"VOC"] = "Other"
-    plot_df = plot_df.groupby( "VOC" ).agg( "sum" ).T
 
-    order = plot_df.sum().sort_values( ascending=False ).index.to_list()
-    order.remove( "Other" )
-    order.append( "Other" )
+    if focus != "VOC":
+        other_df = plot_df.loc[~plot_df["VOC"].str.startswith( focus )]
+        other_df = other_df.drop( columns="VOC" ).sum()
+        other_df.name = "Other"
 
-    plot_df = plot_df.reindex( columns=order )
+        focus_df = plot_df.loc[plot_df["VOC"].str.startswith( focus )]
+        focus_df = focus_df.drop( columns="VOC" ).T
+        focus_df = focus_df.reindex( columns=focus_df.sum().sort_values( ascending=False ).index )
+        focus_top = focus_df.iloc[:,:5]
+        focus_bottom = focus_df.iloc[:,5:].sum( axis=1)
+        focus_bottom.name = "Other"
+        focus_df = pd.concat( [focus_top, focus_bottom], axis=1 )
+        focus_df = focus_df.rename(columns={"Other" : f"Other {focus} lineages"} )
+
+        plot_df = pd.concat( [focus_df,other_df], axis=1 )
+
+    else:
+        plot_df = plot_df.groupby( "VOC" ).agg( "sum" ).T
+
+        order = plot_df.sum().sort_values( ascending=False ).index.to_list()
+        order.remove( "Other" )
+        order.append( "Other" )
+
+        plot_df = plot_df.reindex( columns=order )
 
     yaxis_label = "Sequences"
     if scaleby == "fraction":
