@@ -500,11 +500,11 @@ def plot_wastewater( ww ):
 
 
 def plot_wastewater_seqs( seqs ):
-    seqs["Other (%)"] = 100 - seqs["Delta (%)"] - seqs["Omicron (%)"]
-    seqs = seqs.loc[~seqs["Other (%)"].isna()]
+    seqs["Other"] = 100 - seqs["Delta"] - seqs["Omicron"]
+    seqs = seqs.loc[~seqs["Other"].isna()]
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Omicron (%)"],
+        x=seqs.index, y=seqs["Omicron"],
         name="Omicron",
         hovertemplate='%{y:.0f}%',
         mode='lines',
@@ -512,7 +512,7 @@ def plot_wastewater_seqs( seqs ):
         stackgroup='one'
     ))
     fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Delta (%)"],
+        x=seqs.index, y=seqs["Delta"],
         name="Delta",
         hovertemplate='%{y:.0f}%',
         hoverinfo='x+y',
@@ -521,7 +521,7 @@ def plot_wastewater_seqs( seqs ):
         stackgroup='one'
     ))
     fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Other (%)"],
+        x=seqs.index, y=seqs["Other"],
         name="Other",
         hovertemplate='%{y:.0f}%',
         hoverinfo='x+y',
