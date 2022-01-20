@@ -479,8 +479,8 @@ def plot_wastewater( ww ):
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
 
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", secondary_y=False, showline=False, ticks="", type="log" )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", secondary_y=True, showline=False, ticks="", type="log" )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type="log" )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type="log" )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
 
     fig.update_layout( template="simple_white",
