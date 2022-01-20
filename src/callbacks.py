@@ -29,7 +29,8 @@ def get_last_commit_date( url ):
         last_date = last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
         return f"Updated at {last_date}"
     except KeyError:
-        return "Updating at the moment..."
+        #return "Updating at the moment..."
+        return ""
 
 def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
 
