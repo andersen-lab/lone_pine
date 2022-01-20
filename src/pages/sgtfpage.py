@@ -52,7 +52,7 @@ def get_layout( sgtf_data, commit_date ):
             className="row" ),
         html.Br(),
         html.Br(),
-        html.P( html.I( f"Updated on {commit_date}" ), style={ 'textAlign': 'center' })
+        html.P( html.I(commit_date ), style={ 'textAlign': 'center' })
     ]
 
     return layout

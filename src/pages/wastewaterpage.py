@@ -42,7 +42,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
         ),
         html.Br(),
         html.Br(),
-        html.P( html.I( f"Updated on {commit_date}" ), style={ 'textAlign': 'center' } )
+        html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
     ]
 
     return layout

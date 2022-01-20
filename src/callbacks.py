@@ -26,9 +26,10 @@ def get_last_commit_date( url ):
         last_commit = requests.get( url ).json()["object"]["url"]
         last_commit_date = requests.get( last_commit ).json()["author"]["date"]
         last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
-        return last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
+        last_date = last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
+        return f"Updated at {last_date}"
     except KeyError:
-        return "processing..."
+        return "Updating at the moment..."
 
 def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
 
