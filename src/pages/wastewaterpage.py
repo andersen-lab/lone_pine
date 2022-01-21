@@ -20,7 +20,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
         html.Div(
             [
                 dcc.Markdown( markdown ),
-                html.Br(),
+                html.P(),
                 html.P( children=[
                 "The following graph compares ",
                 html.Strong( "viral load in wastewater", style={"color" : "#56B4E9"} ),
