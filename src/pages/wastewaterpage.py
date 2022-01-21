@@ -27,7 +27,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                 " to ",
                 html.Strong( "reported cases", style={"color" : "#D55E00"} ),
                 " in San Diego county. Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. "
-                "Hoverover text displays raw values only."
+                "Hover-over text displays raw values only."
                 ] ),
                 html.Div(
                     dcc.Graph(
