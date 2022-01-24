@@ -167,6 +167,7 @@ def get_lineage_values( seqs ):
 
     return_dict = [{"label" : "All variants of concern", "value" : "all-voc" },
                    {"label" : "All Delta lineages", "value" : "all-delta" },
+                   {"label" : "All Omicron lineages", "value" : "all-omicron" },
                    {"label" : " - Variants of concern" , "value" : "None", "disabled" : True}]
     for i in sorted( VOC.keys() ):
         if i in values:

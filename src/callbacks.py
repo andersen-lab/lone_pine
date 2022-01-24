@@ -214,6 +214,8 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
             return dashplot.plot_voc( new_sequences, scaleby, focus="VOC" )
         elif lineage == "all-delta":
             return dashplot.plot_voc( new_sequences, scaleby, focus="Delta" )
+        elif lineage == "all-omicron":
+            return dashplot.plot_voc( new_sequences, scaleby, focus="Omicron" )
         else:
             return dashplot.plot_lineages_time( new_sequences, lineage, scaleby )
 
