@@ -500,17 +500,20 @@ def plot_wastewater( ww ):
 
 
 def plot_wastewater_seqs( seqs ):
-    seqs["Other"] = 100 - seqs["Delta"] - seqs["Omicron"]
-    seqs = seqs.loc[~seqs["Other"].isna()]
+    omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
+    seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
+    seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
     fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Omicron"],
-        name="Omicron",
-        hovertemplate='%{y:.0f}%',
-        mode='lines',
-        line=dict(width=0.5, color='#56B4E9'),
-        stackgroup='one'
-    ))
+    for i in zip( seqs.columns[seqs.columns.isin( VOC )], px.colors.sequential.Blues[5:] ):
+        fig.add_trace( go.Scatter(
+            x=seqs.index, y=seqs[i[0]],
+            name=f"{i[0]} (Omicron)",
+            hovertemplate='%{y:.0f}%',
+            mode='lines',
+            line=dict( width=0.5, color=i[1] ),
+            stackgroup='one'
+        ) )
+
     fig.add_trace(go.Scatter(
         x=seqs.index, y=seqs["Delta"],
         name="Delta",
