@@ -503,8 +503,10 @@ def plot_wastewater_seqs( seqs ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
+    blues = px.colors.sequential.Blues
+    palette = [blues[3], blues[5], blues[7]]
     fig = go.Figure()
-    for i in zip( seqs.columns[seqs.columns.isin( VOC )], px.colors.sequential.Blues[5:] ):
+    for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
         fig.add_trace( go.Scatter(
             x=seqs.index, y=seqs[i[0]],
             name=f"{i[0]} (Omicron)",
