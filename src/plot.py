@@ -28,6 +28,7 @@ def _add_date_formating( fig, minimum, maximum ):
     fig.update_yaxes( mirror=True )
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
+                       xaxis=dict( hoverformat="%B %d, %Y" ),
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
@@ -80,11 +81,13 @@ def plot_cummulative_cases_seqs( df ):
     fig.add_trace( go.Scattergl( x=df["date"], y=df["cases"],
                                mode='lines',
                                name='Reported',
+                               hovertemplate='%{y:,.0f}',
                                line={ "color" : '#767676', "width" : 4 } ) )
     fig.add_trace(go.Scattergl(x=df["date"], y=df["sequences"],
-                             mode='lines',
-                             name='Sequenced',
-                             line={ "color" : "#DFB377", "width" : 4 } ) )
+                               mode='lines',
+                               name='Sequenced',
+                               hovertemplate='%{y:,.0f}',
+                               line={ "color" : "#DFB377", "width" : 4 } ) )
 
     _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max() )
     min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
@@ -178,9 +181,8 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
         plot_df = plot_df.set_index( "epiweek" )
 
     fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
-    fig.update_layout(barmode='stack')
+    fig.update_layout(barmode='stack' )
     fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0,max_lim] )
-
     fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
     _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
 
@@ -284,9 +286,9 @@ def plot_delta( df, scaleby="fraction" ):
     fig.update_layout( barmode='stack' )
     fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0, max_lim] )
     fig.update_xaxes( range=get_date_limits( plot_df.index ))
-    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
-    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
 
+    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
+    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
     return fig
 
 
