@@ -39,7 +39,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                 ),
                 html.Div(
                     dcc.Graph(
-                        figure=dashplot.plot_wastewater_seqs( wastewater_seq_data ),
+                        figure=dashplot.plot_wastewater_seqs( wastewater_data, wastewater_seq_data ),
                         id="wastewater-seq-graph",
                         config={"displayModeBar" : False},
                         style={"height" : "30em", "width" : "50em"}

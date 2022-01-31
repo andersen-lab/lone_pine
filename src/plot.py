@@ -14,7 +14,7 @@ from src.variants import VOC, VOI
 #      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
 
 
-def _add_date_formating( fig, minimum, maximum ):
+def _add_date_formating( fig, minimum, maximum, skip=1 ):
     min_date = pd.to_datetime( f"{minimum.year}-{minimum.month}-01" )
     maximum += pd.DateOffset( months=1 )
     max_date = pd.to_datetime( f"{maximum.year}-{maximum.month}-01" )
@@ -24,7 +24,7 @@ def _add_date_formating( fig, minimum, maximum ):
     for i in intervals[::2]:
         fig.add_vrect( x0=i.left, x1=i.right, fillcolor="#EFEFEF", opacity=1, layer="below" )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True )
+    fig.update_xaxes( dtick=f"M{skip}", tickformat="%b\n%Y", tickangle=0, mirror=True )
     fig.update_yaxes( mirror=True )
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
@@ -67,7 +67,7 @@ def plot_daily_cases_seqs( df ):
                                name='Daily Sequences',
                                marker={ "color" : "#DFB377"} ) )
 
-    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max() )
+    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max(), skip=2 )
     min_lim = np.floor( np.log10( 0.75 ) )
     max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
@@ -89,7 +89,7 @@ def plot_cummulative_cases_seqs( df ):
                                hovertemplate='%{y:,.0f}',
                                line={ "color" : "#DFB377", "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max() )
+    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max(), skip=2 )
     min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
@@ -112,7 +112,7 @@ def plot_cummulative_sampling_fraction( df ):
                                  name='Fraction',
                                  line={ "color" : '#767676', "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=plot_df["epiweek"].min(), maximum=plot_df["epiweek"].max() )
+    _add_date_formating( fig, minimum=plot_df["epiweek"].min(), maximum=plot_df["epiweek"].max(), skip=2 )
 
     fig.update_layout(  yaxis_tickformat='.1%' )
 
@@ -501,27 +501,37 @@ def plot_wastewater( ww ):
     return fig
 
 
-def plot_wastewater_seqs( seqs ):
+def plot_wastewater_seqs( ww_data, seqs ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
+
+    #seqs = seqs.merge( ww_data[["date", "gene_copies_rolling"]], left_index=True, right_on="date", how="left" )
+    #seqs = seqs.rename( columns={"date" : "Date"} )
+    #seqs = seqs.dropna()
+    #seqs = seqs.set_index( "Date" )
+    #seqs = seqs.loc[:,seqs.columns != "gene_copies_rolling"].apply( lambda x: (x/100) * seqs["gene_copies_rolling"] )
+
+    ht = '%{y:.0f}%'
+    #ht = '%{y:.0f}'
+
     blues = px.colors.sequential.Blues
     palette = [blues[3], blues[5], blues[7]]
     fig = go.Figure()
+
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
         fig.add_trace( go.Scatter(
             x=seqs.index, y=seqs[i[0]],
             name=f"{i[0]} (Omicron)",
-            hovertemplate='%{y:.0f}%',
+            hovertemplate=ht,
             mode='lines',
             line=dict( width=0.5, color=i[1] ),
             stackgroup='one'
         ) )
-
     fig.add_trace(go.Scatter(
         x=seqs.index, y=seqs["Delta"],
         name="Delta",
-        hovertemplate='%{y:.0f}%',
+        hovertemplate=ht,
         hoverinfo='x+y',
         mode='lines',
         line=dict(width=0.5, color='#E69F00'),
@@ -530,16 +540,17 @@ def plot_wastewater_seqs( seqs ):
     fig.add_trace(go.Scatter(
         x=seqs.index, y=seqs["Other"],
         name="Other",
-        hovertemplate='%{y:.0f}%',
+        hovertemplate=ht,
         hoverinfo='x+y',
         mode='lines',
         line=dict(width=0.5, color='#009E73'),
         stackgroup='one'
     ))
-    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+
+    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0,100], tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+    #fig.update_yaxes( showgrid=True, title=f"<b>Variant copies / Liter</b>", tickformat='.0', showline=False, ticks="" )
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
     fig.update_layout( template="simple_white",
-                       yaxis_range=(0,100),
                        hovermode="x unified",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
