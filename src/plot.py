@@ -516,7 +516,7 @@ def plot_wastewater_seqs( ww_data, seqs ):
     #ht = '%{y:.0f}'
 
     blues = px.colors.sequential.Blues
-    palette = [blues[3], blues[5], blues[7]]
+    palette = [blues[2], blues[4], blues[6], blues[8]]
     fig = go.Figure()
 
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
