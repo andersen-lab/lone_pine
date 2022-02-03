@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 import src.format_resources as format_data
 import dash
 from src.callbacks import register_callbacks
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = [dbc.themes.ZEPHYR]
 app = dash.Dash( __name__, external_stylesheets=external_stylesheets )
 server = app.server
 app.config.suppress_callback_exceptions = True

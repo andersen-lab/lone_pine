@@ -29,6 +29,7 @@ def get_layout( sgtf_data, commit_date ):
                             config={"displayModeBar" : False},
                             style={"height" : "30em"}
                         ),
+                        style={ 'width': '49%', 'display': 'inline-block' },
                         className="six columns",
                     ),
                     html.Div(
@@ -39,6 +40,7 @@ def get_layout( sgtf_data, commit_date ):
                             style={ "height" : "30em",
                                     "marginLeft" : "20px" }
                         ),
+                        style={ 'width': '49%', 'display': 'inline-block' },
                         className="six columns",
                     )
                 ],

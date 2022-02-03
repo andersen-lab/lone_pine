@@ -1,4 +1,5 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 def get_layout():
     layout = [
@@ -41,7 +42,7 @@ def get_layout():
                     dcc.Dropdown( id = 'sequencer-drop',
                                   multi=False,
                                   placeholder="All",
-                                  style={"margin" : "1%", "font-size" : "85%" }
+                                  style={"margin" : "1%", "fontSize" : "12px" }
                                   )
                 ],
                     style={ "float" : "left", "width" : "25%" } ),
@@ -61,7 +62,7 @@ def get_layout():
         ],
             style={ "marginLeft" : "auto",
                     "marginRight" : "auto",
-                    "backgroundColor" : "#5A71A2"},
+                    "backgroundColor" : "#3C5C94"},
             className="pretty_container_rounded row"
         ),
         html.Div( [
@@ -72,7 +73,7 @@ def get_layout():
                     style={ "height" : "25em" }
                 ),
                 className="pretty_container four columns",
-                style={"flexGrow" : "1"}
+                style={'width': '32%', 'display': 'inline-block'}
             ),
             html.Div(
                 dcc.Graph(
@@ -81,7 +82,7 @@ def get_layout():
                     style={ "height" : "25em" }
                 ),
                 className="pretty_container four columns",
-                style={"flexGrow" : "1"}
+                style={'width': '32%', 'display': 'inline-block', }
 
             ),
             html.Div(
@@ -91,7 +92,7 @@ def get_layout():
                     style={ "height" : "25em" }
                 ),
                 className="pretty_container four columns",
-                style={"flexGrow" : "1"}
+                style={"width": '33%', "display": "inline-block"}
             ),
         ], className="row",
             style={ "marginLeft" : "auto",
@@ -106,16 +107,22 @@ def get_layout():
                               multi=False,
                               placeholder="All lineages"
                               ),
+                style={'width': '30%', 'display': 'inline-block'},
                 className="three columns" ),
             html.Div(
-                dcc.RadioItems(
-                    id='lineage-type',
-                    options=[{ 'label': "Total", 'value': 'sequences' },
-                             { 'label': "Fraction", 'value': "fraction" }],
-                    value='sequences',
-                    labelStyle={ 'display': 'inline-block' }
+                dbc.RadioItems(
+                    id="lineage-type",
+                    className="btn-group",
+                    inputClassName="btn-check",
+                    labelClassName="btn btn-outline-primary",
+                    labelCheckedClassName="active",
+                    options=[
+                        { 'label': "Total", 'value': 'sequences' },
+                        { 'label': "Fraction", 'value': "fraction" },
+                    ],
+                    value="sequences",
                 ),
-                style={"marginLeft" : "15px", "marginTop" : "7px" },
+                style={ 'width': '49%', 'display': 'inline-block'},
                 className="three columns" )
         ],
             className="row"
