@@ -3,7 +3,7 @@ import src.format_resources as format_data
 import src.pages.mainpage as mainpage
 import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
-from dash.dependencies import Input, Output
+from dash import  Input, Output
 from datetime import datetime, timezone, timedelta
 import requests
 

@@ -1,5 +1,4 @@
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import html, dcc
 import src.plot as dashplot
 
 def get_layout( sgtf_data, commit_date ):

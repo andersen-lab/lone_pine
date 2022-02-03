@@ -1,7 +1,6 @@
-import geopandas as gpd
 import numpy as np
 import pandas as pd
-import dash_html_components as html
+from dash import html
 from src.variants import VOC, VOI
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
@@ -108,34 +107,6 @@ def get_seqs( seq_md, groupby="collection_date", zip_f=None ):
         seqs.columns = ["zip", "sequences"]
 
     return seqs
-
-def format_shapefile( cases, seqs ):
-    """ Downloads and formats the San Diego ZIP GeoJSON formatted as a dictionary.
-    Parameters
-    ----------
-    cases : pandas.DataFrame
-        output of download_cases() containing the cummulative cases for each ZIP code.
-    seqs : pandas.DataFrame
-        output of download_search() containing a list of sequences with ZIP code information.
-    Returns
-    -------
-    geopandas.GeoDataFrame:
-        GeoDataFrame linking ZIP code areas to case counts, sequences, and fraction of cases sequenced.
-    """
-    zip_area = gpd.read_file( "resources/zips.geojson")
-
-    # Add case data so it is there...
-    zip_area = zip_area.merge( cases, left_on="ZIP", right_on="ziptext" )
-    zip_area = zip_area.merge( get_seqs( seqs, groupby="zipcode" ), left_on="ZIP", right_on="zip", how="left" )
-    zip_area["sequences"] = zip_area["sequences"].fillna( 0 )
-    zip_area["fraction"] = zip_area["sequences"] / zip_area["case_count"]
-    zip_area.loc[zip_area["fraction"].isna(),"fraction"] = 0
-    zip_area = zip_area.set_index( "ZIP" )
-
-    # Removing a number of columns to save memory.
-    zip_area = zip_area[["geometry", "case_count","sequences", "fraction"]]
-
-    return zip_area
 
 def format_zip_summary( cases, seqs ):
     """ Merges cummulate cases and sequences for each ZIP code.
