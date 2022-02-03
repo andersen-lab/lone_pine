@@ -481,8 +481,8 @@ def plot_wastewater( ww ):
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
 
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type="log" )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type="log" )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="" )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="" )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
 
     fig.update_layout( template="simple_white",
@@ -517,6 +517,7 @@ def plot_wastewater_seqs( ww_data, seqs ):
 
     blues = px.colors.sequential.Blues
     palette = [blues[2], blues[4], blues[6], blues[8]]
+    #palette = ["#2b8cbe", "#7bccc4", "#bae4bc", "#f0f9e8"]
     fig = go.Figure()
 
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
