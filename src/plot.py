@@ -485,12 +485,36 @@ def plot_wastewater( ww ):
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="" )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
 
+    updatemenus = list( [
+        dict( active=0,
+              type="buttons",
+              direction="left",
+              name="Scale",
+              xanchor="right",
+              x=0.94,
+              yanchor="top",
+              y=1.1,
+              buttons=[
+                  dict( label='Linear Scale',
+                        method='relayout',
+                        args=[{ "yaxis.type": "linear",
+                                "yaxis2.type": "linear" }] ),
+                  dict( label='Log Scale',
+                        method='relayout',
+                        args=[{"yaxis.type": "log",
+                               "yaxis2.type" : "log"}] ),
+
+              ],
+              )
+    ] )
+
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
                        xaxis=dict( hoverformat="%B %d, %Y" ),
+                       updatemenus=updatemenus,
                        legend=dict( yanchor="top",
                                     y=0.99,
                                     xanchor="left",
