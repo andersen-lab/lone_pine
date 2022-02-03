@@ -33,7 +33,7 @@ app.layout = html.Div( children=[
 ],
     style={ "marginLeft" : "auto",
             "marginRight" : "auto",
-            "maxWidth" : "80em" }
+            "maxWidth" : "77em" }
 )
 
 if __name__ == '__main__':

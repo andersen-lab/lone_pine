@@ -1,4 +1,5 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 import src.plot as dashplot
 
 def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
@@ -36,6 +37,24 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                         style={"height" : "30em"}
                     ),
                 ),
+                #html.Div(
+                #    [
+                #        dbc.RadioItems(
+                #            id="radios",
+                #            className="btn-group",
+                #            inputClassName="btn-check",
+                #            labelClassName="btn btn-outline-primary",
+                #            labelCheckedClassName="active",
+                #            options=[
+                #                { "label": "Raw prevalance", "value": "prevalence" },
+                #                { "label": "Scale by viral load", "value": "viral" },
+                #                { "label": "Scale by cases", "value": "cases" },
+                #            ],
+                #            value=1,
+                #        ),
+                #    ],
+                #    className="radio-group",
+                #),
                 html.Div(
                     dcc.Graph(
                         figure=dashplot.plot_wastewater_seqs( wastewater_data, wastewater_seq_data ),
