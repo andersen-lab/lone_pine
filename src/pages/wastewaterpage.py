@@ -73,7 +73,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                                         labelClassName="btn btn-outline-primary",
                                         labelCheckedClassName="active",
                                         options=[
-                                            { "label": "Raw prevalance", "value": "prevalence" },
+                                            { "label": "Prevalence", "value": "prevalence" },
                                             { "label": "Scale by viral load", "value": "viral" },
                                             { "label": "Scale by cases", "value": "cases" },
                                         ],
