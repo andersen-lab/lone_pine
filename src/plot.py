@@ -14,6 +14,19 @@ from src.variants import VOC, VOI
 #      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
 
 
+def _add_date_formatting_minimum( fig ):
+    fig.update_layout( template="simple_white",
+                       hovermode="x unified",
+                       xaxis=dict( hoverformat="%B %d, %Y" ),
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={"r":0,"t":0,"l":0,"b":0},
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)" ) )
+
 def _add_date_formating( fig, minimum, maximum, skip=1 ):
     min_date = pd.to_datetime( f"{minimum.year}-{minimum.month}-01" )
     maximum += pd.DateOffset( months=1 )
@@ -26,17 +39,7 @@ def _add_date_formating( fig, minimum, maximum, skip=1 ):
 
     fig.update_xaxes( dtick=f"M{skip}", tickformat="%b\n%Y", tickangle=0, mirror=True )
     fig.update_yaxes( mirror=True )
-    fig.update_layout( template="simple_white",
-                       hovermode="x unified",
-                       xaxis=dict( hoverformat="%B %d, %Y" ),
-                       plot_bgcolor="#ffffff",
-                       paper_bgcolor="#ffffff",
-                       margin={"r":0,"t":0,"l":0,"b":0},
-                       legend=dict( yanchor="top",
-                                    y=0.99,
-                                    xanchor="left",
-                                    x=0.01,
-                                    bgcolor="rgba(0,0,0,0)" ) )
+    _add_date_formatting_minimum( fig )
 
 def get_date_limits( series ):
     # Max
@@ -454,7 +457,7 @@ def plot_sgtf_estiamte( sgtf_data ):
 
     return fig
 
-def plot_wastewater( ww ):
+def plot_wastewater( ww, scale="linear" ):
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
 
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
@@ -481,32 +484,9 @@ def plot_wastewater( ww ):
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
 
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="" )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="" )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type=scale )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
-
-    updatemenus = list( [
-        dict( active=0,
-              type="buttons",
-              direction="left",
-              name="Scale",
-              xanchor="right",
-              x=0.94,
-              yanchor="top",
-              y=1.1,
-              buttons=[
-                  dict( label='Linear Scale',
-                        method='relayout',
-                        args=[{ "yaxis.type": "linear",
-                                "yaxis2.type": "linear" }] ),
-                  dict( label='Log Scale',
-                        method='relayout',
-                        args=[{"yaxis.type": "log",
-                               "yaxis2.type" : "log"}] ),
-
-              ],
-              )
-    ] )
 
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
@@ -514,7 +494,6 @@ def plot_wastewater( ww ):
                        paper_bgcolor="#ffffff",
                        margin={"r":0,"t":0,"l":0,"b":0},
                        xaxis=dict( hoverformat="%B %d, %Y" ),
-                       updatemenus=updatemenus,
                        legend=dict( yanchor="top",
                                     y=0.99,
                                     xanchor="left",
@@ -525,16 +504,68 @@ def plot_wastewater( ww ):
     return fig
 
 
-def plot_wastewater_seqs( ww_data, seqs ):
+def plot_wastewater_seqs_estimates( ww_data, seqs, norm_type="viral" ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
 
-    #seqs = seqs.merge( ww_data[["date", "gene_copies_rolling"]], left_index=True, right_on="date", how="left" )
-    #seqs = seqs.rename( columns={"date" : "Date"} )
-    #seqs = seqs.dropna()
-    #seqs = seqs.set_index( "Date" )
-    #seqs = seqs.loc[:,seqs.columns != "gene_copies_rolling"].apply( lambda x: (x/100) * seqs["gene_copies_rolling"] )
+    if norm_type == "viral":
+        norm = "gene_copies_rolling"
+        yaxis_label = "<b>Variant copies / Liter</b>"
+        ht = "%{y:.0f}"
+    elif norm_type == "cases":
+        norm="reported_cases_rolling"
+        yaxis_label = "<b>Estimated cases<b>"
+        ht = "%{y:.0f}"
+
+    seqs = seqs.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
+    seqs = seqs.rename( columns={"date" : "Date"} )
+    seqs = seqs.dropna()
+    seqs = seqs.set_index( "Date" )
+    seqs = seqs.loc[:,seqs.columns !=norm].apply( lambda x: (x/100) * seqs[norm] )
+
+    blues = px.colors.sequential.Blues
+    palette = [blues[2], blues[4], blues[6], blues[8]]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=seqs.index, y=seqs["Other"],
+        name="Other",
+        hovertemplate=ht,
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict(width=0.5, color='#009E73'),
+        stackgroup='one'
+    ))
+    fig.add_trace(go.Scatter(
+        x=seqs.index, y=seqs["Delta"],
+        name="Delta",
+        hovertemplate=ht,
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict(width=0.5, color='#E69F00'),
+        stackgroup='one'
+    ))
+    for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
+        fig.add_trace( go.Scatter(
+            x=seqs.index, y=seqs[i[0]],
+            name=f"{i[0]} (Omicron)",
+            hovertemplate=ht,
+            mode='lines',
+            line=dict( width=0.5, color=i[1] ),
+            stackgroup='one'
+        ) )
+
+    fig.update_yaxes( showgrid=True, title=yaxis_label, tickformat='.0f', showline=False, ticks="" )
+    fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
+    _add_date_formatting_minimum( fig )
+    fig.update_traces( mode="markers+lines" )
+    return fig
+
+def plot_wastewater_seqs( _, seqs ):
+    omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
+    seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
+    seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
 
     ht = '%{y:.0f}%'
     #ht = '%{y:.0f}'
@@ -572,19 +603,10 @@ def plot_wastewater_seqs( ww_data, seqs ):
         stackgroup='one'
     ))
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0,100], tickformat='.0', ticksuffix="%", showline=False, ticks="" )
+    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0,100], tickformat='.0f', ticksuffix="%", showline=False, ticks="" )
     #fig.update_yaxes( showgrid=True, title=f"<b>Variant copies / Liter</b>", tickformat='.0', showline=False, ticks="" )
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
-    fig.update_layout( template="simple_white",
-                       hovermode="x unified",
-                       plot_bgcolor="#ffffff",
-                       paper_bgcolor="#ffffff",
-                       margin={"r":0,"t":40,"l":0,"b":10},
-                       legend=dict( yanchor="top",
-                                    y=0.99,
-                                    xanchor="left",
-                                    x=0.01,
-                                    bgcolor="rgba(255,255,255,1)" ) )
+    _add_date_formatting_minimum( fig )
     fig.update_traces( mode="markers+lines" )
     return fig
 

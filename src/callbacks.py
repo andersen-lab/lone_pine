@@ -245,6 +245,23 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
     def enable_zip_graph( url ):
         return url=="/bajacalifornia"
 
+    @app.callback(
+        Output( "wastewater-graph", "figure" ),
+        Input( "yaxis-scale-radio", "value" )
+    )
+    def update_wastewater_graph( scale ):
+        return dashplot.plot_wastewater( format_data.load_wastewater_data()[0], scale=scale )
+
+    @app.callback(
+        Output( "wastewater-seq-graph", "figure" ),
+        Input( "scale-seqs-radios", "value" )
+    )
+    def update_wastewater_graph( norm_type ):
+        if norm_type == "prevalence":
+            return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data() )
+        else:
+            return dashplot.plot_wastewater_seqs_estimates( *format_data.load_wastewater_data(), norm_type=norm_type )
+
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(
         """

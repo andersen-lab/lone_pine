@@ -62,7 +62,8 @@ def get_layout():
         ],
             style={ "marginLeft" : "auto",
                     "marginRight" : "auto",
-                    "backgroundColor" : "#3C5C94"},
+                    "backgroundColor" : "#3C5C94",
+                    "opacity" : "1"},
             className="pretty_container_rounded row"
         ),
         html.Div( [

@@ -30,39 +30,73 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                 "Hover-over text displays raw values only."
                 ] ),
                 html.Div(
-                    dcc.Graph(
-                        figure=dashplot.plot_wastewater( wastewater_data ),
-                        id="wastewater-graph",
-                        config={"displayModeBar" : False},
-                        style={"height" : "30em"}
-                    ),
+                    [
+                        html.Div(
+                            dbc.RadioItems(
+                                id="yaxis-scale-radio",
+                                className="btn-group",
+                                inputClassName="btn-check",
+                                labelClassName="btn btn-outline-primary",
+                                labelCheckedClassName="active",
+                                options=[
+                                    { "label": "Linear scale", "value": "linear" },
+                                    { "label": "Log scale", "value": "log" },
+
+                                ],
+                                value="linear",
+                                style = {"width" : "100%", "justifyContent": "flex-end"}
+                            )
+                        ),
+                        dcc.Graph(
+                            id="wastewater-graph",
+                            config={"displayModeBar" : False},
+                            style={"height" : "30em"}
+                        ),
+                    ]
                 ),
-                #html.Div(
-                #    [
-                #        dbc.RadioItems(
-                #            id="radios",
-                #            className="btn-group",
-                #            inputClassName="btn-check",
-                #            labelClassName="btn btn-outline-primary",
-                #            labelCheckedClassName="active",
-                #            options=[
-                #                { "label": "Raw prevalance", "value": "prevalence" },
-                #                { "label": "Scale by viral load", "value": "viral" },
-                #                { "label": "Scale by cases", "value": "cases" },
-                #            ],
-                #            value=1,
-                #        ),
-                #    ],
-                #    className="radio-group",
-                #),
+                html.P(),
                 html.Div(
-                    dcc.Graph(
-                        figure=dashplot.plot_wastewater_seqs( wastewater_data, wastewater_seq_data ),
-                        id="wastewater-seq-graph",
-                        config={"displayModeBar" : False},
-                        style={"height" : "30em", "width" : "50em"}
-                    ),
-                    style={'width': '100%', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'}
+                    [
+                        html.Div(
+                            [
+                                html.Br(),
+                                html.Div(
+                                    html.H4( "Wastewater lineages" ),
+                                    className="three columns",
+                                    style={"width" : "60%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
+                                ),
+                                html.Div(
+                                    dbc.RadioItems(
+                                        id="scale-seqs-radios",
+                                        className="btn-group",
+                                        inputClassName="btn-check",
+                                        labelClassName="btn btn-outline-primary",
+                                        labelCheckedClassName="active",
+                                        options=[
+                                            { "label": "Raw prevalance", "value": "prevalence" },
+                                            { "label": "Scale by viral load", "value": "viral" },
+                                            { "label": "Scale by cases", "value": "cases" },
+                                        ],
+                                        value="prevalence",
+                                        style={"justifyContent": "flex-end"}
+                                    ),
+                                    className="three columns",
+                                    style={ 'display': 'inline-block' }
+                                )
+                            ],
+                            className="radio-group",
+                            style={"margin" : "0"}
+                        ),
+                        html.Div(
+                            dcc.Graph(
+                                figure=dashplot.plot_wastewater_seqs( wastewater_data, wastewater_seq_data ),
+                                id="wastewater-seq-graph",
+                                config={"displayModeBar" : False},
+                            ),
+                            style={ "height": "30em", 'width': '60em', "margin" : "auto" }
+                        )
+                    ],
+
                 )
             ]
         ),
