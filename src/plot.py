@@ -575,6 +575,24 @@ def plot_wastewater_seqs( _, seqs ):
     #palette = ["#2b8cbe", "#7bccc4", "#bae4bc", "#f0f9e8"]
     fig = go.Figure()
 
+    fig.add_trace( go.Scatter(
+        x=seqs.index, y=seqs["Other"],
+        name="Other",
+        hovertemplate=ht,
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict( width=0.5, color='#009E73' ),
+        stackgroup='one'
+    ) )
+    fig.add_trace( go.Scatter(
+        x=seqs.index, y=seqs["Delta"],
+        name="Delta",
+        hovertemplate=ht,
+        hoverinfo='x+y',
+        mode='lines',
+        line=dict( width=0.5, color='#E69F00' ),
+        stackgroup='one'
+    ) )
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
         fig.add_trace( go.Scatter(
             x=seqs.index, y=seqs[i[0]],
@@ -584,24 +602,6 @@ def plot_wastewater_seqs( _, seqs ):
             line=dict( width=0.5, color=i[1] ),
             stackgroup='one'
         ) )
-    fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Delta"],
-        name="Delta",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict(width=0.5, color='#E69F00'),
-        stackgroup='one'
-    ))
-    fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Other"],
-        name="Other",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict(width=0.5, color='#009E73'),
-        stackgroup='one'
-    ))
 
     fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0,100], tickformat='.0f', ticksuffix="%", showline=False, ticks="" )
     #fig.update_yaxes( showgrid=True, title=f"<b>Variant copies / Liter</b>", tickformat='.0', showline=False, ticks="" )
