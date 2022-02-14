@@ -508,6 +508,7 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, norm_type="viral" ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
+    seqs["Other"] = seqs["Other"].clip( lower=0 )
 
     if norm_type == "viral":
         norm = "gene_copies_rolling"
@@ -566,6 +567,7 @@ def plot_wastewater_seqs( _, seqs ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
+    seqs["Other"] = seqs["Other"].clip( lower=0 )
 
     ht = '%{y:.0f}%'
     #ht = '%{y:.0f}'
