@@ -32,6 +32,20 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                 html.Div(
                     [
                         html.Div(
+                            [dbc.RadioItems(
+                                id="ww-source-radio",
+                                className="btn-group",
+                                inputClassName="btn-check",
+                                labelClassName="btn btn-outline-primary",
+                                labelCheckedClassName="active",
+                                options=[
+                                    { "label": "Encina", "value": "Encina" },
+                                    { "label": "Point Loma", "value": "PointLoma" },
+                                    { "label": "South Bay", "value": "SouthBay", "disabled": True }
+                                ],
+                                value="PointLoma",
+                                style={ "width": "50%", "justifyContent": "flex-start" }
+                            ),
                             dbc.RadioItems(
                                 id="yaxis-scale-radio",
                                 className="btn-group",
@@ -44,12 +58,12 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
 
                                 ],
                                 value="linear",
-                                style = {"width" : "100%", "justifyContent": "flex-end"}
-                            )
+                                style = {"width" : "50%", "justifyContent": "flex-end"}
+                            )]
                         ),
                         dcc.Graph(
                             id="wastewater-graph",
-                            config={"displayModeBar" : False},
+                            config={"displayModeBar" : False },
                             style={"height" : "30em"}
                         ),
                     ]

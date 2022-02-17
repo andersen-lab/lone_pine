@@ -247,16 +247,17 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
 
     @app.callback(
         Output( "wastewater-graph", "figure" ),
-        Input( "yaxis-scale-radio", "value" )
+        [Input( "yaxis-scale-radio", "value" ),
+         Input( "ww-source-radio", "value" )]
     )
-    def update_wastewater_graph( scale ):
-        return dashplot.plot_wastewater( format_data.load_wastewater_data()[0], scale=scale )
+    def update_wastewater_graph( scale, source ):
+        return dashplot.plot_wastewater( format_data.load_wastewater_data()[0], scale=scale, source=source )
 
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
         Input( "scale-seqs-radios", "value" )
     )
-    def update_wastewater_graph( norm_type ):
+    def update_wastewater_seq_graph( norm_type ):
         if norm_type == "prevalence":
             return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data() )
         else:

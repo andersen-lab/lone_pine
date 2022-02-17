@@ -457,7 +457,7 @@ def plot_sgtf_estiamte( sgtf_data ):
 
     return fig
 
-def plot_wastewater( ww, scale="linear" ):
+def plot_wastewater( ww, scale="linear", source="PointLima" ):
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
 
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
