@@ -223,10 +223,27 @@ def load_sgtf_data():
     return tests, fit_df, estimates
 
 def load_wastewater_data():
-    return_df = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv", parse_dates=["Sample_Date"] )
-    return_df.columns = ["date", "gene_copies", "reported_cases"]
-    return_df.loc[~return_df["gene_copies"].isna(),"gene_copies_rolling"] = savgol_filter( return_df["gene_copies"].dropna(), window_length=11, polyorder=2 )
-    return_df.loc[~return_df["reported_cases"].isna(),"reported_cases_rolling"] = savgol_filter( return_df["reported_cases"].dropna(), window_length=7, polyorder=2 )
+    def round_to_odd( value ):
+        return np.ceil( np.floor( value ) / 2 ) * 2 - 1
+
+    def load_ww_individual( loc, source ):
+        temp = pd.read_csv( loc, parse_dates=["Sample_Date"] )
+        temp["source"] = source
+        temp.columns = ["date", "gene_copies", "reported_cases", "source"]
+        window_length = 11 if source == "PointLoma" else 3
+        temp.loc[~temp["gene_copies"].isna(), "gene_copies_rolling"] = savgol_filter(
+            temp["gene_copies"].dropna(), window_length=window_length, polyorder=2 )
+
+        if source == "PointLoma":
+            temp.loc[~temp["reported_cases"].isna(), "reported_cases_rolling"] = savgol_filter(
+                temp["reported_cases"].dropna(), window_length=7, polyorder=2 )
+
+        return temp
+
+    pl_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv"
+    en_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Encina_sewage_qPCR.csv"
+
+    return_df = pd.concat( [load_ww_individual( pl_loc, "PointLoma" ), load_ww_individual( en_loc, "Encina" )] )
 
     seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"], index_col="Date" )
     #seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]

@@ -460,6 +460,8 @@ def plot_sgtf_estiamte( sgtf_data ):
 def plot_wastewater( ww, scale="linear", source="PointLima" ):
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
 
+    subset_ww = ww.loc[ww["source"]==source]
+
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
                                  name="Reported cases",
                                  mode="markers",
@@ -471,12 +473,12 @@ def plot_wastewater( ww, scale="linear", source="PointLima" ):
                                  hoverinfo='skip',
                                  showlegend=False,
                                  line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
-    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies"],
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
                                  name="Viral load in wastewater",
                                  mode="markers",
                                  hovertemplate="%{y:,.0f}",
                                  marker={"color" : "#56B4E9", "size" : 8 } ), secondary_y=False )
-    fig.add_trace( go.Scattergl( x=ww["date"], y=ww["gene_copies_rolling"],
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies_rolling"],
                                  showlegend=False,
                                  name="Viral load in wastewater",
                                  mode="lines",
