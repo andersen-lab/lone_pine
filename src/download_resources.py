@@ -146,7 +146,8 @@ def download_sd_cases():
         entry["new_cases"] = entry.rolling( window=indexer, min_periods=1 )["new_cases"].apply( lambda x: x.max() / 7 )
         return entry
 
-    cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
+    # cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
+    cases_loc = "/Users/natem/Downloads/COVID_19_Statistics_by_ZIP_Code/COVID_19_Statistics_by_ZIP_Code.gdb"
     sd = gpd.read_file( cases_loc )
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
@@ -275,8 +276,8 @@ if __name__ == "__main__":
 
     #estimate_sgtf()
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
