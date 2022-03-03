@@ -490,27 +490,27 @@ def plot_wastewater( ww, cases, scale="linear", source="PointLoma" ):
 
     cases = cases.loc[cases.index > ww["date"].min() ]
 
-    fig.add_trace( go.Scattergl( x=cases.index, y=cases["reported_cases"],
-                                 name="Reported cases",
-                                 mode="markers",
-                                 hovertemplate="%{y:,.0f}",
-                                 marker={"color" : "#D55E00", "size" : 8 } ), secondary_y=True )
+    #fig.add_trace( go.Scattergl( x=cases.index, y=cases["reported_cases"],
+    #                             name="Reported cases",
+    #                             mode="markers",
+    #                             hovertemplate="%{y:,.0f}",
+    #                             marker={"color" : "#D55E00", "size" : 8 } ), secondary_y=True )
     fig.add_trace( go.Scattergl( x=cases.dropna().index, y=cases.dropna()["reported_cases_rolling"],
                                  name="Reported cases",
                                  mode="lines",
-                                 hoverinfo='skip',
+                                 hovertemplate="%{y:,.0f}",
                                  showlegend=False,
                                  line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
                                  name="Viral load in wastewater",
                                  mode="markers",
-                                 hovertemplate="%{y:,.0f}",
+                                 hoverinfo='skip',
                                  marker={"color" : "#56B4E9", "size" : 8 } ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies_rolling"],
                                  showlegend=False,
                                  name="Viral load in wastewater",
                                  mode="lines",
-                                 hoverinfo='skip',
+                                 hovertemplate="%{y:,.0f}",
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
 
     fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale )

@@ -27,7 +27,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_are
                 " to ",
                 html.Strong( "reported cases", style={"color" : "#D55E00"} ),
                 " in San Diego county. Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. "
-                "Hover-over text displays raw values only."
+                "Hover-over text displays raw values for viral load and smoothed values for reported cases."
                 ] ),
                 html.Div(
                     [
@@ -83,7 +83,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_are
                             [
                                 html.Br(),
                                 html.Div(
-                                    html.H4( "Wastewater lineages" ),
+                                    html.H4( "Wastewater lineages (Point Loma only)" ),
                                     className="three columns",
                                     style={"width" : "60%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
                                 ),
