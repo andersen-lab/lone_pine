@@ -5,6 +5,7 @@ from src.variants import VOC, VOI
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 from numpy import exp, sqrt, diagonal, log
+import geopandas as gpd
 
 #VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
 #VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
@@ -251,3 +252,17 @@ def load_wastewater_data():
     #seqs = seqs.loc[~seqs["Other (%)"].isna()]
 
     return return_df, seqs
+
+def load_catchment_areas():
+    zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
+    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
+
+    sd = gpd.read_file( "resources/zips.geojson" )
+
+    sd = sd.merge( zips, left_on=["ZIP"], right_on=["Zip_code"], how="outer" )
+    sd = sd.loc[~sd["geometry"].isna()]
+    sd["geometry"] = sd.simplify( 0.002 )
+    sd["Wastewater_treatment_plant"] = sd["Wastewater_treatment_plant"].fillna( "Other" )
+    sd["ZIP"] = sd["ZIP"].apply( lambda x: f"{x:.0f}" )
+    sd = sd.set_index( "ZIP" )
+    return sd

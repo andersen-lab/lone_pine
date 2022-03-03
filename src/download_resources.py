@@ -124,6 +124,19 @@ def download_cases():
 
     return c
 
+
+def append_wastewater( sd ):
+    zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
+    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
+    zips.columns = ["ziptext", "catchment"]
+    zips["catchment"] = zips["catchment"].str.replace( " " , "" )
+    zips = zips.set_index( "ziptext" )
+    return_df = sd.merge( zips, left_on="ziptext", right_index=True, how="left" )
+    return_df["catchment"] = return_df["catchment"].fillna( "Other" )
+
+    assert return_df.shape[0] == sd.shape[0], f"Merge was unsuccessful. {sd.shape[0]} rows in original vs. {return_df.shape[0]} rows in merge output."
+    return return_df
+
 def download_sd_cases():
     """
     Returns
@@ -146,7 +159,8 @@ def download_sd_cases():
         entry["new_cases"] = entry.rolling( window=indexer, min_periods=1 )["new_cases"].apply( lambda x: x.max() / 7 )
         return entry
 
-    cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
+    #cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
+    cases_loc = "/Users/natem/Downloads/COVID_19_Statistics_by_ZIP_Code/COVID_19_Statistics_by_ZIP_Code.gdb"
     sd = gpd.read_file( cases_loc )
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
@@ -174,6 +188,9 @@ def download_sd_cases():
     sd["days_past"] = ( datetime.datetime.today() - sd["updatedate"] ).dt.days
 
     sd["case_count"] = sd.groupby( "ziptext" )["new_cases"].cumsum()
+
+    # Add the catchment area
+    sd = append_wastewater( sd )
     return sd
 
 def download_bc_cases():
@@ -270,13 +287,13 @@ def download_shapefile():
 #    estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    seqs_md = download_search()
-    seqs_md.to_csv( "resources/sequences.csv", index=False )
+    #seqs_md = download_search()
+    #seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     #estimate_sgtf()
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
