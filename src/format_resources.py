@@ -5,6 +5,7 @@ from src.variants import VOC, VOI
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 from numpy import exp, sqrt, diagonal, log
+import geopandas as gpd
 
 #VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
 #VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
@@ -224,13 +225,45 @@ def load_sgtf_data():
     return tests, fit_df, estimates
 
 def load_wastewater_data():
-    return_df = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv", parse_dates=["Sample_Date"] )
-    return_df.columns = ["date", "gene_copies", "reported_cases"]
-    return_df.loc[~return_df["gene_copies"].isna(),"gene_copies_rolling"] = savgol_filter( return_df["gene_copies"].dropna(), window_length=11, polyorder=2 )
-    return_df.loc[~return_df["reported_cases"].isna(),"reported_cases_rolling"] = savgol_filter( return_df["reported_cases"].dropna(), window_length=7, polyorder=2 )
+    def round_to_odd( value ):
+        return np.ceil( np.floor( value ) / 2 ) * 2 - 1
+
+    def load_ww_individual( loc, source ):
+        temp = pd.read_csv( loc, parse_dates=["Sample_Date"] )
+        temp["source"] = source
+        temp.columns = ["date", "gene_copies", "reported_cases", "source"]
+        window_length = 11 if source == "PointLoma" else 5
+        temp.loc[~temp["gene_copies"].isna(), "gene_copies_rolling"] = savgol_filter(
+            temp["gene_copies"].dropna(), window_length=window_length, polyorder=2 )
+
+        if source == "PointLoma":
+            temp.loc[~temp["reported_cases"].isna(), "reported_cases_rolling"] = savgol_filter(
+                temp["reported_cases"].dropna(), window_length=7, polyorder=2 )
+
+        return temp
+
+    pl_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv"
+    en_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Encina_sewage_qPCR.csv"
+    sb_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/SouthBay_sewage_qPCR.csv"
+
+    return_df = pd.concat( [load_ww_individual( pl_loc, "PointLoma" ), load_ww_individual( en_loc, "Encina" ), load_ww_individual( sb_loc, "SouthBay" )] )
 
     seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"], index_col="Date" )
     #seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]
     #seqs = seqs.loc[~seqs["Other (%)"].isna()]
 
     return return_df, seqs
+
+def load_catchment_areas():
+    zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
+    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
+
+    sd = gpd.read_file( "resources/zips.geojson" )
+
+    sd = sd.merge( zips, left_on=["ZIP"], right_on=["Zip_code"], how="outer" )
+    sd = sd.loc[~sd["geometry"].isna()]
+    sd["geometry"] = sd.simplify( 0.002 )
+    sd["Wastewater_treatment_plant"] = sd["Wastewater_treatment_plant"].fillna( "Other" )
+    sd["ZIP"] = sd["ZIP"].apply( lambda x: f"{x:.0f}" )
+    sd = sd.set_index( "ZIP" )
+    return sd

@@ -1,3 +1,4 @@
+from scipy.signal import savgol_filter
 import src.plot as dashplot
 import src.format_resources as format_data
 import src.pages.mainpage as mainpage
@@ -32,7 +33,7 @@ def get_last_commit_date( url ):
         #return "Updating at the moment..."
         return ""
 
-def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data ):
+def register_callbacks( app, sequences, cases_whole ):
 
     def get_sequences( seqs, url, window=None, provider=None, sequencer=None, zip_f=None ):
         new_seqs = seqs.copy()
@@ -50,13 +51,18 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
 
         return new_seqs
 
-    def get_cases( cases, url, window=None ):
+    def get_cases( cases, url, window=None, source=None ):
         new_cases = cases.copy()
 
         new_cases = register_url_cases( new_cases, url )
 
         if window:
             new_cases = cases.loc[cases["days_past"] <= window]
+
+        if source:
+            new_cases = cases.loc[cases["catchment"] == source].groupby( "updatedate" ).agg(
+                reported_cases=("new_cases", sum) )
+            new_cases["reported_cases_rolling"] = savgol_filter( new_cases["reported_cases"], window_length=13, polyorder=2 )
         return new_cases
 
     @app.callback(
@@ -69,7 +75,7 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
             return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
-            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date )
+            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date, format_data.load_catchment_areas() )
         else:
             return mainpage.get_layout()
 
@@ -98,7 +104,7 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
         Input( "url", "pathname" )
     )
     def update_zip_drop( url ):
-        new_cases = get_cases( cases_whole, url, None )
+        new_cases = get_cases( cases_whole, url )
         return [{"label" : i, "value": i } for i in new_cases["ziptext"].sort_values().unique()]
 
     @app.callback(
@@ -247,16 +253,17 @@ def register_callbacks( app, sequences, cases_whole, sgtf_data, wastewater_data 
 
     @app.callback(
         Output( "wastewater-graph", "figure" ),
-        Input( "yaxis-scale-radio", "value" )
+        [Input( "yaxis-scale-radio", "value" ),
+         Input( "ww-source-radio", "value" )]
     )
-    def update_wastewater_graph( scale ):
-        return dashplot.plot_wastewater( format_data.load_wastewater_data()[0], scale=scale )
+    def update_wastewater_graph( scale, source ):
+        return dashplot.plot_wastewater( ww=format_data.load_wastewater_data()[0], cases=get_cases( cases_whole, "/", source=source ), scale=scale, source=source )
 
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
         Input( "scale-seqs-radios", "value" )
     )
-    def update_wastewater_graph( norm_type ):
+    def update_wastewater_seq_graph( norm_type ):
         if norm_type == "prevalence":
             return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data() )
         else:

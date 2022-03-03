@@ -124,6 +124,19 @@ def download_cases():
 
     return c
 
+
+def append_wastewater( sd ):
+    zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
+    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
+    zips.columns = ["ziptext", "catchment"]
+    zips["catchment"] = zips["catchment"].str.replace( " " , "" )
+    zips = zips.set_index( "ziptext" )
+    return_df = sd.merge( zips, left_on="ziptext", right_index=True, how="left" )
+    return_df["catchment"] = return_df["catchment"].fillna( "Other" )
+
+    assert return_df.shape[0] == sd.shape[0], f"Merge was unsuccessful. {sd.shape[0]} rows in original vs. {return_df.shape[0]} rows in merge output."
+    return return_df
+
 def download_sd_cases():
     """
     Returns
@@ -175,6 +188,9 @@ def download_sd_cases():
     sd["days_past"] = ( datetime.datetime.today() - sd["updatedate"] ).dt.days
 
     sd["case_count"] = sd.groupby( "ziptext" )["new_cases"].cumsum()
+
+    # Add the catchment area
+    sd = append_wastewater( sd )
     return sd
 
 def download_bc_cases():

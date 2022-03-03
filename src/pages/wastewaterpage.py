@@ -2,7 +2,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 import src.plot as dashplot
 
-def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
+def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_areas ):
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Point 
     Loma Wastewater Treatment Plant, the main wastewater treatment facility for the city (serves roughly 2.3 million 
@@ -27,11 +27,33 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                 " to ",
                 html.Strong( "reported cases", style={"color" : "#D55E00"} ),
                 " in San Diego county. Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. "
-                "Hover-over text displays raw values only."
+                "Hover-over text displays raw values for viral load and smoothed values for reported cases."
                 ] ),
                 html.Div(
                     [
+                        #html.Div(
+                        #    dcc.Graph(
+                        #        figure=dashplot.plot_catchment_areas( catchment_areas ),
+                        #        id="catchment-graph",
+                        #        config={"displayModeBay" : False },
+                        #        style={"height" : "30em" }
+                        #    )
+                        #),
                         html.Div(
+                            [dbc.RadioItems(
+                                id="ww-source-radio",
+                                className="btn-group",
+                                inputClassName="btn-check",
+                                labelClassName="btn btn-outline-primary",
+                                labelCheckedClassName="active",
+                                options=[
+                                    { "label": "Encina", "value": "Encina" },
+                                    { "label": "Point Loma", "value": "PointLoma" },
+                                    { "label": "South Bay", "value": "SouthBay" }
+                                ],
+                                value="PointLoma",
+                                style={ "width": "50%", "justifyContent": "flex-start" }
+                            ),
                             dbc.RadioItems(
                                 id="yaxis-scale-radio",
                                 className="btn-group",
@@ -44,12 +66,12 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
 
                                 ],
                                 value="linear",
-                                style = {"width" : "100%", "justifyContent": "flex-end"}
-                            )
+                                style = {"width" : "50%", "justifyContent": "flex-end"}
+                            )]
                         ),
                         dcc.Graph(
                             id="wastewater-graph",
-                            config={"displayModeBar" : False},
+                            config={"displayModeBar" : False },
                             style={"height" : "30em"}
                         ),
                     ]
@@ -61,7 +83,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                             [
                                 html.Br(),
                                 html.Div(
-                                    html.H4( "Wastewater lineages" ),
+                                    html.H4( "Wastewater lineages (Point Loma only)" ),
                                     className="three columns",
                                     style={"width" : "60%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
                                 ),
