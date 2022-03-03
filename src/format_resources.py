@@ -230,7 +230,7 @@ def load_wastewater_data():
         temp = pd.read_csv( loc, parse_dates=["Sample_Date"] )
         temp["source"] = source
         temp.columns = ["date", "gene_copies", "reported_cases", "source"]
-        window_length = 11 if source == "PointLoma" else 3
+        window_length = 11 if source == "PointLoma" else 5
         temp.loc[~temp["gene_copies"].isna(), "gene_copies_rolling"] = savgol_filter(
             temp["gene_copies"].dropna(), window_length=window_length, polyorder=2 )
 
@@ -242,8 +242,9 @@ def load_wastewater_data():
 
     pl_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv"
     en_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Encina_sewage_qPCR.csv"
+    sb_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/SouthBay_sewage_qPCR.csv"
 
-    return_df = pd.concat( [load_ww_individual( pl_loc, "PointLoma" ), load_ww_individual( en_loc, "Encina" )] )
+    return_df = pd.concat( [load_ww_individual( pl_loc, "PointLoma" ), load_ww_individual( en_loc, "Encina" ), load_ww_individual( sb_loc, "SouthBay" )] )
 
     seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"], index_col="Date" )
     #seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]

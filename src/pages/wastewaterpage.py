@@ -41,7 +41,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
                                 options=[
                                     { "label": "Encina", "value": "Encina" },
                                     { "label": "Point Loma", "value": "PointLoma" },
-                                    { "label": "South Bay", "value": "SouthBay", "disabled": True }
+                                    { "label": "South Bay", "value": "SouthBay" }
                                 ],
                                 value="PointLoma",
                                 style={ "width": "50%", "justifyContent": "flex-start" }
