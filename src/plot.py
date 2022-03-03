@@ -457,10 +457,35 @@ def plot_sgtf_estiamte( sgtf_data ):
 
     return fig
 
-def plot_wastewater( ww, scale="linear", source="PointLima" ):
+def plot_catchment_areas( sd_map ):
+    fig = px.choropleth( sd_map, geojson=sd_map.geometry, locations=sd_map.index, color="Wastewater_treatment_plant",
+                         labels={ "ZIP": "Zip code", "Wastewater_treatment_plant": "Catchment area" },
+                         hover_data=["Wastewater_treatment_plant"],
+                         category_orders={ "Encina": 0, "Point Loma": 1, "South Bay": 2, "Other": 3 },
+                         color_discrete_map={ "Encina": "#009E73", "Point Loma": "#56B4E9", "South Bay": "#D55E00",
+                                              "Other": "#dddddd" },
+                         projection="mercator", basemap_visible=False, fitbounds="geojson", scope=None )
+    fig.update_geos( bgcolor="#ffffff" )
+    fig.update_layout( template="simple_white",
+                       autosize=True,
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={ "r": 0, "t": 0, "l": 0, "b": 0 },
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)",
+                                    itemsizing='constant' ) )
+    fig.show()
+
+def plot_wastewater( ww, scale="linear", source="PointLoma" ):
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
 
     subset_ww = ww.loc[ww["source"]==source]
+    date_range = get_date_limits(subset_ww["date"] )
+    if source != "PointLoma":
+        date_range[0] = "2022-01-01"
 
     fig.add_trace( go.Scattergl( x=ww["date"], y=ww["reported_cases"],
                                  name="Reported cases",
@@ -485,10 +510,9 @@ def plot_wastewater( ww, scale="linear", source="PointLima" ):
                                  hoverinfo='skip',
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
 
-
     fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type=scale )
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", range=date_range )
 
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
