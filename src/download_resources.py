@@ -127,7 +127,7 @@ def download_cases():
 
 def append_wastewater( sd ):
     zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
-    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
+    zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"], dtype={"Zip_code" : str, "Wastewater_treatment_plant" : str } )
     zips.columns = ["ziptext", "catchment"]
     zips["catchment"] = zips["catchment"].str.replace( " " , "" )
     zips = zips.set_index( "ziptext" )
@@ -146,11 +146,9 @@ def download_sd_cases():
     """
     def _append_population( dataframe ):
         pop_loc = "resources/zip_pop.csv"
-        pop = pd.read_csv( pop_loc )
-        pop = pop.set_index( "Zip" )
-        pop["Total Population"] = pd.to_numeric( pop["Total Population"].str.replace( ",", "" ) )
-        pop = pop["Total Population"].to_dict()
-        dataframe["population"] = dataframe["ziptext"].map( pop )
+        pop = pd.read_csv( "resources/zip_pop.csv", usecols=["Zip", "Total Population"], thousands=",", dtype={"Zip" : str, "Total Population" : int } )
+        dataframe = dataframe.merge( pop, left_on="ziptext", right_on="Zip", how="left" )
+        dataframe = dataframe.drop( columns=["Zip"] ).rename( columns={"Total Population" : "population"} )
         return dataframe
 
     def _add_missing_cases( entry ):
@@ -165,12 +163,11 @@ def download_sd_cases():
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
     sd["updatedate"] = sd["updatedate"].dt.normalize()
-    sd["ziptext"] = pd.to_numeric( sd["ziptext"] )
+    #sd["ziptext"] = pd.to_numeric( sd["ziptext"] )
     sd = sd.groupby( ["updatedate", "ziptext"] ).last().reset_index()
     sd = sd.sort_values( "updatedate" )
 
     # Calculate cases per day because thats way more useable than cummulative counts.
-    sd = _append_population( sd )
     sd["case_count"] = sd["case_count"].fillna( 0 )
     sd["new_cases"] = sd.groupby( "ziptext" )["case_count"].diff()
     sd["new_cases"] = sd["new_cases"].fillna( sd["case_count"] )
@@ -184,6 +181,8 @@ def download_sd_cases():
 
     sd = sd.loc[sd["updatedate"]<="2021-06-28"]
     sd = pd.concat( [sd,sdprob] )
+
+    sd = _append_population( sd )
 
     sd["days_past"] = ( datetime.datetime.today() - sd["updatedate"] ).dt.days
 
