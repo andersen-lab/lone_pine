@@ -439,7 +439,7 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-02-15"] )
+    fig.update_xaxes( range=["2021-11-25", "2022-03-06"] )
 
     esti = sgtf_data[2]
     date_str = f"99%: {esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}-{esti['date'][2].strftime('%B %d')})"
