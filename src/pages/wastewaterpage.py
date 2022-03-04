@@ -4,7 +4,7 @@ import src.plot as dashplot
 
 def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_areas ):
     markdown = """
-    To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Encino, Point 
+    To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Encina, Point 
     Loma, and South Bay wastewater treatment plants. Fragments of SARS-CoV-2 RNA are shed in urine and stool and can serve 
     as an early indicator of changes in COVID-19 caseload in the community. To study individual virus lineages in present
     in San Diego, we are sequencing wastewater and performing lineage deconvolution with 
