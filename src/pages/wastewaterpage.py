@@ -1,3 +1,4 @@
+import base64
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 import src.plot as dashplot
@@ -5,28 +6,36 @@ import src.plot as dashplot
 def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_areas ):
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Encina, Point 
-    Loma, and South Bay wastewater treatment plants. Fragments of SARS-CoV-2 RNA are shed in urine and stool and can serve 
-    as an early indicator of changes in COVID-19 caseload in the community. To study individual virus lineages in present
-    in San Diego, we are sequencing wastewater and performing lineage deconvolution with 
-    [Freyja](https://github.com/andersen-lab/Freyja). The data shown here is collected by the Knight Lab at UCSD in 
-    collaboration with San Diego County. The raw data for this dashboard can be found in our 
+    Loma, and South Bay wastewater treatment plants (see map below for catchment areas of each plant). Fragments of 
+    SARS-CoV-2 RNA are shed in urine and stool and can serve as an early indicator of changes in COVID-19 caseload in the 
+    community. To study individual virus lineages in present in San Diego, we are sequencing wastewater and performing 
+    lineage deconvolution with [Freyja](https://github.com/andersen-lab/Freyja). The data shown here is collected by the
+     Knight Lab at UCSD in collaboration with San Diego County. The raw data for this dashboard can be found in our 
     [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego).
     """
 
     #commit_date = get_last_commit_date()
     #commit_date = "December 22 @ 1:07 PM PST"
 
+    image_filename = 'assets/catchment_map.png'  # replace with your own image
+    encoded_image = base64.b64encode( open( image_filename, 'rb' ).read() )
+
     layout = [
         html.Div(
             [
-                dcc.Markdown( markdown ),
+                dcc.Markdown( markdown, style={"margin-bottom" : "-30pt" } ),
+                html.Div(
+                    html.Img( src='data:image/png;base64,{}'.format(encoded_image.decode()),
+                          style={"width" : "40em" } ),
+                    style={"textAlign" : "center", "margin-bottom" : "-30pt" }
+                ),
                 html.P(),
                 html.P( children=[
                 "The following graph compares ",
                 html.Strong( "viral load in wastewater", style={"color" : "#56B4E9"} ),
                 " to ",
                 html.Strong( "reported cases", style={"color" : "#D55E00"} ),
-                " in San Diego county. Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. "
+                " in the communities that are treated by each plant. Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. "
                 "Hover-over text displays raw values for viral load and smoothed values for reported cases."
                 ] ),
                 html.Div(
