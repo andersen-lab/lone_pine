@@ -213,12 +213,12 @@ def load_sgtf_data():
     fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
     fit_df["ndays"] = fit_df.index
     fit_df["fit_y"] = [lgm_mixture(i, *fit) for i in range( days_sim )]
-    fit_df["fit_lower"] = [lgm_mixture( i, fit[0], fit[1] - sigma_ab[1], fit[2], fit[3] - sigma_ab[3] ) for i in range( days_sim )]
-    fit_df["fit_upper"] = [lgm_mixture( i, fit[0], fit[1] + sigma_ab[1], fit[2], fit[3] + sigma_ab[3] ) for i in range( days_sim )]
+    fit_df["fit_lower"] = [lgm_mixture( i, fit[0], fit[1] + sigma_ab[1], fit[2], fit[3] + sigma_ab[3] ) for i in range( days_sim )]
+    fit_df["fit_upper"] = [lgm_mixture( i, fit[0], fit[1] - sigma_ab[1], fit[2], fit[3] - sigma_ab[3] ) for i in range( days_sim )]
 
     above_1 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.01),"date"].min()
     above_1_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
-    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
+    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_upper"] <= 0.01),"date"].min()
 
     growth_rate = fit[3]
     serial_interval = 5.5
