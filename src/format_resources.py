@@ -218,7 +218,7 @@ def load_sgtf_data():
 
     above_1 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.01),"date"].min()
     above_1_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
-    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] >= 0.01),"date"].min()
+    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
 
     growth_rate = fit[3]
     serial_interval = 5.5
