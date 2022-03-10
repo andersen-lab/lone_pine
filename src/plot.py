@@ -425,7 +425,7 @@ def plot_sgtf_estiamte( sgtf_data ):
                                hoverinfo='skip',
                                line={"color" : shade } ) )
 
-    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="", showgrid=True )
+    fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", showgrid=True )
     fig.update_yaxes( mirror=True, tickformat='.0%', showline=False, ticks="" )
     fig.update_yaxes( showgrid=True, title=f"<b>SGTF (%)</b>", range=[-0.01,1.01] )
     fig.update_layout( template="simple_white",
@@ -439,13 +439,13 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-03-06"] )
+    fig.update_xaxes( range=["2021-11-25", "2022-06-01"] )
 
     esti = sgtf_data[2]
-    date_str = f"99%: {esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}-{esti['date'][2].strftime('%B %d')})"
-    double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][1]:.1f} - {esti['doubling_time'][2]:.1f})<br>"
-    growth_str =  f"Daily growth rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%} - {esti['growth_rate'][2]:.1%})<br>"
-    transmission_str =  f"Transmission increase: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%} - {esti['transmission_increase'][2]:.0%})<br>"
+    date_str = f"1%: {esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}–{esti['date'][2].strftime('%B %d')})"
+    double_str =  f"Halving time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
+    growth_str =  f"Daily decline rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
+    transmission_str =  f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
     midpoint =  pd.to_datetime( sgtf_data[2]["date"]["estimate"] ).timestamp() * 1000
     fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )

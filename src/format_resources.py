@@ -186,8 +186,11 @@ def get_provider_sequencer_values( seqs, value ):
 
 
 def load_sgtf_data():
+
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
+    def lgm_mixture( ndays, g_x0, g_r, d_x0, d_r ):
+        return lgm( ndays, g_x0, g_r ) - lgm( ndays, d_x0, d_r )
 
     tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego_new.csv", parse_dates=["Date"] )
     tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
@@ -196,28 +199,34 @@ def load_sgtf_data():
     tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
     tests["ndays"] = tests.index
 
-    fit, covar = curve_fit( lgm, tests["ndays"], tests["percent_filter"], [0.001, 0.008] )
-    sigma_ab = sqrt( diagonal( covar ) )
+    fit, covar = curve_fit(
+        f=lgm_mixture,
+        xdata=tests["ndays"],
+        ydata=tests["percent_filter"],
+        p0=[0.001, 0.008, 0.001, 0.008],
+        bounds=((0, 0, 0, 0), (np.inf, np.inf, np.inf, np.inf))
+    )
+    sigma_ab = np.sqrt( np.diagonal( covar ) )
 
     days_sim = 300
 
     fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
     fit_df["ndays"] = fit_df.index
-    fit_df["fit_y"] = [lgm(i, fit[0], fit[1]) for i in range( days_sim )]
-    fit_df["fit_lower"] = [lgm(i, fit[0]-sigma_ab[0], fit[1]-sigma_ab[1]) for i in range( days_sim )]
-    fit_df["fit_upper"] = [lgm(i, fit[0]+sigma_ab[0], max(0, fit[1]+sigma_ab[1]) ) for i in range( days_sim )]
+    fit_df["fit_y"] = [lgm_mixture(i, *fit) for i in range( days_sim )]
+    fit_df["fit_lower"] = [lgm_mixture( i, fit[0], fit[1] - sigma_ab[1], fit[2], fit[3] - sigma_ab[3] ) for i in range( days_sim )]
+    fit_df["fit_upper"] = [lgm_mixture( i, fit[0], fit[1] + sigma_ab[1], fit[2], fit[3] + sigma_ab[3] ) for i in range( days_sim )]
 
-    above_50 = fit_df.loc[fit_df["fit_y"] >= 0.99,"date"].min()
-    above_50_lower = fit_df.loc[fit_df["fit_lower"] >= 0.99,"date"].min()
-    above_50_upper = fit_df.loc[fit_df["fit_upper"] >= 0.99,"date"].min()
+    above_1 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.01),"date"].min()
+    above_1_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
+    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] >= 0.01),"date"].min()
 
-    growth_rate = fit[1]
+    growth_rate = fit[3]
     serial_interval = 5.5
 
     estimates = pd.DataFrame( {
-        "estimate" : [above_50,growth_rate],
-        "lower" : [above_50_lower,growth_rate - sigma_ab[1]],
-        "upper" : [above_50_upper,growth_rate + sigma_ab[1]] }, index=["date", "growth_rate"] )
+        "estimate" : [above_1,growth_rate],
+        "lower" : [above_1_lower,growth_rate - sigma_ab[3]],
+        "upper" : [above_1_upper,growth_rate + sigma_ab[3]] }, index=["date", "growth_rate"] )
     estimates = estimates.T
     estimates["doubling_time"] = log(2) / estimates["growth_rate"]
     estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
