@@ -442,14 +442,15 @@ def plot_sgtf_estiamte( sgtf_data ):
     fig.update_xaxes( range=["2021-11-25", "2022-06-01"] )
 
     esti = sgtf_data[2]
-    date_str = f"1%: {esti['date'][0].strftime('%B %d')}<br>({esti['date'][1].strftime('%B %d')}–{esti['date'][2].strftime('%B %d')})"
     double_str =  f"Halving time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
     growth_str =  f"Daily decline rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
     transmission_str =  f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-    midpoint =  pd.to_datetime( sgtf_data[2]["date"]["estimate"] ).timestamp() * 1000
-    fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
-    fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
+    for col, name in [("date", "1%"), ("date50","50%")]:
+        date_str = f"{name}: {esti[col][0].strftime( '%B %d' )}<br>({esti[col][1].strftime( '%B %d' )}–{esti[col][2].strftime( '%B %d' )})"
+        midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
+        fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
+        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
 
     fig.add_annotation( x="2021-12-19", y=0.2, text=double_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
     fig.add_annotation( x="2021-12-19", y=0.15, text=growth_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )

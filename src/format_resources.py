@@ -220,13 +220,17 @@ def load_sgtf_data():
     above_1_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
     above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_upper"] <= 0.01),"date"].min()
 
+    above_50 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.50),"date"].min()
+    above_50_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.50),"date"].min()
+    above_50_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_upper"] <= 0.50),"date"].min()
+
     growth_rate = fit[3]
     serial_interval = 5.5
 
     estimates = pd.DataFrame( {
-        "estimate" : [above_1,growth_rate],
-        "lower" : [above_1_lower,growth_rate - sigma_ab[3]],
-        "upper" : [above_1_upper,growth_rate + sigma_ab[3]] }, index=["date", "growth_rate"] )
+        "estimate" : [above_1, above_50, growth_rate],
+        "lower" : [above_1_lower, above_50_lower, growth_rate - sigma_ab[3]],
+        "upper" : [above_1_upper, above_50_upper, growth_rate + sigma_ab[3]] }, index=["date", "date50", "growth_rate"] )
     estimates = estimates.T
     estimates["doubling_time"] = log(2) / estimates["growth_rate"]
     estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
