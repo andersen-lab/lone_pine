@@ -447,7 +447,7 @@ def plot_sgtf_estiamte( sgtf_data ):
     transmission_str =  f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
     for col, name in [("date", "1%"), ("date50","50%")]:
-        date_str = f"{name}: {esti[col][0].strftime( '%B %d' )}<br>({esti[col][1].strftime( '%B %d' )}–{esti[col][2].strftime( '%B %d' )})"
+        date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
         midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
         fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
         fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
