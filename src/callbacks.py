@@ -26,8 +26,8 @@ def get_last_commit_date( url ):
     try:
         last_commit = requests.get( url ).json()["object"]["url"]
         last_commit_date = requests.get( last_commit ).json()["author"]["date"]
-        last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-8 ) ) )
-        last_date = last_commit_date.strftime( "%B %d @ %I:%M %p PST" )
+        last_commit_date = datetime.strptime( last_commit_date, "%Y-%m-%dT%H:%M:%SZ" ).replace( tzinfo=timezone.utc ).astimezone( timezone( timedelta( hours=-7 ) ) )
+        last_date = last_commit_date.strftime( "%B %d @ %I:%M %p PDT" )
         return f"Updated at {last_date}"
     except KeyError:
         #return "Updating at the moment..."
