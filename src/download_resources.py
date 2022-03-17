@@ -158,7 +158,7 @@ def download_sd_cases():
         return entry
 
     # cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
-    cases_loc = "/Users/natem/Downloads/COVID_19_Statistics_by_ZIP_Code (1)/COVID_19_Statistics_by_ZIP_Code.gdb"
+    cases_loc = "/Users/natem/Downloads/COVID_19_Statistics_by_ZIP_Code/COVID_19_Statistics_by_ZIP_Code.gdb"
     sd = gpd.read_file( cases_loc )
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
@@ -286,8 +286,8 @@ def download_shapefile():
 #    estimates.to_csv( "resources/estimates.csv" )
 
 if __name__ == "__main__":
-    #seqs_md = download_search()
-    #seqs_md.to_csv( "resources/sequences.csv", index=False )
+    seqs_md = download_search()
+    seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     #estimate_sgtf()
 
