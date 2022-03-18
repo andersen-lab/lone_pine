@@ -552,6 +552,7 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, norm_type="viral" ):
         yaxis_label = "<b>Estimated cases<b>"
         ht = "%{y:.0f}"
 
+    ww_data = ww_data.loc[ww_data["source"]=="PointLoma"]
     seqs = seqs.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
     seqs = seqs.rename( columns={"date" : "Date"} )
     seqs = seqs.dropna()
