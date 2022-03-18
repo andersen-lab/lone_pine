@@ -3,9 +3,6 @@ import geopandas as gpd
 import pandas as pd
 import json
 from epiweeks import Week
-from scipy.optimize import curve_fit
-from scipy.signal import savgol_filter
-from numpy import exp, sqrt, diagonal, log
 
 # Download metadata from SEARCH repository
 # https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv
@@ -40,7 +37,7 @@ def download_search():
     md = md.loc[~md["collection_date"].str.contains( "/" )]
     md = md.loc[md["collection_date"] != "NaT"]
     md = md.loc[md["collection_date"] != "nan"]
-    md = md.loc[md["host"]!="Environment"]
+    md = md.loc[~md["host"].isin(["Environment","Environmental"] )]
 
     # Generate an identifiable location column
     md["state"] = "Baja California"
