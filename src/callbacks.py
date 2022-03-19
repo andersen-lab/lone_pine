@@ -269,7 +269,8 @@ def register_callbacks( app, sequences, cases_whole ):
         if norm_type == "prevalence":
             return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data() )
         else:
-            return dashplot.plot_wastewater_seqs_estimates( *format_data.load_wastewater_data(), norm_type=norm_type )
+            # TODO: source=PointLoma is hardcoded, in the future this probably isn't going to be the case.
+            return dashplot.plot_wastewater_seqs_estimates( *format_data.load_wastewater_data(), cases=get_cases( cases_whole, "/", source="PointLoma" ), norm_type=norm_type )
 
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(

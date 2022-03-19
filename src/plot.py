@@ -537,7 +537,7 @@ def plot_wastewater( ww, cases, scale="linear", source="PointLoma" ):
     return fig
 
 
-def plot_wastewater_seqs_estimates( ww_data, seqs, norm_type="viral" ):
+def plot_wastewater_seqs_estimates( ww_data, seqs, cases, norm_type="viral" ):
     omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
     seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
@@ -548,6 +548,8 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, norm_type="viral" ):
         yaxis_label = "<b>Variant copies / Liter</b>"
         ht = "%{y:.0f}"
     elif norm_type == "cases":
+        ww_data = ww_data.merge( cases, left_on="date", right_index=True, how="left" )
+        ww_data["reported_cases_rolling"] = ww_data["reported_cases_rolling"] * ww_data["population"]
         norm="reported_cases_rolling"
         yaxis_label = "<b>Estimated cases<b>"
         ht = "%{y:.0f}"

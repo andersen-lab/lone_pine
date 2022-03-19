@@ -244,14 +244,10 @@ def load_wastewater_data():
     def load_ww_individual( loc, source ):
         temp = pd.read_csv( loc, parse_dates=["Sample_Date"] )
         temp["source"] = source
-        temp.columns = ["date", "gene_copies", "reported_cases", "source"]
+        temp.columns = ["date", "gene_copies", "source"]
         window_length = 11 if source == "PointLoma" else 5
         temp.loc[~temp["gene_copies"].isna(), "gene_copies_rolling"] = savgol_filter(
             temp["gene_copies"].dropna(), window_length=window_length, polyorder=2 )
-
-        if source == "PointLoma":
-            temp.loc[~temp["reported_cases"].isna(), "reported_cases_rolling"] = savgol_filter(
-                temp["reported_cases"].dropna(), window_length=7, polyorder=2 )
 
         return temp
 
