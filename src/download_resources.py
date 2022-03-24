@@ -198,7 +198,7 @@ def download_bc_cases():
     """
     # This heuristic works for today, so hopefully it works for other days.
     today = datetime.datetime.today()
-    date_url = int( today.strftime( "%Y%m%d" ) ) - 1
+    date_url = int( today.strftime( "%Y%m%d" ) ) - 2
     bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
 
     # Load and format the data from the url
@@ -288,8 +288,8 @@ if __name__ == "__main__":
 
     #estimate_sgtf()
 
-    #cases = download_cases()
-    #cases.to_csv( "resources/cases.csv", index=False )
+    cases = download_cases()
+    cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
