@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -7,12 +5,6 @@ import numpy as np
 import pandas as pd
 from epiweeks import Week
 from src.variants import VOC, VOI
-
-
-#VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
-#VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
-#      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
-
 
 def _add_date_formatting_minimum( fig ):
     fig.update_layout( template="simple_white",
@@ -137,26 +129,6 @@ def add_missing_to_color_scale( scale, color="white" ):
         else:
             return_list.append( [( 1 / len_scale ) * i, col] )
     return return_list
-
-def plot_choropleth( sf, colorby="fraction" ):
-    # TODO: This plot would be easier to read in a log scale.
-    #  Requires modifying sf, the hoverdata, and then the colorscale.
-    #  Ref: https://community.plotly.com/t/how-to-make-a-logarithmic-color-scale-in-my-choropleth-map/35010/3
-
-    fig = px.choropleth( sf, geojson=sf.geometry,
-                         locations=sf.index, color=colorby,
-                         labels={"fraction": "Sequences per case",
-                                 "case_count" : "Cases",
-                                 "sequences" : "Sequences" },
-                         hover_data=[ "case_count", "sequences", "fraction" ],
-                         projection="mercator", color_continuous_scale=px.colors.sequential.Bluyl,
-                         basemap_visible=False, fitbounds="geojson", scope=None )
-    fig.update_geos( bgcolor="#ffffff" )
-    fig.update_layout( autosize=True,
-                       plot_bgcolor="#ffffff",
-                       paper_bgcolor="#ffffff",
-                       margin={"r":0,"t":0,"l":0,"b":0} )
-    return fig
 
 def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
     plot_df = df.pivot_table( index="epiweek", columns="lineage", values="ID", aggfunc="count" )
@@ -543,16 +515,17 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, cases, norm_type="viral" ):
     seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
     seqs["Other"] = seqs["Other"].clip( lower=0 )
 
+    norm=None
+    ht = "%{y:.0f}"
+
     if norm_type == "viral":
         norm = "gene_copies_rolling"
         yaxis_label = "<b>Variant copies / Liter</b>"
-        ht = "%{y:.0f}"
     elif norm_type == "cases":
         ww_data = ww_data.merge( cases, left_on="date", right_index=True, how="left" )
         ww_data["reported_cases_rolling"] = ww_data["reported_cases_rolling"] * ww_data["population"]
         norm="reported_cases_rolling"
         yaxis_label = "<b>Estimated cases<b>"
-        ht = "%{y:.0f}"
 
     ww_data = ww_data.loc[ww_data["source"]=="PointLoma"]
     seqs = seqs.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )

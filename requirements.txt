@@ -1,10 +1,10 @@
 dash==2.1.0
 dash-bootstrap-components==1.0.2
 plotly==5.5.0
-numpy==1.18.1
+numpy==1.22.3
 epiweeks==2.1.3
 pandas~=1.3.0
 gunicorn==20.1.0
-scipy~=1.7.3
+scipy~=1.8.0
 requests~=2.27.1
 geopandas~=0.9.0
