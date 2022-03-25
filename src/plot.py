@@ -584,9 +584,16 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, cases, norm_type="viral" ):
         stackgroup='one'
     ))
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
+        # BA.1.1 and BA.2 labels are misleading as we collapse all descended lineages into these categories as well.
+        # This adds that hint to the label.
+        label = i[0]
+        if label in ["BA.1.1", "BA.2"]:
+            label += ".X"
+
+        # Plot the lineage
         fig.add_trace( go.Scatter(
             x=seqs.index, y=seqs[i[0]],
-            name=f"{i[0]} (Omicron)",
+            name=f"{label} (Omicron)",
             hovertemplate=ht,
             mode='lines',
             line=dict( width=0.5, color=i[1] ),
@@ -632,9 +639,14 @@ def plot_wastewater_seqs( _, seqs ):
         stackgroup='one'
     ) )
     for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
+        # BA.1.1 and BA.2 labels are misleading as we collapse all descended lineages into these categories as well.
+        # This adds that hint to the label.
+        label = i[0]
+        if label in ["BA.1.1", "BA.2"]:
+            label += ".X"
         fig.add_trace( go.Scatter(
             x=seqs.index, y=seqs[i[0]],
-            name=f"{i[0]} (Omicron)",
+            name=f"{label} (Omicron)",
             hovertemplate=ht,
             mode='lines',
             line=dict( width=0.5, color=i[1] ),
