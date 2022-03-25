@@ -1,7 +1,7 @@
 dash==2.1.0
 dash-bootstrap-components==1.0.2
 plotly==5.5.0
-numpy==1.22.3
+numpy~=1.22.3
 epiweeks==2.1.3
 pandas~=1.3.0
 gunicorn==20.1.0
