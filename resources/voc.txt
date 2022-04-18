@@ -66,6 +66,7 @@ AY.34.1.1,Delta-like
 AY.35,Delta-like
 AY.36,Delta-like
 AY.37,Delta-like
+AY.38,Delta-like
 AY.39,Delta-like
 AY.39.1,Delta-like
 AY.39.2,Delta-like
@@ -102,6 +103,7 @@ AY.60,Delta-like
 AY.61,Delta-like
 AY.62,Delta-like
 AY.64,Delta-like
+AY.65,Delta-like
 AY.67,Delta-like
 AY.7,Delta-like
 AY.74,Delta-like
@@ -112,6 +114,7 @@ AY.81,Delta-like
 AY.86,Delta-like
 AY.87,Delta-like
 AY.88,Delta-like
+AY.9,Delta-like
 AY.9.2,Delta-like
 AY.90,Delta-like
 AY.92,Delta-like

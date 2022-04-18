@@ -96,7 +96,7 @@ def download_search():
     md = md.merge( pango, left_on="num", right_on="num", how="left", validate="one_to_one" )
 
     # Filter sequences which failed lineage calling. These sequences are likely incomplete/erroneous.
-    md = md.loc[md["lineage"]!="None"]
+    md = md.loc[~md["lineage"].isin( ["None", "Unassigned"] )]
 
     md = md[["ID","collection_date", "zipcode", "epiweek", "days_past", "sequencer", "provider", "lineage", "state"]]
 
@@ -225,8 +225,8 @@ if __name__ == "__main__":
 
     #estimate_sgtf()
 
-    cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    #cases = download_cases()
+    #cases.to_csv( "resources/cases.csv", index=False )
 
     #sd_zips = download_shapefile()
     #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )
