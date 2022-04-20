@@ -23,7 +23,7 @@ def download_search():
     """
 
     search_md = "https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv"
-    md = pd.read_csv( search_md, usecols=["ID", "collection_date", "location", "authors", "originating_lab", "zipcode", "host"] )
+    md = pd.read_csv( search_md, usecols=["ID", "collection_date", "location", "authors", "originating_lab", "zipcode", "host", "percent_coverage_cds"] )
     md["collection_date"] = md["collection_date"].astype( str )
 
     # Filter out incorrect samples or wastewater
