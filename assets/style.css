@@ -237,3 +237,15 @@ th {
   border-bottom-left-radius: 0;
   margin-left: -1px;
 }
+
+.dash-table-tooltip {
+    font-family: sans-serif;
+    color: red;
+    text-align: center;
+}
+
+.dash-tooltip {
+    font-family: sans-serif;
+    color: red;
+    text-align: center;
+}
