@@ -52,6 +52,7 @@ def get_table( growth_rates ):
             },
             style_table={
                 'borderRadius': '5px',
+                "overflow" : "hidden",
                 'fontSize': "11px",
             },
             style_header_conditional=[
