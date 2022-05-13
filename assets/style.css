@@ -55,18 +55,18 @@ h5 {
 .dcc_control {
     margin: 0;
     padding: 5px;
-    width: calc(100%-40px);
+    width: calc(100% - 40px);
 }
 
 .control_label {
-    padding: 10px 10px 0px;
-    margin: 0 0 0px;
-    width: calc(100%-40px);
+    padding: 10px 10px 0;
+    margin: 0 0 0;
+    width: calc(100% - 40px);
 }
 
 .rc-slider {
-    margin-left: 0px;
-    padding-left: 0px;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 .flex-display {
@@ -236,16 +236,4 @@ th {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   margin-left: -1px;
-}
-
-.dash-table-tooltip {
-    font-family: sans-serif;
-    color: red;
-    text-align: center;
-}
-
-.dash-tooltip {
-    font-family: sans-serif;
-    color: red;
-    text-align: center;
 }

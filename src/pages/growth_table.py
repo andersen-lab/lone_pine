@@ -3,13 +3,11 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 from dash.dash_table.Format import Format, Scheme
 
-def get_layout():
-    df = pd.read_csv( "../../resources/growth_rates.csv" )
+def get_table( growth_rates ):
+    date_first = growth_rates["first_date"].values[0]
+    date_last = growth_rates["last_date"].values[0]
 
-    date_first = df["first_date"].values[0]
-    date_last = df["last_date"].values[0]
-
-    df = df.drop( columns=["first_date", "last_date"] )
+    growth_rates = growth_rates.drop( columns=["first_date", "last_date"] )
 
     columns = [
         {'id': "lineage", 'name': "Lineage"},
@@ -20,9 +18,9 @@ def get_layout():
         {'id': "growth_rate", 'name': "Growth rate", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage )},
     ]
 
-    layout = html.Div( [
+    table = html.Div( [
         dash_table.DataTable(
-            data=df.to_dict('records'),
+            data=growth_rates.to_dict('records'),
             columns=columns,
             tooltip_header={
                 "total_count" : "Total number of genomces sequenced from lineage.",
@@ -40,21 +38,21 @@ def get_layout():
 
             ],
             style_as_list_view=True,
-            sort_action="native",
             style_header={
-                'backgroundColor': 'white',
+                'backgroundColor': '#3C5C94',
+                'color': '#F8F9FA',
                 'fontWeight': 'bold',
                 'fontFamily': 'sans-serif',
-                'borderBottom': '1px solid black',
-                'borderTop': '2px solid black',
             },
             style_cell = {
                 'fontFamily': 'sans-serif',
-                'border': '0'
+                'border': '0',
+                'padding-right': '10px',
+                'padding-left': '10px'
             },
             style_table={
-                'borderBottom': '1px solid black',
-                'fontSize': "12px"
+                'borderRadius': '5px',
+                'fontSize': "11px",
             },
             style_header_conditional=[
                 {
@@ -79,7 +77,7 @@ def get_layout():
                 },
                 {
                     'if': {'row_index': 'odd' },
-                    'backgroundColor': '#f0f0f0',
+                    'backgroundColor': '#e9eef6', # was #f0f0f0
                 },
                 {
                     'if': {'column_id': 'variant'},
@@ -91,13 +89,7 @@ def get_layout():
                     'fontStyle': 'italic'
                 }
             ]
-        ) ],
-        style={
-            "width" : "30em",
-            "marginLeft" : "auto",
-            "marginRight" : "auto",
-            "marginBottom" : "20px"
-        }
+        ) ]
     )
 
-    return layout
+    return table

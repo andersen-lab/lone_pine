@@ -7,10 +7,6 @@ from scipy.signal import savgol_filter
 from numpy import exp, sqrt, diagonal, log
 import geopandas as gpd
 
-#VOC = sorted( ["AY.1", "AY.2", "AY.3", "AY.3.1", "B.1.1.7", "B.1.351", "B.1.351.2", "B.1.351.3", "B.1.617.2", "P.1", "P.1.1", "P.1.2"] )
-#VOI = sorted( ["AV.1", "B.1.427", "B.1.429", "B.1.525", "B.1.526", "B.1.526.1", "B.1.526.2", "B.1.617", "B.1.617.1", "B.1.617.3",
-#      "B.1.621", "B.1.621.1", "B.1.1.318", "C.36.3", "C.37", "P.3", "P.2"] )
-
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
 
@@ -29,6 +25,7 @@ def load_sequences( window=None ):
 
     return sequences
 
+
 def load_cases( window = None ):
     cases = pd.read_csv( "resources/cases.csv" )
 
@@ -40,8 +37,10 @@ def load_cases( window = None ):
         cases = cases.loc[cases["days_past"] <= window].copy()
     return cases
 
-#def format_cases_timeseries( cases_df, window=None ):
-#    return cases_df.melt( id_vars=["updatedate", "ziptext"], value_vars=['case_count'] )
+
+def load_growth_rates():
+    return pd.read_csv( "resources/growth_rates.csv" )
+
 
 def format_cases_total( cases_df ):
     return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).first()

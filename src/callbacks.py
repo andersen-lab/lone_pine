@@ -4,6 +4,7 @@ import src.format_resources as format_data
 import src.pages.mainpage as mainpage
 import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
+import src.pages.growth_table as growth_table
 from dash import  Input, Output
 from datetime import datetime, timezone, timedelta
 import requests
@@ -33,7 +34,7 @@ def get_last_commit_date( url ):
         #return "Updating at the moment..."
         return ""
 
-def register_callbacks( app, sequences, cases_whole ):
+def register_callbacks( app, sequences, cases_whole, growth_rates ):
 
     def get_sequences( seqs, url, window=None, provider=None, sequencer=None, zip_f=None ):
         new_seqs = seqs.copy()
@@ -69,7 +70,7 @@ def register_callbacks( app, sequences, cases_whole ):
 
     @app.callback(
         Output( "page-contents", "children" ),
-        Input( "url", "pathname")
+        Input( "url", "pathname" )
     )
     def generate_page_content( path ):
         if path == "/sgtf":
@@ -100,6 +101,16 @@ def register_callbacks( app, sequences, cases_whole ):
         '''
 
         return markdown_text
+
+    @app.callback(
+        Output( "top-table-div", "children" ),
+        Input( "url", "pathname" )
+    )
+    def generate_top_table( url ):
+        if url == "/bajacalifornia":
+            return [html.Table( id="summary-table" )]
+        else:
+            return growth_table.get_table( growth_rates )
 
     @app.callback(
         Output( "zip-drop", "options" ),

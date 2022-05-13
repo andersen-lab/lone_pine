@@ -19,8 +19,9 @@ app.scripts.append_script( {
 
 sequences = format_data.load_sequences()
 cases_whole = format_data.load_cases()
+growth_rates = format_data.load_growth_rates()
 
-register_callbacks( app, sequences, cases_whole )
+register_callbacks( app, sequences, cases_whole, growth_rates )
 
 app.layout = html.Div( children=[
     dcc.Location(id='url', refresh=False),
@@ -35,4 +36,4 @@ app.layout = html.Div( children=[
 )
 
 if __name__ == '__main__':
-    app.run_server( debug=False )
+    app.run_server( debug=True )

@@ -5,10 +5,10 @@ def get_layout():
     layout = [
         html.Div( [dcc.Markdown( id="markdown-stuff" ),
                    html.P() ] ),
-        html.Div( [html.Table( id="summary-table" )], style={"width" : "30em",
-                                                             "marginLeft" : "auto",
-                                                             "marginRight" : "auto",
-                                                             "marginBottom" : "20px"} ),
+        html.Div( id="top-table-div", style={"width" : "40em",
+                                             "marginLeft" : "auto",
+                                             "marginRight" : "auto",
+                                             "marginBottom" : "25px"} ),
         html.Div( [
             html.Div( [
                 html.Div( [
