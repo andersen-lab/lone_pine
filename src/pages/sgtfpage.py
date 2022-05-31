@@ -19,7 +19,7 @@ def get_layout( sgtf_data, commit_date ):
     layout = [
         html.Div(
             [
-                dcc.Markdown( markdown ),
+                dcc.Markdown( markdown, link_target='_blank' ),
                 html.Div( [
                     #html.H4( "S Gene Target Failure" ),
                     html.Div(

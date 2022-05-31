@@ -23,7 +23,7 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_are
     layout = [
         html.Div(
             [
-                dcc.Markdown( markdown, style={"margin-bottom" : "-15pt" } ),
+                dcc.Markdown( markdown, style={"margin-bottom" : "-15pt" }, link_target='_blank' ),
                 html.Div(
                     html.Img( src='data:image/png;base64,{}'.format(encoded_image.decode()),
                           style={"width" : "40em", "zIndex" : '2'} ),
