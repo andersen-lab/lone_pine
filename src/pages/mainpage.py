@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 
 def get_layout():
     layout = [
-        html.Div( [dcc.Markdown( id="markdown-stuff" ),
+        html.Div( [dcc.Markdown( id="markdown-stuff", link_target='_blank' ),
                    html.P() ] ),
         html.Div( id="top-table-div", style={"width" : "40em",
                                              "marginLeft" : "auto",
