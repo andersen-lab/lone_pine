@@ -200,7 +200,7 @@ def download_bc_cases():
     today = datetime.datetime.today()
     date_url = int( today.strftime( "%Y%m%d" ) ) - 2
     #bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
-    bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220515.csv"
+    bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220530.csv"
 
     # Load and format the data from the url
     bc = pd.read_csv( bc_url, index_col="nombre" )
