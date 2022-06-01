@@ -275,3 +275,31 @@ def load_catchment_areas():
     sd["ZIP"] = sd["ZIP"].apply( lambda x: f"{x:.0f}" )
     sd = sd.set_index( "ZIP" )
     return sd
+
+def load_ww_plot_config():
+    """
+    Loads the configuration file for the wastewater seqs plots. Essentially, the file specifies the name and color of
+    lineages to be included.
+    Returns
+    -------
+    dict
+        Description of the name, lineage members, and color of each trace to be included in the plot.
+    """
+    import yaml
+    from urllib import request
+
+    try:
+        config_url = request.urlopen( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml" )
+        plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
+    except:
+        print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
+        with open( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml", "r" ) as f :
+            plot_config = yaml.load( f, Loader=yaml.FullLoader )
+
+    # Test the config is reasonable complete.
+    assert "Other" in plot_config, "YAML is not complete. Does not contain 'Other' entry."
+    for key in plot_config.keys() :
+        for value in ["name", "members", "color"] :
+            assert value in plot_config[key], f"YAML entry {key} is not complete. Does not contain '{value}' entry."
+
+    return plot_config

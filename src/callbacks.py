@@ -5,7 +5,7 @@ import src.pages.mainpage as mainpage
 import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
 import src.pages.growth_table as growth_table
-from dash import  Input, Output
+from dash import Input, Output, html
 from datetime import datetime, timezone, timedelta
 import requests
 
@@ -21,8 +21,6 @@ def register_url_cases( df, url ):
     else:
         return df.loc[df["ziptext"]!="None"]
 
-
-# TODO: Error handling needs to be performed. What date to return if can't find last commit?
 def get_last_commit_date( url ):
     try:
         last_commit = requests.get( url ).json()["object"]["url"]
@@ -78,7 +76,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
             return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
-            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date, format_data.load_catchment_areas() )
+            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date )
         else:
             return mainpage.get_layout()
 
@@ -278,7 +276,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
     )
     def update_wastewater_seq_graph( norm_type ):
         if norm_type == "prevalence":
-            return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data() )
+            return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), format_data.load_ww_plot_config() )
         else:
             # TODO: source=PointLoma is hardcoded, in the future this probably isn't going to be the case.
             return dashplot.plot_wastewater_seqs_estimates( *format_data.load_wastewater_data(), cases=get_cases( cases_whole, "/", source="PointLoma" ), norm_type=norm_type )

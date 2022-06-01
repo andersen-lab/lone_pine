@@ -579,55 +579,32 @@ def plot_wastewater_seqs_estimates( ww_data, seqs, cases, norm_type="viral" ):
     fig.update_traces( mode="markers+lines" )
     return fig
 
-def plot_wastewater_seqs( _, seqs ):
-    omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
-    seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
-    seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
-    seqs["Other"] = seqs["Other"].clip( lower=0 )
+def plot_wastewater_seqs( _, seqs, config ):
+    plot_df = []
+    for i in config.keys() :
+        if i != "Other" :
+            temp_sum = seqs[config[i]["members"]].sum( axis=1 )
+            temp_sum.name = i
+            plot_df.append( temp_sum )
+    plot_df = pd.concat( plot_df, axis=1 )
+    plot_df["Other"] = 100 - plot_df.sum( axis=1 )
+    plot_df["Other"] = plot_df["Other"].clip( lower=0 )
 
-    ht = '%{y:.0f}%'
-    #ht = '%{y:.0f}'
-
-    blues = px.colors.sequential.Blues
-    palette = [blues[2], blues[4], blues[6], blues[8]]
-    #palette = ["#2b8cbe", "#7bccc4", "#bae4bc", "#f0f9e8"]
     fig = go.Figure()
-
-    fig.add_trace( go.Scatter(
-        x=seqs.index, y=seqs["Other"],
-        name="Other",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict( width=0.5, color='#009E73' ),
-        stackgroup='one'
-    ) )
-    fig.add_trace( go.Scatter(
-        x=seqs.index, y=seqs["Delta"],
-        name="Delta",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict( width=0.5, color='#E69F00' ),
-        stackgroup='one'
-    ) )
-    for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
-        # BA.1.1 and BA.2 labels are misleading as we collapse all descended lineages into these categories as well.
-        # This adds that hint to the label.
-        label = i[0]
-        if label in ["BA.1.1", "BA.2"]:
-            label += ".X"
-        fig.add_trace( go.Scatter(
-            x=seqs.index, y=seqs[i[0]],
-            name=f"{label} (Omicron)",
-            hovertemplate=ht,
-            mode='lines',
-            line=dict( width=0.5, color=i[1] ),
-            stackgroup='one'
-        ) )
-
-    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0,100], tickformat='.0f', ticksuffix="%", showline=False, ticks="" )
-    #fig.update_yaxes( showgrid=True, title=f"<b>Variant copies / Liter</b>", tickformat='.0', showline=False, ticks="" )
+    for i in reversed( list( config.keys() ) ) :
+        fig.add_trace(
+            go.Scatter(
+                x=plot_df.index, y=plot_df[i],
+                name=config[i]["name"],
+                hovertemplate="%{y:.0f}%",
+                hoverinfo='x+y',
+                mode='lines',
+                line=dict( width=0.5, color=config[i]["color"] ),
+                stackgroup='one'
+            )
+        )
+    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0, 100], tickformat='.0f',
+                      ticksuffix="%", showline=False, ticks="" )
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
     _add_date_formatting_minimum( fig )
     fig.update_traces( mode="markers+lines" )

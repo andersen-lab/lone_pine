@@ -3,7 +3,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 import src.plot as dashplot
 
-def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_areas ):
+def get_layout( wastewater_data, wastewater_seq_data, commit_date ):
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Encina, Point 
     Loma, and South Bay wastewater treatment plants (see map below for catchment areas of each plant). Fragments of 
@@ -40,14 +40,6 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_are
                 ] ),
                 html.Div(
                     [
-                        #html.Div(
-                        #    dcc.Graph(
-                        #        figure=dashplot.plot_catchment_areas( catchment_areas ),
-                        #        id="catchment-graph",
-                        #        config={"displayModeBay" : False },
-                        #        style={"height" : "30em" }
-                        #    )
-                        #),
                         html.Div(
                             [dbc.RadioItems(
                                 id="ww-source-radio",
@@ -120,7 +112,6 @@ def get_layout( wastewater_data, wastewater_seq_data, commit_date, catchment_are
                         ),
                         html.Div(
                             dcc.Graph(
-                                figure=dashplot.plot_wastewater_seqs( wastewater_data, wastewater_seq_data ),
                                 id="wastewater-seq-graph",
                                 config={"displayModeBar" : False},
                             ),
