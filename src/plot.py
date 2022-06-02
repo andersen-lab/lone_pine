@@ -509,77 +509,7 @@ def plot_wastewater( ww, cases, scale="linear", source="PointLoma" ):
     return fig
 
 
-def plot_wastewater_seqs_estimates( ww_data, seqs, cases, norm_type="viral" ):
-    omicron = [i for i in VOC.keys() if VOC[i] == "Omicron-like"]
-    seqs = seqs.loc[:,~seqs.columns.str.startswith( ( "AY", 'Other', "Omicron" ) )].copy()
-    seqs["Other"] = 100 - seqs.loc[:, seqs.columns.isin( omicron + ["Delta"] )].sum( axis=1 )
-    seqs["Other"] = seqs["Other"].clip( lower=0 )
-
-    norm=None
-    ht = "%{y:.0f}"
-
-    if norm_type == "viral":
-        norm = "gene_copies_rolling"
-        yaxis_label = "<b>Variant copies / Liter</b>"
-    elif norm_type == "cases":
-        ww_data = ww_data.merge( cases, left_on="date", right_index=True, how="left" )
-        ww_data["reported_cases_rolling"] = ww_data["reported_cases_rolling"] * ww_data["population"]
-        norm="reported_cases_rolling"
-        yaxis_label = "<b>Estimated cases<b>"
-
-    ww_data = ww_data.loc[ww_data["source"]=="PointLoma"]
-    seqs = seqs.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
-    seqs = seqs.rename( columns={"date" : "Date"} )
-    seqs = seqs.dropna()
-    seqs = seqs.set_index( "Date" )
-    seqs = seqs.loc[:,seqs.columns !=norm].apply( lambda x: (x/100) * seqs[norm] )
-
-    blues = px.colors.sequential.Blues
-    palette = [blues[2], blues[4], blues[6], blues[8]]
-
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Other"],
-        name="Other",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict(width=0.5, color='#009E73'),
-        stackgroup='one'
-    ))
-    fig.add_trace(go.Scatter(
-        x=seqs.index, y=seqs["Delta"],
-        name="Delta",
-        hovertemplate=ht,
-        hoverinfo='x+y',
-        mode='lines',
-        line=dict(width=0.5, color='#E69F00'),
-        stackgroup='one'
-    ))
-    for i in zip( seqs.columns[seqs.columns.isin( VOC )], palette ):
-        # BA.1.1 and BA.2 labels are misleading as we collapse all descended lineages into these categories as well.
-        # This adds that hint to the label.
-        label = i[0]
-        if label in ["BA.1.1", "BA.2"]:
-            label += ".X"
-
-        # Plot the lineage
-        fig.add_trace( go.Scatter(
-            x=seqs.index, y=seqs[i[0]],
-            name=f"{label} (Omicron)",
-            hovertemplate=ht,
-            mode='lines',
-            line=dict( width=0.5, color=i[1] ),
-            stackgroup='one'
-        ) )
-
-    fig.update_yaxes( showgrid=True, title=yaxis_label, tickformat='.0f', showline=False, ticks="" )
-    fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
-    _add_date_formatting_minimum( fig )
-    fig.update_traces( mode="markers+lines" )
-    return fig
-
-def plot_wastewater_seqs( _, seqs, config ):
+def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ):
     plot_df = []
     for i in config.keys() :
         if i != "Other" :
@@ -590,21 +520,50 @@ def plot_wastewater_seqs( _, seqs, config ):
     plot_df["Other"] = 100 - plot_df.sum( axis=1 )
     plot_df["Other"] = plot_df["Other"].clip( lower=0 )
 
+    norm=None
+    ht = "%{y:.0f}"
+
+    if norm_type == "viral":
+        norm = "gene_copies_rolling"
+        yaxis_label = "<b>Variant copies / Liter</b>"
+        ticksuffix = ""
+        yrange = None
+    elif norm_type == "cases":
+        ww_data = ww_data.merge( cases, left_on="date", right_index=True, how="left" )
+        ww_data["reported_cases_rolling"] = ww_data["reported_cases_rolling"] * ww_data["population"]
+        norm="reported_cases_rolling"
+        yaxis_label = "<b>Estimated cases<b>"
+        ticksuffix = ""
+        yrange = None
+    elif norm_type == "prevalence":
+        ht = "%{y:.0f}%"
+        yaxis_label = "<b>Variant prevalence</b>"
+        ticksuffix = "%"
+        yrange = [0,100]
+
+    if norm is not None:
+        ww_data = ww_data.loc[ww_data["source"] == "PointLoma"]
+        plot_df = plot_df.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
+        plot_df = plot_df.rename( columns={ "date" : "Date" } )
+        plot_df = plot_df.dropna()
+        plot_df = plot_df.set_index( "Date" )
+        plot_df = plot_df.loc[:, plot_df.columns != norm].apply( lambda x : (x / 100) * plot_df[norm] )
+
     fig = go.Figure()
     for i in reversed( list( config.keys() ) ) :
         fig.add_trace(
             go.Scatter(
                 x=plot_df.index, y=plot_df[i],
                 name=config[i]["name"],
-                hovertemplate="%{y:.0f}%",
+                hovertemplate=ht,
                 hoverinfo='x+y',
                 mode='lines',
                 line=dict( width=0.5, color=config[i]["color"] ),
                 stackgroup='one'
             )
         )
-    fig.update_yaxes( showgrid=True, title=f"<b>Variant prevalence</b>", range=[0, 100], tickformat='.0f',
-                      ticksuffix="%", showline=False, ticks="" )
+    fig.update_yaxes( showgrid=True, title=yaxis_label, range=yrange, tickformat='.0f',
+                      ticksuffix=ticksuffix, showline=False, ticks="" )
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
     _add_date_formatting_minimum( fig )
     fig.update_traces( mode="markers+lines" )
