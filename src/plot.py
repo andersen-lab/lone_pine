@@ -355,14 +355,14 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
                        hovermode="closest",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
-                       xaxis=dict( hoverformat="%B %d" ),
+                       xaxis=dict( hoverformat="%b %d, %Y" ),
                        margin={"r":0,"t":40,"l":0,"b":0},
                        legend=dict( yanchor="top",
                                     y=0.99,
@@ -409,30 +409,32 @@ def plot_sgtf_estiamte( sgtf_data ):
                        hovermode="closest",
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
-                       xaxis=dict( hoverformat="%B %d" ),
+                       xaxis=dict( hoverformat="%b %d, %Y" ),
                        margin={"r":0,"t":40,"l":0,"b":10},
                        legend=dict( yanchor="top",
                                     y=0.99,
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-07-01"] )
+    fig.update_xaxes( range=["2021-11-25", "2022-08-01"] )
 
     esti = sgtf_data[2]
     double_str =  f"Halving time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
     growth_str =  f"Daily decline rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
     transmission_str =  f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-    for col, name in [("date", "1%")]:
+    for col, name in [("date50", "50%")]:
         date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
         midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
         fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
         fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
 
     y_scale = 0.75
-    fig.add_annotation( x="2022-03-11", y=0.2+y_scale, text=double_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
-    fig.add_annotation( x="2022-03-11", y=0.15+y_scale, text=growth_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
-    fig.add_annotation( x="2022-03-11", y=0.1+y_scale, text=transmission_str, showarrow=False, xanchor="left", bgcolor="#ffffff" )
+    x_place = "2022-03-09"
+    bgcolor = "rgba(255,255,255,0.8)"
+    fig.add_annotation( x=x_place, y=0.2 + y_scale, text=double_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
+    fig.add_annotation( x=x_place, y=0.15 + y_scale, text=growth_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
+    fig.add_annotation( x=x_place, y=0.1 + y_scale, text=transmission_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
 
     return fig
 

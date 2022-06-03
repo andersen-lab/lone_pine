@@ -190,8 +190,8 @@ def load_sgtf_data():
 
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
-    def lgm_mixture( ndays, g_x0, g_r, d_x0, d_r ):
-        return lgm( ndays, g_x0, g_r ) - lgm( ndays, d_x0, d_r )
+    def lgm_mixture( ndays, x0_1, r_1, x0_2, r_2, x0_3, r_3 ):
+        return lgm( ndays, x0_1, r_1 ) - lgm( ndays, x0_2, r_2 ) + lgm( ndays, x0_3, r_3 )
 
     tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego_new.csv", parse_dates=["Date"] )
     tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
@@ -204,34 +204,40 @@ def load_sgtf_data():
         f=lgm_mixture,
         xdata=tests["ndays"],
         ydata=tests["percent_filter"],
-        p0=[0.001, 0.008, 0.001, 0.008],
-        bounds=((0, 0, 0, 0), (np.inf, np.inf, np.inf, np.inf))
+        p0=[0.003, 0.008, 0.002, 0.008, 0.001, 0.008],
+        bounds=([0] * 6, [np.inf] * 6)
     )
     sigma_ab = np.sqrt( np.diagonal( covar ) )
 
-    days_sim = 300
+    days_sim = 400
 
     fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
     fit_df["ndays"] = fit_df.index
     fit_df["fit_y"] = [lgm_mixture(i, *fit) for i in range( days_sim )]
-    fit_df["fit_lower"] = [lgm_mixture( i, fit[0], fit[1] + sigma_ab[1], fit[2], fit[3] + sigma_ab[3] ) for i in range( days_sim )]
-    fit_df["fit_upper"] = [lgm_mixture( i, fit[0], fit[1] - sigma_ab[1], fit[2], fit[3] - sigma_ab[3] ) for i in range( days_sim )]
 
-    above_1 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.01),"date"].min()
-    above_1_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.01),"date"].min()
-    above_1_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_upper"] <= 0.01),"date"].min()
+    sigma_addition = sigma_ab
+    # should be -1 when we want to include the term. I won't for now because the CI is so large.
+    sigma_addition[4] *= 0
+    sigma_addition[5] *= -1
 
-    above_50 = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_y"] <= 0.50),"date"].min()
-    above_50_lower = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_lower"] <= 0.50),"date"].min()
-    above_50_upper = fit_df.loc[(fit_df["date"] > "2022-01-15")&(fit_df["fit_upper"] <= 0.50),"date"].min()
+    fit_df["fit_lower"] = [lgm_mixture( i, *(fit - sigma_addition) ) for i in range( days_sim )]
+    fit_df["fit_upper"] = [lgm_mixture( i, *(fit + sigma_addition) ) for i in range( days_sim )]
 
-    growth_rate = fit[3]
+    above_99 = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_y"] > 0.99),"date"].min()
+    above_99_lower = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_lower"] > 0.99),"date"].min()
+    above_99_upper = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_upper"] > 0.99),"date"].min()
+
+    above_50 = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_y"] > 0.50),"date"].min()
+    above_50_lower = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_lower"] > 0.50),"date"].min()
+    above_50_upper = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_upper"] > 0.50),"date"].min()
+
+    growth_rate = fit[5]
     serial_interval = 5.5
 
     estimates = pd.DataFrame( {
-        "estimate" : [above_1, above_50, growth_rate],
-        "lower" : [above_1_lower, above_50_lower, growth_rate - sigma_ab[3]],
-        "upper" : [above_1_upper, above_50_upper, growth_rate + sigma_ab[3]] }, index=["date", "date50", "growth_rate"] )
+        "estimate" : [above_99, above_50, growth_rate],
+        "lower" : [above_99_lower, above_50_lower, growth_rate - sigma_ab[5]],
+        "upper" : [above_99_upper, above_50_upper, growth_rate + sigma_ab[5]] }, index=["date99", "date50", "growth_rate"] )
     estimates = estimates.T
     estimates["doubling_time"] = log(2) / estimates["growth_rate"]
     estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]
