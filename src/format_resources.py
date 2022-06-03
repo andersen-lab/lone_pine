@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from dash import html
+from epiweeks import Week
+
 from src.variants import VOC, VOI
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter

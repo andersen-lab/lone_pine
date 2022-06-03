@@ -334,14 +334,19 @@ def plot_zips( df, colorby="sequences" ):
 
 def plot_sgtf( sgtf_data ):
     plot_df = sgtf_data[0]
+    plot_df["week"] = plot_df["Date"].apply( lambda x: Week.fromdate( x ).startdate() )
+    plot_df = plot_df.groupby( "week" )[["sgtf_all", "sgtf_likely", "sgtf_unlikely", "total_positive"]].agg( sum )
+    plot_df["percent"] = plot_df["sgtf_all"] / plot_df["total_positive"]
+    plot_df = plot_df.reset_index()
+
+
     max_lim = np.round( plot_df["total_positive"].max() * 1.05 )
-    #print( plot_df[["sgtf_likely","total_positive"]].sum( axis=1 ) )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
-    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_likely"], name="SGTF <=30 Ct", marker_color="#E69F00" ), secondary_y=False )
-    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["sgtf_unlikely"], name="SGTF >30 Ct", marker_color="#009E73" ), secondary_y=False )
-    fig.add_trace( go.Bar( x=plot_df["Date"], y=plot_df["total_positive"] - plot_df["sgtf_likely"] - plot_df["sgtf_unlikely"], name="Total positive", marker_color="#56B4E9" ), secondary_y=False )
-    fig.add_trace( go.Scattergl( x=plot_df["Date"], y=plot_df["percent"],
+    fig.add_trace( go.Bar( x=plot_df["week"], y=plot_df["sgtf_likely"], name="SGTF <=30 Ct", marker_color="#E69F00" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["week"], y=plot_df["sgtf_unlikely"], name="SGTF >30 Ct", marker_color="#009E73" ), secondary_y=False )
+    fig.add_trace( go.Bar( x=plot_df["week"], y=plot_df["total_positive"] - plot_df["sgtf_likely"] - plot_df["sgtf_unlikely"], name="Total positive", marker_color="#56B4E9" ), secondary_y=False )
+    fig.add_trace( go.Scattergl( x=plot_df["week"], y=plot_df["percent"],
                                  mode='lines',
                                  name='SGTF (%)',
                                  showlegend=False,
@@ -350,7 +355,7 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
 
-    fig.update_xaxes( dtick="6.048e+8", tickformat="%b\n%d", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
@@ -363,7 +368,7 @@ def plot_sgtf( sgtf_data ):
                                     y=0.99,
                                     xanchor="left",
                                     x=0.01,
-                                    bgcolor="rgba(0,0,0,0)" ) )
+                                    bgcolor="rgba(255,255,255,0.8)" ) )
 
     return fig
 
@@ -509,7 +514,7 @@ def plot_wastewater( ww, cases, scale="linear", source="PointLoma" ):
     return fig
 
 
-def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ):
+def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ) -> go.Figure:
     plot_df = []
     for i in config.keys() :
         if i != "Other" :
@@ -550,7 +555,7 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ):
         plot_df = plot_df.loc[:, plot_df.columns != norm].apply( lambda x : (x / 100) * plot_df[norm] )
 
     fig = go.Figure()
-    for i in reversed( list( config.keys() ) ) :
+    for i in reversed( list( config.keys() ) ):
         fig.add_trace(
             go.Scatter(
                 x=plot_df.index, y=plot_df[i],
@@ -568,35 +573,3 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ):
     _add_date_formatting_minimum( fig )
     fig.update_traces( mode="markers+lines" )
     return fig
-
-#def plot_wastewater_seqs( seqs ):
-#    df = seqs.drop( columns=['Delta (%)','Omicron (%)'] )
-#    df = df.dropna( axis = 0, how = 'all' ).fillna( 0 )
-#    df['Other'] = 100. - df.sum( axis=1 )
-#    interval='D'
-#    df = df.groupby( pd.Grouper( freq=interval ) ).mean()
-#    df = df.rolling( 14, center=True, min_periods=0 ).mean()
-#    df = df.reindex( columns=df.sum().sort_values(ascending=False ).index )
-#
-#    fig = go.Figure()
-#    for lin in df.columns:
-#        fig.add_trace( go.Scatter(
-#            x=df.index, y=df.loc[:,lin],
-#            hoverinfo='x+y',
-#            hovertemplate='%{y:.0f}%',
-#            mode='lines',
-#            name=lin,
-#            line=dict(width=0.5),
-#            stackgroup='one' # define stack group
-#        ) )
-#
-#    fig.update_yaxes( showgrid=True, title=f"<b>Lineage prevalence</b>", tickformat='.0', ticksuffix="%", showline=False, ticks="" )
-#    fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
-#    fig.update_layout( template="simple_white",
-#                       #yaxis_range=(0,100),
-#                       hovermode="closest",
-#                       plot_bgcolor="#ffffff",
-#                       paper_bgcolor="#ffffff",
-#                       margin={"r":0,"t":40,"l":0,"b":10},
-#                       legend=dict( bgcolor="rgba(255,255,255,1)" ) )
-#    return fig
