@@ -258,15 +258,17 @@ def load_wastewater_data():
 
         return temp
 
-    pl_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_qPCR.csv"
-    en_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Encina_sewage_qPCR.csv"
-    sb_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/SouthBay_sewage_qPCR.csv"
+    def load_seq_individul( loc, source ):
+        temp = pd.read_csv( loc, parse_dates=["Date"], index_col="Date" )
+        temp["source"] = source
+        return temp
 
-    return_df = pd.concat( [load_ww_individual( pl_loc, "PointLoma" ), load_ww_individual( en_loc, "Encina" ), load_ww_individual( sb_loc, "SouthBay" )] )
+    titer_template = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/{}_sewage_qPCR.csv"
+    seqs_template = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/{}_sewage_seqs.csv"
+    locations = ["PointLoma", "Encina", "SouthBay"]
 
-    seqs = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/PointLoma_sewage_seqs.csv", parse_dates=["Date"], index_col="Date" )
-    #seqs["Other (%)"] = 100 - seqs["Omicron (%)"] - seqs["Delta (%)"]
-    #seqs = seqs.loc[~seqs["Other (%)"].isna()]
+    return_df = pd.concat( [load_ww_individual( titer_template.format( loc ), loc ) for loc in locations] )
+    seqs = pd.concat( [load_seq_individul( seqs_template.format( loc ), loc ) for loc in locations] )
 
     return return_df, seqs
 

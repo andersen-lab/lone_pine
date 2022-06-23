@@ -76,7 +76,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
             return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
-            return wastepage.get_layout( *format_data.load_wastewater_data(), commit_date )
+            return wastepage.get_layout( commit_date )
         else:
             return mainpage.get_layout()
 
@@ -272,11 +272,12 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
 
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
-        Input( "scale-seqs-radios", "value" )
+        [Input( "scale-seqs-radios", "value" ),
+         Input( "ww-source-radio", "value" )]
     )
-    def update_wastewater_seq_graph( norm_type ):
+    def update_wastewater_seq_graph( norm_type, source ):
         # TODO: source=PointLoma is hardcoded, in the future this probably isn't going to be the case.
-        return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source="PointLoma"), norm_type=norm_type )
+        return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source=source), norm_type=norm_type, source=source )
 
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(

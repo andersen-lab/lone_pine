@@ -516,11 +516,18 @@ def plot_wastewater( ww, cases, scale="linear", source="PointLoma" ):
     return fig
 
 
-def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ) -> go.Figure:
+def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma" ) -> go.Figure:
+
+    filtered_seqs = seqs.loc[seqs["source"]==source]
+
     plot_df = []
     for i in config.keys() :
         if i != "Other" :
-            temp_sum = seqs[config[i]["members"]].sum( axis=1 )
+            try:
+                temp_sum = filtered_seqs[config[i]["members"]].sum( axis=1 )
+            except KeyError:
+                print( 'help"')
+                exit()
             temp_sum.name = i
             plot_df.append( temp_sum )
     plot_df = pd.concat( plot_df, axis=1 )
@@ -549,7 +556,7 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type ) -> go.Figure
         yrange = [0,100]
 
     if norm is not None:
-        ww_data = ww_data.loc[ww_data["source"] == "PointLoma"]
+        ww_data = ww_data.loc[ww_data["source"]==source]
         plot_df = plot_df.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
         plot_df = plot_df.rename( columns={ "date" : "Date" } )
         plot_df = plot_df.dropna()
