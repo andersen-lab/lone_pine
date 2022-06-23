@@ -86,7 +86,7 @@ def get_layout( commit_date ):
                                 html.Div(
                                     html.H4( "Wastewater lineages" ),
                                     className="three columns",
-                                    style={"width" : "60%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
+                                    style={"width" : "63.3%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
                                 ),
                                 html.Div(
                                     dbc.RadioItems(
@@ -103,8 +103,8 @@ def get_layout( commit_date ):
                                         value="prevalence",
                                         style={"justifyContent": "flex-end"}
                                     ),
-                                    className="three columns",
-                                    style={ 'display': 'inline-block' }
+                                    #className="three columns",
+                                    style={ 'display': 'inline-block', "justifyContent": "flex-end" }
                                 )
                             ],
                             className="radio-group",
@@ -115,7 +115,7 @@ def get_layout( commit_date ):
                                 id="wastewater-seq-graph",
                                 config={"displayModeBar" : False},
                             ),
-                            style={ "height": "30em", 'width': '60em', "margin" : "auto" }
+                            style={ "height": "30em", "margin" : "auto" }
                         )
                     ],
 
