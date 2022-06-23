@@ -84,7 +84,7 @@ def get_layout( commit_date ):
                             [
                                 html.Br(),
                                 html.Div(
-                                    html.H4( "Wastewater lineages (Point Loma)" ),
+                                    html.H4( "Wastewater lineages" ),
                                     className="three columns",
                                     style={"width" : "60%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
                                 ),
