@@ -268,7 +268,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
          Input( "ww-source-radio", "value" )]
     )
     def update_wastewater_graph( scale, source ):
-        return dashplot.plot_wastewater( ww=format_data.load_wastewater_data()[0], cases=get_cases( cases_whole, "/", source=source ), scale=scale, source=source )
+        return dashplot.plot_wastewater( *format_data.load_wastewater_data(), cases=get_cases( cases_whole, "/", source=source ), scale=scale, source=source )
 
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
