@@ -571,6 +571,7 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
         plot_df = plot_df.loc[:, plot_df.columns != norm].apply( lambda x : (x / 100) * plot_df[norm] )
 
     fig = go.Figure()
+
     for i in reversed( list( config.keys() ) ):
         fig.add_trace(
             go.Scatter(
@@ -587,5 +588,5 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
                       ticksuffix=ticksuffix, showline=False, ticks="" )
     fig.update_xaxes( dtick="6.048e+8", tickformat="%b %d", mirror=True, showline=False, ticks="", showgrid=False )
     _add_date_formatting_minimum( fig )
-    fig.update_traces( mode="markers+lines" )
+    fig.update_traces( mode="lines" )
     return fig

@@ -31,11 +31,12 @@ def download_search():
     #md = md.loc[~md["ID"].isin( load_file_as_list( "resources/ignore.txt") )]
 
     md = md.loc[(md["location"]=="North America/USA/California/San Diego")|(md["location"].str.startswith( "North America/Mexico/Baja California" ))]
-    md = md.loc[md["collection_date"]!='Unknown']
+
     md = md.loc[~md["collection_date"].str.startswith( "19" )]
     md = md.loc[~md["collection_date"].str.contains( "/" )]
-    md = md.loc[md["collection_date"] != "NaT"]
-    md = md.loc[md["collection_date"] != "nan"]
+
+    md = md.loc[~md["collection_date"].isin( ["NaT", "nan", 'Unknown', 'missing'] )]
+
     md = md.loc[~md["host"].isin(["Environment","Environmental"] )]
 
     # Generate an identifiable location column
