@@ -204,3 +204,5 @@ BA.5,Omicron-like
 BA.5.2.1,Omicron-like
 BA.5.5,Omicron-like
 XE,Omicron-like
+XAC,Omicron-like
+BG.2,Omicron-like
