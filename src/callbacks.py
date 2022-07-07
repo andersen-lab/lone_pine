@@ -4,6 +4,7 @@ import src.format_resources as format_data
 import src.pages.mainpage as mainpage
 import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
+import src.pages.monkeypox as monkeypox
 import src.pages.growth_table as growth_table
 from dash import Input, Output, html
 from datetime import datetime, timezone, timedelta
@@ -77,6 +78,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
             return wastepage.get_layout( commit_date )
+        elif path == "/monkeypox":
+            return monkeypox.get_layout()
         else:
             return mainpage.get_layout()
 
@@ -278,6 +281,13 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
     def update_wastewater_seq_graph( norm_type, source ):
         # TODO: source=PointLoma is hardcoded, in the future this probably isn't going to be the case.
         return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source=source), norm_type=norm_type, source=source )
+
+    @app.callback(
+        Output( "monkeypox-graph", "figure"),
+        Input( "yaxis-scale-radio", "value" )
+    )
+    def update_monkeypox_graph( scale ):
+        return dashplot.plot_monkeypox_concentration( *format_data.load_wastewater_data(), scale=scale )
 
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(

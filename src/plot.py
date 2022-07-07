@@ -522,6 +522,40 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma" ):
 
     return fig
 
+def plot_monkeypox_concentration( ww_data, seqs, scale="linear" ):
+    subset_ww = ww_data.loc[ww_data["source"] == "PointLoma"]
+    date_range = get_date_limits( subset_ww["date"] )
+
+    fig = go.Figure()
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
+                                 name="Viral load in wastewater",
+                                 mode="markers",
+                                 hovertemplate="%{y:,.0f}",
+                                 marker={ "color": "#56B4E9", "size": 8 } ) )
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies_rolling"],
+                                 showlegend=False,
+                                 name="Viral load in wastewater",
+                                 mode="lines",
+                                 hoverinfo="skip",
+                                 line={ "color": "#56B4E9", "width": 3 } ) )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict( color="#56B4E9" ),
+                      title_font=dict( color="#56B4E9" ), showline=False, ticks="", type=scale )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", range=date_range )
+
+    fig.update_layout( template="simple_white",
+                       hovermode="x unified",
+                       plot_bgcolor="#ffffff",
+                       paper_bgcolor="#ffffff",
+                       margin={ "r": 0, "t": 0, "l": 0, "b": 0 },
+                       xaxis=dict( hoverformat="%B %d, %Y" ),
+                       legend=dict( yanchor="top",
+                                    y=0.99,
+                                    xanchor="left",
+                                    x=0.01,
+                                    bgcolor="rgba(0,0,0,0)",
+                                    itemsizing='constant' ) )
+
+    return fig
 
 def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma" ) -> go.Figure:
 
