@@ -287,7 +287,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
         Input( "yaxis-scale-radio", "value" )
     )
     def update_monkeypox_graph( scale ):
-        return dashplot.plot_monkeypox_concentration( *format_data.load_wastewater_data(), scale=scale )
+        return dashplot.plot_monkeypox_concentration( format_data.load_monkeypox_data(), scale=scale )
 
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(

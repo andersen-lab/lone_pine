@@ -522,25 +522,25 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma" ):
 
     return fig
 
-def plot_monkeypox_concentration( ww_data, seqs, scale="linear" ):
-    subset_ww = ww_data.loc[ww_data["source"] == "PointLoma"]
+def plot_monkeypox_concentration( mx_data, scale="linear" ):
+    subset_ww = mx_data.loc[mx_data["source"] == "PointLoma"]
     date_range = get_date_limits( subset_ww["date"] )
 
     fig = go.Figure()
-    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
-                                 name="Viral load in wastewater",
-                                 mode="markers",
-                                 hovertemplate="%{y:,.0f}",
-                                 marker={ "color": "#56B4E9", "size": 8 } ) )
-    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies_rolling"],
-                                 showlegend=False,
+    #fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
+    #                             name="Viral load in wastewater",
+    #                             mode="markers",
+    #                             hovertemplate="%{y:,.0f}",
+    #                             marker={ "color": "#3C5C94", "size": 8 } ) )
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies"],
+                                 showlegend=True,
                                  name="Viral load in wastewater",
                                  mode="lines",
-                                 hoverinfo="skip",
-                                 line={ "color": "#56B4E9", "width": 3 } ) )
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict( color="#56B4E9" ),
-                      title_font=dict( color="#56B4E9" ), showline=False, ticks="", type=scale )
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", range=date_range )
+                                 hovertemplate="%{y:,.0f}",
+                                 line={ "color": "#3C5C94", "width": 3 } ) )
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / ul</b>", tickfont=dict( color="#3C5C94" ),
+                      title_font=dict( color="#3C5C94" ), showline=False, ticks="", type=scale )
+    fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", range=date_range )
 
     fig.update_layout( template="simple_white",
                        hovermode="x unified",

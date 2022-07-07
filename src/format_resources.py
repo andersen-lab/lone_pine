@@ -313,3 +313,8 @@ def load_ww_plot_config():
             assert value in plot_config[key], f"YAML entry {key} is not complete. Does not contain '{value}' entry."
 
     return plot_config
+
+def load_monkeypox_data():
+    data = pd.read_csv( "resources/monkeypox.csv", parse_dates=["date"] )
+    data["copies"] = data["copies"] * 1000000
+    return data
