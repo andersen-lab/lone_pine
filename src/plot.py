@@ -538,7 +538,7 @@ def plot_monkeypox_concentration( mx_data, scale="linear" ):
                                  mode="lines",
                                  hovertemplate="%{y:,.0f}",
                                  line={ "color": "#3C5C94", "width": 3 } ) )
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / ul</b>", tickfont=dict( color="#3C5C94" ),
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict( color="#3C5C94" ),
                       title_font=dict( color="#3C5C94" ), showline=False, ticks="", type=scale )
     fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", range=date_range )
 
