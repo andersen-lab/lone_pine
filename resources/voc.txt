@@ -128,12 +128,12 @@ BA.1.1.16,Omicron-like
 BA.1.1.17,Omicron-like
 BA.1.1.18,Omicron-like
 BA.1.1.2,Omicron-like
-BA.1.1.4,Omicron-like
 BA.1.1.6,Omicron-like
 BA.1.1.7,Omicron-like
 BA.1.1.8,Omicron-like
 BA.1.1.9,Omicron-like
 BA.1.10,Omicron-like
+BA.1.12,Omicron-like
 BA.1.13,Omicron-like
 BA.1.14,Omicron-like
 BA.1.14.2,Omicron-like
@@ -141,7 +141,6 @@ BA.1.15,Omicron-like
 BA.1.15.1,Omicron-like
 BA.1.15.2,Omicron-like
 BA.1.15.3,Omicron-like
-BA.1.16,Omicron-like
 BA.1.17,Omicron-like
 BA.1.17.2,Omicron-like
 BA.1.18,Omicron-like
@@ -172,9 +171,11 @@ BA.2.3,Omicron-like
 BA.2.3.12,Omicron-like
 BA.2.3.14,Omicron-like
 BA.2.3.17,Omicron-like
+BA.2.3.2,Omicron-like
 BA.2.3.4,Omicron-like
 BA.2.3.5,Omicron-like
 BA.2.3.6,Omicron-like
+BA.2.3.9,Omicron-like
 BA.2.31,Omicron-like
 BA.2.32,Omicron-like
 BA.2.36,Omicron-like
@@ -182,6 +183,7 @@ BA.2.37,Omicron-like
 BA.2.38,Omicron-like
 BA.2.4,Omicron-like
 BA.2.40.1,Omicron-like
+BA.2.41,Omicron-like
 BA.2.42,Omicron-like
 BA.2.47,Omicron-like
 BA.2.48,Omicron-like
@@ -201,6 +203,7 @@ BA.2.9.2,Omicron-like
 BA.4,Omicron-like
 BA.4.1,Omicron-like
 BA.5,Omicron-like
+BA.5.1,Omicron-like
 BA.5.2.1,Omicron-like
 BA.5.5,Omicron-like
 XE,Omicron-like
