@@ -200,8 +200,8 @@ def download_bc_cases():
     # This heuristic works for today, so hopefully it works for other days.
     today = datetime.datetime.today()
     date_url = int( today.strftime( "%Y%m%d" ) ) - 1
-    #bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
-    bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220630.csv"
+    bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
+    #bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220630.csv"
 
     # Load and format the data from the url
     bc = pd.read_csv( bc_url, index_col="nombre" )
@@ -224,8 +224,8 @@ def download_bc_cases():
     return bc
 
 if __name__ == "__main__":
-    #seqs_md = download_search()
-    #seqs_md.to_csv( "resources/sequences.csv", index=False )
+    seqs_md = download_search()
+    seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     #estimate_sgtf()
 
