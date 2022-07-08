@@ -208,5 +208,7 @@ BA.5.2.1,Omicron-like
 BA.5.5,Omicron-like
 XE,Omicron-like
 XAC,Omicron-like
+XZ,Omicron-like
 BG.2,Omicron-like
 BE.1,Omicron-like
+BF.1,Omicron-like
