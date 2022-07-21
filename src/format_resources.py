@@ -317,4 +317,8 @@ def load_ww_plot_config():
 def load_monkeypox_data():
     data = pd.read_csv( "resources/monkeypox.csv", parse_dates=["date"] )
     data["copies"] = data["copies"] * 1000000
-    return data
+
+    cases = pd.read_csv( "resources/monkeypox_cases.csv", parse_dates=["date"] )
+    cases["cases"] = cases["cases"].diff()
+
+    return data, cases
