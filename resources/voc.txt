@@ -234,4 +234,5 @@ XAC,Omicron-like
 XZ,Omicron-like
 BG.2,Omicron-like
 BE.1,Omicron-like
+BE.3,Omicron-like
 BF.1,Omicron-like
