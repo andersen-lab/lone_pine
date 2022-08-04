@@ -2,6 +2,7 @@ import datetime
 import geopandas as gpd
 import pandas as pd
 from epiweeks import Week
+from arcgis.gis import GIS
 
 # Download metadata from SEARCH repository
 # https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv
@@ -155,9 +156,11 @@ def download_sd_cases():
         entry["new_cases"] = entry.rolling( window=indexer, min_periods=1 )["new_cases"].apply( lambda x: x.max() / 7 )
         return entry
 
-    # cases_loc = "https://opendata.arcgis.com/datasets/8fea64744565407cbc56288ab92f6706_0.geojson"
-    cases_loc = "/Users/natem/Downloads/COVID_19_Statistics_by_ZIP_Code/COVID_19_Statistics_by_ZIP_Code.gdb"
-    sd = gpd.read_file( cases_loc )
+    gis = GIS()
+    cases_loc = "34b6df47e084441790813348c69d49ee"
+    gis_layer = gis.content.get( cases_loc )
+    features = gis_layer.layers[0].query( where='1=1' )
+    sd = features.df
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
     sd["updatedate"] = sd["updatedate"].dt.normalize()
@@ -165,7 +168,7 @@ def download_sd_cases():
     sd = sd.groupby( ["updatedate", "ziptext"] ).last().reset_index()
     sd = sd.sort_values( "updatedate" )
 
-    # Calculate cases per day because thats way more useable than cummulative counts.
+    # Calculate cases per day because that's way more usable than cumulative counts.
     sd["case_count"] = sd["case_count"].fillna( 0 )
     sd["new_cases"] = sd.groupby( "ziptext" )["case_count"].diff()
     sd["new_cases"] = sd["new_cases"].fillna( sd["case_count"] )

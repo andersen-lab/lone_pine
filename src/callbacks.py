@@ -78,8 +78,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
         elif path == "/wastewater":
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
             return wastepage.get_layout( commit_date )
-        elif path == "/monkeypox":
-            return monkeypox.get_layout()
+        #elif path == "/monkeypox":
+        #    return monkeypox.get_layout()
         else:
             return mainpage.get_layout()
 
