@@ -11,7 +11,8 @@ def get_layout( commit_date ):
     community. To study individual virus lineages in present in San Diego, we are sequencing wastewater and performing 
     lineage deconvolution with [Freyja](https://github.com/andersen-lab/Freyja). The data shown here is collected by the
      Knight Lab at UCSD in collaboration with San Diego County. The raw data for this dashboard can be found in our 
-    [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego).
+    [GitHub repository](https://github.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego). Displayed case counts for each 
+    catchment area are aggregated from ZIP code-level case counts from within the catchment.
     """
 
     #commit_date = get_last_commit_date()

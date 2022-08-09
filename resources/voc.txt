@@ -232,7 +232,12 @@ BA.5.6,Omicron-like
 XE,Omicron-like
 XAC,Omicron-like
 XZ,Omicron-like
+XD,Omicron-like
+XW,Omicron-like
+XW,Omicron-like
+XW,Omicron-like
 BG.2,Omicron-like
 BE.1,Omicron-like
 BE.3,Omicron-like
 BF.1,Omicron-like
+BF.4,Omicron-like
