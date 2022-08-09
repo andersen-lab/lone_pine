@@ -538,13 +538,13 @@ def plot_monkeypox_concentration( mx_gene, mx_cases, scale="linear" ):
                                  showlegend=False,
                                  mode="markers",
                                  hovertemplate="%{y:f}",
-                                 marker={ "color": "#3C5C94", "size": 8 } ), secondary_y=False )
+                                 marker={ "color": "#56B4E9", "size": 8 } ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies_rolling"],
                                  showlegend=True,
                                  name="Viral load in wastewater",
                                  mode="lines",
                                  hoverinfo="skip",
-                                 line={ "color": "#3C5C94", "width": 3 } ), secondary_y=False )
+                                 line={ "color": "#56B4E9", "width": 3 } ), secondary_y=False )
     fig.update_yaxes( showgrid=True, title=f"<b>MPX copies / PPMoV copies</b>", tickfont=dict( color="#3C5C94" ), tickformat="f",
                       title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale, rangemode="tozero" )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict( color="#D55E00" ),
