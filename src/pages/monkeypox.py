@@ -26,9 +26,9 @@ def get_layout( commit_date="Updated on July 7 @ 05:50 AM PDT" ):
                                 labelClassName="btn btn-outline-primary",
                                 labelCheckedClassName="active",
                                 options=[
-                                    { "label": "Encina", "value": "Encina", "disabled" : True },
+                                    #{ "label": "Encina", "value": "Encina", "disabled" : True },
                                     { "label": "Point Loma", "value": "PointLoma" },
-                                    { "label": "South Bay", "value": "SouthBay", "disabled" : True }
+                                    #{ "label": "South Bay", "value": "SouthBay", "disabled" : True }
                                 ],
                                 value="PointLoma",
                                 style={ "width": "50%", "justifyContent": "flex-start" }
