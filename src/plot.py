@@ -527,24 +527,28 @@ def plot_monkeypox_concentration( mx_gene, mx_cases, scale="linear" ):
     date_range = get_date_limits( subset_ww["date"] )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
-    #fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["gene_copies"],
-    #                             name="Viral load in wastewater",
-    #                             mode="markers",
-    #                             hovertemplate="%{y:,.0f}",
-    #                             marker={ "color": "#3C5C94", "size": 8 } ) )
-    fig.add_trace( go.Bar( x=mx_cases["date"], y=mx_cases["cases"], marker_color="#D55E00",
-                           showlegend=True,
-                           name="Case counts" ), secondary_y=True )
+    fig.add_trace( go.Scattergl( x=mx_cases["date"], y=mx_cases["cases_rolling"],
+                                 name="Reported cases",
+                                 mode="lines",
+                                 hovertemplate="%{y:,.0f}",
+                                 showlegend=True,
+                                 line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies"],
+                                 name="Viral load in wastewater",
+                                 showlegend=False,
+                                 mode="markers",
+                                 hovertemplate="%{y:f}",
+                                 marker={ "color": "#3C5C94", "size": 8 } ), secondary_y=False )
+    fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies_rolling"],
                                  showlegend=True,
                                  name="Viral load in wastewater",
                                  mode="lines",
-                                 hovertemplate="%{y:,.0f}",
+                                 hoverinfo="skip",
                                  line={ "color": "#3C5C94", "width": 3 } ), secondary_y=False )
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict( color="#3C5C94" ),
-                      title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale )
+    fig.update_yaxes( showgrid=True, title=f"<b>MPX copies / PPMoV copies</b>", tickfont=dict( color="#3C5C94" ), tickformat="f",
+                      title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale, rangemode="tozero" )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict( color="#D55E00" ),
-                      title_font=dict( color="#D55E00" ), secondary_y=True, showline=False, ticks="", type=scale )
+                      title_font=dict( color="#D55E00" ), secondary_y=True, showline=False, ticks="", type=scale, rangemode="tozero" )
     fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", range=date_range )
 
     fig.update_layout( template="simple_white",

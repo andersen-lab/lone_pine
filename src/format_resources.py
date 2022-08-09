@@ -59,7 +59,6 @@ def get_seqs_per_case( time_series, seq_md, zip_f=None ):
 
     Returns
     -------
-
     """
     if zip_f:
         if type( zip_f ) != list:
@@ -316,9 +315,15 @@ def load_ww_plot_config():
 
 def load_monkeypox_data():
     data = pd.read_csv( "resources/monkeypox.csv", parse_dates=["date"] )
-    data["copies"] = data["copies"] * 1000000
+    data["copies_rolling"] = savgol_filter( data["copies"], window_length=7, polyorder=2 )
 
     cases = pd.read_csv( "resources/monkeypox_cases.csv", parse_dates=["date"] )
     cases["cases"] = cases["cases"].diff()
+    cases["week"] = cases["date"].apply( lambda x: Week.fromdate( x ).startdate() )
+    cases = cases.groupby( "week" )["cases"].agg( "sum" )
+    cases = cases.reindex( pd.date_range( cases.index.min(), cases.index.max() ) ).rename_axis( "date" ).reset_index()
+    indexer = pd.api.indexers.FixedForwardWindowIndexer( window_size=7 )
+    cases["cases"] = cases.rolling( window=indexer, min_periods=1 )["cases"].apply( lambda x: x.max() / 7 )
+    cases["cases_rolling"] = savgol_filter( cases["cases"], window_length=7, polyorder=2 )
 
     return data, cases
