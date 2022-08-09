@@ -316,6 +316,7 @@ def load_ww_plot_config():
 def load_monkeypox_data():
     data = pd.read_csv( "resources/monkeypox.csv", parse_dates=["date"] )
     data["copies_rolling"] = savgol_filter( data["copies"], window_length=7, polyorder=2 )
+    data.loc[data["copies_rolling"]<0, "copies_rolling"] = 0
 
     cases = pd.read_csv( "resources/monkeypox_cases.csv", parse_dates=["date"] )
     cases["cases"] = cases["cases"].diff()
@@ -325,5 +326,6 @@ def load_monkeypox_data():
     indexer = pd.api.indexers.FixedForwardWindowIndexer( window_size=7 )
     cases["cases"] = cases.rolling( window=indexer, min_periods=1 )["cases"].apply( lambda x: x.max() / 7 )
     cases["cases_rolling"] = savgol_filter( cases["cases"], window_length=7, polyorder=2 )
+    cases.loc[cases["cases_rolling"]<0,"cases_rolling"] = 0
 
     return data, cases
