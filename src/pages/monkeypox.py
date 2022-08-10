@@ -59,7 +59,7 @@ def get_layout( commit_date="Updated on July 7 @ 05:50 AM PDT" ):
         ),
         html.Br(),
         html.Br(),
-        html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
+        #html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
     ]
 
     return layout
