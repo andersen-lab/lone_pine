@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 def get_layout( commit_date="Updated on July 7 @ 05:50 AM PDT" ):
     markdown = """
     To monitor the prevalence of Monkeypox in San Diego, we are measuring virus concentration at the wastewater 
-    treatment plants in San Diego. Fragments of monkeypox virus RNA are shed in urine and stool and can serve as an 
+    treatment plants in San Diego. Fragments of monkeypox virus DNA are shed in urine and stool and can serve as an 
     early indicator of the caseload in the community. The data shown here is collected by the Knight Lab at UCSD in 
     collaboration with San Diego County. The raw data used by this dashboard will be publicly available soon. Scatter 
     points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. Hover-over
