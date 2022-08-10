@@ -460,7 +460,7 @@ def plot_catchment_areas( sd_map ):
                                     itemsizing='constant' ) )
     return fig
 
-def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma" ):
+def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma", seq_indicator=True ):
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
 
     seqs_filter = seqs.loc[seqs["source"]==source]
@@ -474,8 +474,6 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma" ):
         date_range[0] = "2022-01-01"
 
     cases = cases.loc[cases.index > ww["date"].min() ]
-
-
 
     #fig.add_trace( go.Scattergl( x=cases.index, y=cases["reported_cases"],
     #                             name="Reported cases",
@@ -501,7 +499,8 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma" ):
                                  mode="lines",
                                  hoverinfo="skip",
                                  line={"color" : "#56B4E9", "width" : 3 } ), secondary_y=False )
-    fig.add_vrect( x0=seq_min, x1=seq_max, fillcolor="#e9eef6", opacity=0.5, annotation_text="*Sequence data available", annotation_borderpad=10, annotation_position="top left", layer="below" )
+    if seq_indicator:
+        fig.add_vrect( x0=seq_min, x1=seq_max, fillcolor="#e9eef6", opacity=0.5, annotation_text="*Sequence data available", annotation_borderpad=10, annotation_position="top left", layer="below" )
 
     fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases / 100,000</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type=scale )

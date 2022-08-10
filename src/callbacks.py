@@ -6,9 +6,11 @@ import src.pages.sgtfpage as sgtfpage
 import src.pages.wastewaterpage as wastepage
 import src.pages.monkeypox as monkeypox
 import src.pages.growth_table as growth_table
+import src.pages.graphonly as graphonly
 from dash import Input, Output, html
 from datetime import datetime, timezone, timedelta
 import requests
+from urllib.parse import parse_qs
 
 def register_url_sequences( df, url ):
     if url == "/bajacalifornia":
@@ -80,6 +82,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
             return wastepage.get_layout( commit_date )
         elif path == "/monkeypox":
             return monkeypox.get_layout()
+        elif path == "/graphonly_ww":
+            return graphonly.get_layout()
         else:
             return mainpage.get_layout()
 
@@ -272,6 +276,22 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
     )
     def update_wastewater_graph( scale, source ):
         return dashplot.plot_wastewater( *format_data.load_wastewater_data(), cases=get_cases( cases_whole, "/", source=source ), scale=scale, source=source )
+
+    @app.callback(
+        Output( "indiv-wastewater-graph", "figure"),
+        Input( "url", "search" )
+    )
+    def update_indiv_wastewater_graph( search ):
+        source = "PointLoma"
+        if search != "":
+            search_dict = parse_qs( search.strip("?") )
+            if "site" in search_dict:
+                source = search_dict["site"][0]
+        return dashplot.plot_wastewater(
+            *format_data.load_wastewater_data(),
+            cases=get_cases( cases_whole, "/", source=source ),
+            source=source, seq_indicator=False
+        )
 
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
