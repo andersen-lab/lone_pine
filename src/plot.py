@@ -544,7 +544,7 @@ def plot_monkeypox_concentration( mx_gene, mx_cases, scale="linear" ):
                                  mode="lines",
                                  hoverinfo="skip",
                                  line={ "color": "#56B4E9", "width": 3 } ), secondary_y=False )
-    fig.update_yaxes( showgrid=True, title=f"<b>MPX copies / PPMoV copies</b>", tickfont=dict( color="#3C5C94" ), tickformat="f",
+    fig.update_yaxes( showgrid=True, title=f"<b>MPX copies / PMMoV copies</b>", tickfont=dict( color="#3C5C94" ), tickformat="f",
                       title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale, rangemode="tozero" )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict( color="#D55E00" ),
                       title_font=dict( color="#D55E00" ), secondary_y=True, showline=False, ticks="", type=scale, rangemode="tozero" )
