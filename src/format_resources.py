@@ -314,11 +314,11 @@ def load_ww_plot_config():
     return plot_config
 
 def load_monkeypox_data():
-    data = pd.read_csv( "resources/monkeypox.csv", parse_dates=["date"] )
+    data = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_PointLoma_qpcr.csv", parse_dates=["date"] )
     data["copies_rolling"] = savgol_filter( data["copies"], window_length=7, polyorder=2 )
     data.loc[data["copies_rolling"]<0, "copies_rolling"] = 0
 
-    cases = pd.read_csv( "resources/monkeypox_cases.csv", parse_dates=["date"] )
+    cases = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_cases.csv", parse_dates=["date"] )
     cases["cases"] = cases["cases"].diff()
     cases["week"] = cases["date"].apply( lambda x: Week.fromdate( x ).startdate() )
     cases = cases.groupby( "week" )["cases"].agg( "sum" )

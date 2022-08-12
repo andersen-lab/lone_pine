@@ -81,7 +81,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
             commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
             return wastepage.get_layout( commit_date )
         elif path == "/monkeypox":
-            return monkeypox.get_layout()
+            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/MPX_WasteWater_San-Diego/git/refs/heads/master" )
+            return monkeypox.get_layout( commit_date )
         elif path == "/graphonly_ww":
             return graphonly.get_layout()
         else:

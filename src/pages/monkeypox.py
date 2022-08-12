@@ -1,7 +1,7 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-def get_layout( commit_date="Updated on July 7 @ 05:50 AM PDT" ):
+def get_layout( commit_date ):
     markdown = """
     To monitor the prevalence of Monkeypox in San Diego, we are measuring virus concentration at the wastewater 
     treatment plants in San Diego. Fragments of monkeypox virus DNA are shed in urine and stool and can serve as an 
@@ -59,7 +59,7 @@ def get_layout( commit_date="Updated on July 7 @ 05:50 AM PDT" ):
         ),
         html.Br(),
         html.Br(),
-        #html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
+        html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
     ]
 
     return layout
