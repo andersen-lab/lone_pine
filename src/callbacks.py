@@ -12,6 +12,15 @@ from datetime import datetime, timezone, timedelta
 import requests
 from urllib.parse import parse_qs
 
+
+PATH_GIT_DICT = {
+    "/sgtf" : "https://api.github.com/repos/andersen-lab/SARS-CoV-2_SGTF_San-Diego/git/refs/heads/main",
+    "/wastewater" : "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master",
+    "/monkeypox" : "https://api.github.com/repos/andersen-lab/MPX_WasteWater_San-Diego/git/refs/heads/master",
+    "/bajacalifornia" : "https://api.github.com/repos/andersen-lab/HCoV-19-Genomics/git/refs/heads/master",
+    "/" : "https://api.github.com/repos/andersen-lab/HCoV-19-Genomics/git/refs/heads/master",
+}
+
 def register_url_sequences( df, url ):
     if url == "/bajacalifornia":
         return df.loc[df["state"]=="Baja California"]
@@ -75,14 +84,11 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
     )
     def generate_page_content( path ):
         if path == "/sgtf":
-            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_SGTF_San-Diego/git/refs/heads/main" )
-            return sgtfpage.get_layout( format_data.load_sgtf_data(), commit_date )
+            return sgtfpage.get_layout( format_data.load_sgtf_data() )
         elif path == "/wastewater":
-            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/git/refs/heads/master" )
-            return wastepage.get_layout( commit_date )
+            return wastepage.get_layout()
         elif path == "/monkeypox":
-            commit_date = get_last_commit_date( "https://api.github.com/repos/andersen-lab/MPX_WasteWater_San-Diego/git/refs/heads/master" )
-            return monkeypox.get_layout( commit_date )
+            return monkeypox.get_layout()
         elif path == "/graphonly_ww":
             return graphonly.get_layout()
         else:
@@ -107,6 +113,13 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
         '''
 
         return markdown_text
+
+    @app.callback(
+        Output( "commit-date", "children" ),
+        Input( "url", "pathname")
+    )
+    def update_commit_date( path ):
+        return html.I( get_last_commit_date( PATH_GIT_DICT.get( path, PATH_GIT_DICT["/"] ) ) )
 
     @app.callback(
         Output( "top-table-div", "children" ),

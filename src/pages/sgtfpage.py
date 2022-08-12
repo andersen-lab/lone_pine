@@ -1,7 +1,7 @@
 from dash import html, dcc
 import src.plot as dashplot
 
-def get_layout( sgtf_data, commit_date ):
+def get_layout( sgtf_data ):
     markdown = """
     To gain insight into the spread of the Omicron variant in our community, we are working with a large number of 
     partners to track S-gene target failures (SGTFs). SGTFs are a feature of the TaqPath PCR assay that fails to detect
@@ -53,7 +53,7 @@ def get_layout( sgtf_data, commit_date ):
             className="row" ),
         html.Br(),
         html.Br(),
-        html.P( html.I(commit_date ), style={ 'textAlign': 'center' })
+        html.P( id="commit-date", style={ 'textAlign': 'center' })
     ]
 
     return layout

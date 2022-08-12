@@ -3,7 +3,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 import src.plot as dashplot
 
-def get_layout( commit_date ):
+def get_layout():
     markdown = """
     To monitor the prevalence of SARS-CoV-2 infections in San Diego, we are measuring virus concentration at the Encina, Point 
     Loma, and South Bay wastewater treatment plants (see map below for catchment areas of each plant). Fragments of 
@@ -125,7 +125,7 @@ def get_layout( commit_date ):
         ),
         html.Br(),
         html.Br(),
-        html.P( html.I( commit_date ), style={ 'textAlign': 'center' } )
+        html.P( id="commit-date", style={ 'textAlign': 'center' } )
     ]
 
     return layout
