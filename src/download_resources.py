@@ -1,4 +1,6 @@
 import datetime
+from urllib.error import HTTPError
+
 import geopandas as gpd
 import pandas as pd
 from epiweeks import Week
@@ -204,10 +206,14 @@ def download_bc_cases():
     today = datetime.datetime.today()
     date_url = int( today.strftime( "%Y%m%d" ) ) - 1
     bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
-    #bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220630.csv"
+    #bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220809.csv"
 
     # Load and format the data from the url
-    bc = pd.read_csv( bc_url, index_col="nombre" )
+    try:
+        bc = pd.read_csv( bc_url, index_col="nombre" )
+    except HTTPError:
+        print( bc_url )
+        raise
     bc = bc.drop( columns=["cve_ent", "poblacion"] )
     bc = bc.T
     bc = bc["BAJA CALIFORNIA"].reset_index()
@@ -227,8 +233,8 @@ def download_bc_cases():
     return bc
 
 if __name__ == "__main__":
-    seqs_md = download_search()
-    seqs_md.to_csv( "resources/sequences.csv", index=False )
+    #seqs_md = download_search()
+    #seqs_md.to_csv( "resources/sequences.csv", index=False )
 
     #estimate_sgtf()
 
