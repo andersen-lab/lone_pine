@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 import pandas as pd
 from dash import html
@@ -244,7 +246,7 @@ def load_sgtf_data():
 
     return tests, fit_df, estimates
 
-def load_ww_individual( loc: str, source: str, date_col: str, value_col: str, columns: list[str], window_length: int ) -> pd.DataFrame:
+def load_ww_individual( loc: str, source: str, date_col: str, value_col: str, columns: List[str], window_length: int ) -> pd.DataFrame:
     """ Loads wastewater qPCR data from file
     Parameters
     ----------
