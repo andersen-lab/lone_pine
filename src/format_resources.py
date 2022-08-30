@@ -193,6 +193,7 @@ def load_sgtf_data():
         return lgm( ndays, x0_1, r_1 ) - lgm( ndays, x0_2, r_2 ) + lgm( ndays, x0_3, r_3 )
 
     tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego_new.csv", parse_dates=["Date"] )
+    tests = tests.dropna( how='all', axis=1 )
     tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
     tests = tests.loc[~tests["Date"].isna()]
     tests["percent"] = tests["sgtf_all"] / tests["total_positive"]
