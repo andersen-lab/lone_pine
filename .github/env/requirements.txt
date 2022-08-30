@@ -1,0 +1,4 @@
+arcgis == 2.0.1
+pandas == 1.4.3
+urllib3 == 1.26.11
+epiweeks == 2.1.3
