@@ -1,7 +1,5 @@
 import datetime
 from urllib.error import HTTPError
-
-import geopandas as gpd
 import pandas as pd
 from epiweeks import Week
 from arcgis.gis import GIS
@@ -108,10 +106,6 @@ def download_search():
 
     return md
 
-
-# Grab covid statistics from data repository
-# https://gis-public.sandiegocounty.gov/arcgis/rest/services/Hosted/COVID_19_Statistics__by_ZIP_Code/FeatureServer/0/query?outFields=*&where=1%3D1
-
 def download_cases():
     """ Downloads the cases per San Diego ZIP code. Appends population.
     Returns
@@ -202,18 +196,22 @@ def download_bc_cases():
     pandas.DataFrame
         DateFrame detailing the daily number of cases in Baja California, Mexico
     """
-    # This heuristic works for today, so hopefully it works for other days.
     today = datetime.datetime.today()
-    date_url = int( today.strftime( "%Y%m%d" ) ) - 1
-    #bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
-    bc_url = "https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_20220828.csv"
+    date_range = 10
+    attempts = 0
+    while attempts < date_range:
+        print( f"Attemping to load BC data from {today.strftime( '%Y-%m-%d')}" )
+        date_url = int( today.strftime( "%Y%m%d" ) )
+        bc_url = f"https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Estado_Nacional_Confirmados_{date_url}.csv"
 
-    # Load and format the data from the url
-    try:
-        bc = pd.read_csv( bc_url, index_col="nombre" )
-    except:
-        print( bc_url )
-        raise
+        try:
+            bc = pd.read_csv( bc_url, index_col="nombre" )
+            break
+        except HTTPError:
+            today = today - datetime.timedelta( days=1 )
+    else:
+        raise RuntimeError( f"Unable to find a valid download link. Last url tried was {bc_url}" )
+
     bc = bc.drop( columns=["cve_ent", "poblacion"] )
     bc = bc.T
     bc = bc["BAJA CALIFORNIA"].reset_index()
@@ -236,10 +234,5 @@ if __name__ == "__main__":
     seqs_md = download_search()
     seqs_md.to_csv( "resources/sequences.csv", index=False )
 
-    #estimate_sgtf()
-
     cases = download_cases()
     cases.to_csv( "resources/cases.csv", index=False )
-
-    #sd_zips = download_shapefile()
-    #sd_zips.to_file("resources/zips.geojson", driver='GeoJSON' )

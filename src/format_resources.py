@@ -244,19 +244,39 @@ def load_sgtf_data():
 
     return tests, fit_df, estimates
 
+def load_ww_individual( loc: str, source: str, date_col: str, value_col: str, columns: list[str], window_length: int ) -> pd.DataFrame:
+    """ Loads wastewater qPCR data from file
+    Parameters
+    ----------
+    loc : str
+        Location of file
+    source : str
+        Name of the catchment area the file refers to. Will be encoded in the returned dataframe.
+    date_col : str
+        Name of column in file that contains the date.
+    value_col : str
+        Name of column in file that contains the qPCR measurements.
+    columns : list[str]
+        Values to replace column names in file. Bit of a hack...
+    window_length : int
+        Length of window to use for Savitzky-Golay filter.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing a time series of qPCR measurements for a given catchment area.
+    """
+    temp = pd.read_csv( loc, parse_dates=[date_col] )
+    temp["source"] = source
+    temp.columns = columns
+    temp.loc[~temp[value_col].isna(), f"{value_col}_rolling"] = savgol_filter(
+        temp[value_col].dropna(), window_length=window_length, polyorder=2 )
+
+    return temp
+
 def load_wastewater_data():
     def round_to_odd( value ):
         return np.ceil( np.floor( value ) / 2 ) * 2 - 1
-
-    def load_ww_individual( loc, source ):
-        temp = pd.read_csv( loc, parse_dates=["Sample_Date"] )
-        temp["source"] = source
-        temp.columns = ["date", "gene_copies", "source"]
-        window_length = 11 if source == "PointLoma" else 5
-        temp.loc[~temp["gene_copies"].isna(), "gene_copies_rolling"] = savgol_filter(
-            temp["gene_copies"].dropna(), window_length=window_length, polyorder=2 )
-
-        return temp
 
     def load_seq_individul( loc, source ):
         temp = pd.read_csv( loc, parse_dates=["Date"], index_col="Date" )
@@ -267,7 +287,8 @@ def load_wastewater_data():
     seqs_template = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/{}_sewage_seqs.csv"
     locations = ["PointLoma", "Encina", "SouthBay"]
 
-    return_df = pd.concat( [load_ww_individual( titer_template.format( loc ), loc ) for loc in locations] )
+    qpcr_columns = ["date", "gene_copies", "source"]
+    return_df = pd.concat( [load_ww_individual( loc=titer_template.format( loc ), source=loc, date_col="Sample_Date", value_col="gene_copies", columns=qpcr_columns, window_length=11 ) for loc in locations] )
     seqs = pd.concat( [load_seq_individul( seqs_template.format( loc ), loc ) for loc in locations] )
 
     return return_df, seqs
@@ -315,9 +336,11 @@ def load_ww_plot_config():
     return plot_config
 
 def load_monkeypox_data():
-    data = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_PointLoma_qpcr.csv", parse_dates=["date"] )
-    data["copies_rolling"] = savgol_filter( data["copies"], window_length=7, polyorder=2 )
-    data.loc[data["copies_rolling"]<0, "copies_rolling"] = 0
+    titer_template = "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_{}_qpcr.csv"
+    locations = ["PointLoma", "Encina", "SouthBay"]
+    data = pd.concat( [load_ww_individual( loc=titer_template.format( loc ), source=loc, date_col="date", value_col="copies", columns=["date", "source", "copies"], window_length=7 if loc=="PointLoma" else 3 ) for loc in locations] )
+    data.loc[data["copies_rolling"] < 0, "copies_rolling"] = 0
+
 
     cases = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_cases.csv", parse_dates=["date"] )
     cases["cases"] = cases["cases"].diff()

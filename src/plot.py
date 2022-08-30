@@ -521,8 +521,8 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma", seq_in
 
     return fig
 
-def plot_monkeypox_concentration( mx_gene, mx_cases, scale="linear" ):
-    subset_ww = mx_gene.loc[mx_gene["source"] == "PointLoma"]
+def plot_monkeypox_concentration( mx_gene: pd.DataFrame, mx_cases: pd.DataFrame, scale: str = "linear", source: str = "PointLoma" ):
+    subset_ww = mx_gene.loc[mx_gene["source"] == source]
     date_range = get_date_limits( subset_ww["date"] )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
