@@ -1,7 +1,7 @@
 name: Daily update data
 on:
   schedule:
-    - cron: '55 * * * *'
+    - cron: '14 * * * *'
 
 jobs:
   update-data:
@@ -39,7 +39,7 @@ jobs:
           resources/cases.csv
 
     - name: Commit changed files
-      if: steps.verify-changed-files.outputs.files_changed == "true"
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
         git config --global user.name 'watronfire'
         git config --global user.email 'snowboardman007@gmail.com'
