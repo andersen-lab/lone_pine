@@ -3,7 +3,7 @@ from epiweeks import Week
 import datetime
 
 def load_excite_providers() :
-    excite = pd.read_csv( "resources/0428_ccbb_full_metadata.csv", usecols=["search_id", "source" ] )
+    excite = pd.read_csv( "resources/excite_providers" )
     excite = excite.set_index( "search_id" )
     return excite["source"].to_dict()
 
