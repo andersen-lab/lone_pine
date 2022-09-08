@@ -206,7 +206,7 @@ def load_sgtf_data():
         f=lgm_mixture,
         xdata=tests["ndays"],
         ydata=tests["percent_filter"],
-        p0=[0.003, 0.008, 0.002, 0.008, 0.001, 0.008],
+        p0=[5e-1, 0.008, 0.1, 0.008, 2e-9, 0.008],
         bounds=([0] * 6, [np.inf] * 6)
     )
     sigma_ab = np.sqrt( np.diagonal( covar ) )
