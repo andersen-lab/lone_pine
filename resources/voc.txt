@@ -241,3 +241,11 @@ BE.1,Omicron-like
 BE.3,Omicron-like
 BF.1,Omicron-like
 BF.4,Omicron-like
+BF.7,Omicron-like
+BE.1.1,Omicron-like
+BE.2,Omicron-like
+BF.10,Omicron-like
+BF.5,Omicron-like
+BF.8,Omicron-like
+BA.5.1.6,Omicron-like
+BA.5.1.10,Omicron-like
