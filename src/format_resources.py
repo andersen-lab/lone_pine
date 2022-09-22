@@ -340,7 +340,7 @@ def load_ww_plot_config():
 def load_monkeypox_data():
     titer_template = "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_{}_qpcr.csv"
     locations = ["PointLoma", "Encina", "SouthBay"]
-    data = pd.concat( [load_ww_individual( loc=titer_template.format( loc ), source=loc, date_col="date", value_col="copies", columns=["date", "source", "copies"], window_length=7 if loc=="PointLoma" else 3 ) for loc in locations] )
+    data = pd.concat( [load_ww_individual( loc=titer_template.format( loc ), source=loc, date_col="date", value_col="copies", columns=["date", "source", "copies"], window_length=11 if loc=="PointLoma" else 3 ) for loc in locations] )
     data.loc[data["copies_rolling"] < 0, "copies_rolling"] = 0
 
 
@@ -351,7 +351,7 @@ def load_monkeypox_data():
     cases = cases.reindex( pd.date_range( cases.index.min(), cases.index.max() ) ).rename_axis( "date" ).reset_index()
     indexer = pd.api.indexers.FixedForwardWindowIndexer( window_size=7 )
     cases["cases"] = cases.rolling( window=indexer, min_periods=1 )["cases"].apply( lambda x: x.max() / 7 )
-    cases["cases_rolling"] = savgol_filter( cases["cases"], window_length=7, polyorder=2 )
+    cases["cases_rolling"] = savgol_filter( cases["cases"], window_length=11, polyorder=2 )
     cases.loc[cases["cases_rolling"]<0,"cases_rolling"] = 0
 
     return data, cases
