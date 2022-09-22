@@ -323,7 +323,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
          Input( "ww-source-radio", "value" )]
     )
     def update_monkeypox_graph( scale, source ):
-        return dashplot.plot_monkeypox_concentration( *format_data.load_monkeypox_data(), scale=scale, source=source )
+        monkeypox_data = format_data.load_monkeypox_data()
+        return dashplot.plot_monkeypox_concentration( *monkeypox_data, scale=scale, source=source )
 
     # This is I guess the way to change the title dynamically. Fingers crossed.
     app.clientside_callback(

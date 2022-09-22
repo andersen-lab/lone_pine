@@ -343,7 +343,6 @@ def load_monkeypox_data():
     data = pd.concat( [load_ww_individual( loc=titer_template.format( loc ), source=loc, date_col="date", value_col="copies", columns=["date", "source", "copies"], window_length=11 if loc=="PointLoma" else 3 ) for loc in locations] )
     data.loc[data["copies_rolling"] < 0, "copies_rolling"] = 0
 
-
     cases = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/MPX_WasteWater_San-Diego/master/MPX_cases.csv", parse_dates=["date"] )
     cases["cases"] = cases["cases"].diff()
     cases["week"] = cases["date"].apply( lambda x: Week.fromdate( x ).startdate() )

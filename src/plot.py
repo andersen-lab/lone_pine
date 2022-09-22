@@ -526,29 +526,40 @@ def plot_monkeypox_concentration( mx_gene: pd.DataFrame, mx_cases: pd.DataFrame,
     date_range = get_date_limits( subset_ww["date"] )
 
     fig = make_subplots( specs=[[{"secondary_y" : True}]] )
+
+    # Concentration plot
     fig.add_trace( go.Scattergl( x=mx_cases["date"], y=mx_cases["cases_rolling"],
                                  name="Reported cases",
                                  mode="lines",
                                  hovertemplate="%{y:,.0f}",
                                  showlegend=True,
+                                 legendgroup="b",
                                  line={"color" : "#D55E00", "width" : 3 } ), secondary_y=True )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies"],
                                  name="Viral load in wastewater",
                                  showlegend=False,
                                  mode="markers",
                                  hovertemplate="%{y:f}",
-                                 marker={ "color": "#56B4E9", "size": 8 } ), secondary_y=False )
+                                 marker={ "color": "#56B4E9", "size": 10 } ), secondary_y=False )
     fig.add_trace( go.Scattergl( x=subset_ww["date"], y=subset_ww["copies_rolling"],
                                  showlegend=True,
+                                 legendgroup="b",
                                  name="Viral load in wastewater",
                                  mode="lines",
                                  hoverinfo="skip",
-                                 line={ "color": "#56B4E9", "width": 3 } ), secondary_y=False )
+                                 line={ "color": "#56B4E9", "width": 3 } ), secondary_y=False)
+    fig.add_trace( go.Scattergl( x=subset_ww.loc[subset_ww["copies"]==0, "date"], y=subset_ww.loc[subset_ww["copies"]==0, "copies"],
+                               name="Below detection limit",
+                               mode='markers',
+                               hoverinfo="skip",
+                               legendgroup="b",
+                               marker=dict( size=6, color="white", line=dict( width=0.5, color="#56B4E9" ) ) ) )
+
     fig.update_yaxes( showgrid=True, title=f"<b>MPX copies / PMMoV copies</b>", tickfont=dict( color="#3C5C94" ), tickformat="f",
-                      title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale, rangemode="tozero" )
+                      title_font=dict( color="#3C5C94" ), secondary_y=False, showline=False, ticks="", type=scale, )
     fig.update_yaxes( showgrid=False, title=f"<b>Reported cases</b>", tickfont=dict( color="#D55E00" ),
-                      title_font=dict( color="#D55E00" ), secondary_y=True, showline=False, ticks="", type=scale, rangemode="tozero" )
-    fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", range=date_range )
+                      title_font=dict( color="#D55E00" ), secondary_y=True, showline=False, ticks="", type=scale, range=(-0.9,13) )
+    fig.update_xaxes( dtick="1209600000", tickformat="%b\n%d", mirror=True, showline=False, ticks="", range=date_range)
 
     fig.update_layout( template="simple_white",
                        hovermode="x unified",

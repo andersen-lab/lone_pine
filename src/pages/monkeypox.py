@@ -52,7 +52,7 @@ def get_layout():
                             id="monkeypox-graph",
                             config={"displayModeBar" : False },
                             style={"height" : "30em"}
-                        ),
+                        )
                     ]
                 )
             ]
