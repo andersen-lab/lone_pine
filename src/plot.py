@@ -416,7 +416,7 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-09-15"] )
+    fig.update_xaxes( range=["2021-11-25", "2022-11-01"] )
 
     esti = sgtf_data[2]
     double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
