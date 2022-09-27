@@ -23,10 +23,10 @@ def get_table( growth_rates ):
             data=growth_rates.to_dict('records'),
             columns=columns,
             tooltip_header={
-                "total_count" : "Total number of genomces sequenced from lineage.",
+                "total_count" : "Total number of genomes sequenced from lineage.",
                 "recent_counts" : "Number of genomes sequenced from lineage in past two months.",
                 "est_proportion" : f"Lineage prevalence in the community estimated from sequencing data as of {date_last}.",
-                "growth_rate" : f"Estimated logisitic growth rate over the past two months ({date_first} to {date_last})."
+                "growth_rate" : f"Estimated logistic growth rate over the past two months ({date_first} to {date_last})."
             },
             tooltip_delay=0,
             tooltip_duration=None,
