@@ -6,6 +6,9 @@ import pandas as pd
 from epiweeks import Week
 from src.variants import VOC, VOI
 
+COLOR_DARK = "#495057"
+COLOR_LIGHT = "#93aad3"
+
 def _add_date_formatting_minimum( fig ):
     fig.update_layout( template="simple_white",
                        hovermode="x unified",
@@ -19,18 +22,32 @@ def _add_date_formatting_minimum( fig ):
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
 
-def _add_date_formating( fig, minimum, maximum, skip=1 ):
+def _add_date_formating( fig, minimum, maximum, ylims, ytitle, ytype="linear", skip=1 ):
     min_date = pd.to_datetime( f"{minimum.year}-{minimum.month}-01" )
     maximum += pd.DateOffset( months=1 )
     max_date = pd.to_datetime( f"{maximum.year}-{maximum.month}-01" )
 
-    intervals = pd.interval_range(start=pd.to_datetime( min_date ), end=pd.to_datetime( max_date ), freq="M" )
+    fig.update_yaxes(
+        type=ytype,
+        title=f"<b>{ytitle}</b>",
+        showgrid=True,
+        showline=True,
+        ticks="" )
+    fig.update_xaxes(
+        dtick=f"M{skip}",
+        tickformat="%b\n%Y",
+        mirror=True,
+        showline=False,
+        ticks="",
+        showgrid=True,
+        range=("2020-01-01", max_date )
+    )
+    fig.update_xaxes( showline=True, mirror=False )
 
-    for i in intervals[::2]:
-        fig.add_vrect( x0=i.left, x1=i.right, fillcolor="#EFEFEF", opacity=1, layer="below" )
-
-    fig.update_xaxes( dtick=f"M{skip}", tickformat="%b\n%Y", tickangle=0, mirror=True )
-    fig.update_yaxes( mirror=True )
+    if ytype == "log":
+        fig.update_yaxes( dtick=1 )
+    if ylims:
+        fig.update_yaxes( range=ylims )
     _add_date_formatting_minimum( fig )
 
 def get_date_limits( series ):
@@ -56,17 +73,15 @@ def plot_daily_cases_seqs( df ):
     fig.add_trace( go.Scattergl( x=df["date"], y=df["new_cases"],
                                  mode='markers',
                                  name='Daily Cases',
-                                 marker={ "color" : "#767676" } ) )
+                                 marker={ "color" : COLOR_DARK } ) )
     fig.add_trace(go.Scattergl(x=df["date"], y=df["new_sequences"],
                                mode='markers',
                                name='Daily Sequences',
-                               marker={ "color" : "#DFB377"} ) )
+                               marker={ "color" : COLOR_LIGHT} ) )
 
-    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), skip=6 )
     min_lim = np.floor( np.log10( 0.75 ) )
     max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
-    fig.update_xaxes( range=("2020-01-01", get_date_limits( df["date"] )[1] ) )
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), ytype="log", ylims=[min_lim, max_lim], ytitle="Number of cases", skip=6 )
 
     return fig
 
@@ -77,18 +92,17 @@ def plot_cummulative_cases_seqs( df ):
                                mode='lines',
                                name='Reported',
                                hovertemplate='%{y:,.0f}',
-                               line={ "color" : '#767676', "width" : 4 } ) )
+                               line={ "color" : COLOR_DARK, "width" : 4 } ) )
     fig.add_trace(go.Scattergl(x=df["date"], y=df["sequences"],
                                mode='lines',
                                name='Sequenced',
                                hovertemplate='%{y:,.0f}',
-                               line={ "color" : "#DFB377", "width" : 4 } ) )
+                               line={ "color" : COLOR_LIGHT, "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), skip=6 )
     min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
-    fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
-    fig.update_xaxes( range=("2020-01-01", get_date_limits( df["date"] )[1] ) )
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), ytype="log",
+                         ylims=[min_lim, max_lim], ytitle="Cummulative cases", skip=6 )
 
     return fig
 
@@ -105,17 +119,12 @@ def plot_cummulative_sampling_fraction( df ):
     fig.add_trace( go.Scattergl( x=plot_df["epiweek"], y=plot_df["fraction"],
                                  mode='lines',
                                  name='Fraction',
-                                 line={ "color" : '#767676', "width" : 4 } ) )
+                                 line={ "color" : COLOR_DARK, "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=pd.to_datetime("2020-01-01"), maximum=plot_df["epiweek"].max(), skip=6 )
-
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=plot_df["epiweek"].max(), ytype="log",
+                         ylims=[], ytitle="Cases sequenced (%)", skip=6 )
     fig.update_layout(  yaxis_tickformat='.1%' )
-
-    #cleaned_array = np.log10( plot_df.loc[plot_df["fraction"] > 0, "fraction"] )
-    #cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
-
-    fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>" )
-    fig.update_xaxes( range=("2020-01-01", get_date_limits( plot_df["epiweek"] )[1] ) )
+    fig.update_yaxes( dtick="D2" )
 
     return fig
 
@@ -149,17 +158,15 @@ def plot_lineages_time( df, lineage=None, scaleby="fraction" ):
         plot_df = plot_df.sum( axis=1 )
         plot_df = pd.concat( [focus_df, plot_df], axis=1 )
         plot_df.columns = [lineage, "all"]
-        fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[lineage], name=lineage, marker_color="#DFB377" ) )
+        fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[lineage], name=lineage, marker_color=COLOR_LIGHT ) )
     else:
         plot_df = plot_df.sum(axis=1).reset_index()
         plot_df.columns = ["epiweek", "all"]
         plot_df = plot_df.set_index( "epiweek" )
 
-    fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color='#767676' ) )
+    fig.add_trace( go.Bar( x=plot_df.index, y=plot_df["all"], name="All", marker_color=COLOR_DARK ) )
     fig.update_layout(barmode='stack' )
-    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0,max_lim] )
-    fig.update_xaxes( range=get_date_limits( df["collection_date"] ) )
-    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=plot_df.index.max(), ylims=[0, max_lim], ytitle=yaxis_label )
 
     if scaleby == "fraction":
         fig.update_layout( yaxis_tickformat='.1%',
@@ -207,17 +214,15 @@ def plot_voc( df, scaleby="fraction", focus="VOC" ):
     fig = go.Figure()
     for i, j in enumerate( plot_df ):
         if j == "Other":
-            color = "#767676"
+            color = COLOR_DARK
         else:
-            color = px.colors.colorbrewer.Set1[i]
+            color = px.colors.colorbrewer.Dark2[i]
         fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
 
     fig.update_layout( barmode='stack' )
-    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0, max_lim] )
-    fig.update_xaxes( range=get_date_limits( plot_df.index ) )
-    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
-    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
 
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=plot_df.index.max(), ylims=[0, max_lim], ytitle=yaxis_label )
+    fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
     if scaleby == "fraction":
         fig.update_layout( yaxis_tickformat='.1%',
                            legend=dict( bgcolor="white" ) )
@@ -253,16 +258,14 @@ def plot_delta( df, scaleby="fraction" ):
     fig = go.Figure()
     for i, j in enumerate( plot_df ):
         if j == "Other":
-            color = "#767676"
+            color = COLOR_DARK
         else:
-            color = px.colors.colorbrewer.Set2[i]
+            color = px.colors.colorbrewer.Dark2[i]
         fig.add_trace( go.Bar( x=plot_df.index, y=plot_df[j], name=j, marker_color=color ) )
 
     fig.update_layout( barmode='stack' )
-    fig.update_yaxes( showgrid=False, title=f"<b>{yaxis_label}</b>", range=[0, max_lim] )
-    fig.update_xaxes( range=get_date_limits( plot_df.index ))
 
-    _add_date_formating( fig, minimum=plot_df.index.min(), maximum=plot_df.index.max() )
+    _add_date_formating( fig, minimum=pd.to_datetime("2020-01-01"), maximum=plot_df.index.max(), ylims=[0, max_lim], ytitle=yaxis_label )
     fig.update_layout( legend=dict( bgcolor="rgba(256,256,256,256)" ) )
     return fig
 
@@ -276,9 +279,9 @@ def plot_lineages( df ):
         if i in sorted( VOI.keys() ):
             colors.append( "#4977CE" )
         elif i in sorted( VOC.keys() ):
-            colors.append( "#AC6D41" )
+            colors.append( "#925c37" )
         else:
-            colors.append( "#767676" )
+            colors.append( COLOR_DARK )
 
     fig = go.Figure()
     fig.add_trace( go.Bar( x=plot_df["index"], y=plot_df["lineage"], marker_color=colors ) )
@@ -303,7 +306,7 @@ def plot_lineages( df ):
 
 def plot_zips( df, colorby="sequences" ):
     fig = go.Figure()
-    fig.add_trace( go.Bar( x=df["ziptext"], y=df[colorby], marker_color="#767676" ) )
+    fig.add_trace( go.Bar( x=df["ziptext"], y=df[colorby], marker_color=COLOR_DARK ) )
 
     if colorby == "fraction":
         title="Cases sequenced (%)"
