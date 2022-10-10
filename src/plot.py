@@ -62,11 +62,11 @@ def plot_daily_cases_seqs( df ):
                                name='Daily Sequences',
                                marker={ "color" : "#DFB377"} ) )
 
-    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max(), skip=2 )
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), skip=6 )
     min_lim = np.floor( np.log10( 0.75 ) )
     max_lim = np.ceil( np.log10( df["new_cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Number of cases</b>", range=[min_lim, max_lim] )
-    fig.update_xaxes( range=get_date_limits( df["date"] ) )
+    fig.update_xaxes( range=("2020-01-01", get_date_limits( df["date"] )[1] ) )
 
     return fig
 
@@ -84,11 +84,11 @@ def plot_cummulative_cases_seqs( df ):
                                hovertemplate='%{y:,.0f}',
                                line={ "color" : "#DFB377", "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=df["date"].min(), maximum=df["date"].max(), skip=2 )
+    _add_date_formating( fig, minimum=pd.to_datetime( "2020-01-01" ), maximum=df["date"].max(), skip=6 )
     min_lim = np.floor( np.log10( df.loc[df["sequences"] > 0,"sequences"].min() ) )
     max_lim = np.ceil( np.log10( df["cases"].max() ) )
     fig.update_yaxes( type="log", dtick=1, title="<b>Cummulative cases</b>", range=[min_lim, max_lim] )
-    fig.update_xaxes( range=get_date_limits( df["date"] ) )
+    fig.update_xaxes( range=("2020-01-01", get_date_limits( df["date"] )[1] ) )
 
     return fig
 
@@ -107,7 +107,7 @@ def plot_cummulative_sampling_fraction( df ):
                                  name='Fraction',
                                  line={ "color" : '#767676', "width" : 4 } ) )
 
-    _add_date_formating( fig, minimum=plot_df["epiweek"].min(), maximum=plot_df["epiweek"].max(), skip=2 )
+    _add_date_formating( fig, minimum=pd.to_datetime("2020-01-01"), maximum=plot_df["epiweek"].max(), skip=6 )
 
     fig.update_layout(  yaxis_tickformat='.1%' )
 
@@ -115,7 +115,7 @@ def plot_cummulative_sampling_fraction( df ):
     #cleaned_array = cleaned_array[~np.isinf( cleaned_array )]
 
     fig.update_yaxes( type="log", title="<b>Cases sequenced (%)</b>" )
-    fig.update_xaxes( range=get_date_limits( plot_df["epiweek"] ) )
+    fig.update_xaxes( range=("2020-01-01", get_date_limits( plot_df["epiweek"] )[1] ) )
 
     return fig
 
