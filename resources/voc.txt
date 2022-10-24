@@ -298,3 +298,10 @@ BA.5.5.3,Omicron-like
 BA.5.9,Omicron-like
 XAS,Omicron-like
 XAZ,Omicron-like
+BA.2.75,Omicron-like
+BA.5.1.4,Omicron-like
+BA.5.2.26,Omicron-like
+BE.1.3,Omicron-like
+BE.4,Omicron-like
+CE.1,Omicron-like
+
