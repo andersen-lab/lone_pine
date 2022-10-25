@@ -92,7 +92,6 @@ def download_search():
     md["num"] = md["ID"].str.extract( "SEARCH-([0-9]+)" )
     md.loc[md["num"].isna(),"num"] = md["ID"]
 
-    breakpoint()
     md = md.merge( pango, left_on="num", right_on="num", how="left", validate="one_to_one" )
 
     # Filter sequences which failed lineage calling. These sequences are likely incomplete/erroneous.
