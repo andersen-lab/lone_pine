@@ -43,6 +43,8 @@ def download_search():
     #clean up zipcode
     md["zipcode"] = md["zipcode"].astype( "str" )
     md["zipcode"] = md["zipcode"].apply( lambda x: x.split( "-" )[0] )
+    # Will covert all zipcodes to int except those with alphabetical characters.
+    md["zipcode"] = pd.to_numeric( md["zipcode"], errors="coerce", downcast="integer" )
 
     md["epiweek"] = md["collection_date"].apply( lambda x: Week.fromdate( datetime.datetime.strptime( x, "%Y-%m-%d" ).date() ).startdate() )
     md["collection_date"] = pd.to_datetime( md["collection_date"], format="%Y-%m-%d" ).dt.normalize()
