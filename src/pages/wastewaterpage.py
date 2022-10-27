@@ -29,6 +29,7 @@ def get_layout():
     layout = [
         html.Div(
             [
+                dbc.Alert( [html.I(className="bi bi-exclamation-triangle-fill me-2"), html.Strong( uncertainty_alert )], color="info" ),
                 dcc.Markdown( markdown, style={"margin-bottom" : "-15pt" }, link_target='_blank' ),
                 html.Div(
                     html.Img( src='data:image/png;base64,{}'.format(encoded_image.decode()),
