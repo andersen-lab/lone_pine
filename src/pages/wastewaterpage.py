@@ -15,6 +15,11 @@ def get_layout():
     catchment area are aggregated from ZIP code-level case counts from within the catchment.
     """
 
+    uncertainty_alert = """
+    Due to the low viral load at the most recent dates, there is considerable uncertainty in the variant calls shown in 
+    the lower graph. We are actively investigating this problem and aim to have more accurate reports soon.
+    """
+
     #commit_date = get_last_commit_date()
     #commit_date = "December 22 @ 1:07 PM PST"
 
@@ -85,9 +90,15 @@ def get_layout():
                             [
                                 html.Br(),
                                 html.Div(
-                                    html.H4( "Wastewater lineages" ),
+                                    html.H4( ["Wastewater lineages  ", html.I(className="bi bi-exclamation-triangle-fill me-2", id="tooltip-target", style={"fontSize" : "1.25rem", "color" : "#DA1414"}) ] ),
                                     className="three columns",
                                     style={"width" : "63.3%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
+                                ),
+                                dbc.Tooltip(
+                                    uncertainty_alert,
+                                    target="tooltip-target",
+                                    placement="right",
+                                    style={"width" : "500", "maxWidth" : "500"}
                                 ),
                                 html.Div(
                                     dbc.RadioItems(
