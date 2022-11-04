@@ -313,7 +313,6 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
          Input( "ww-source-radio", "value" )]
     )
     def update_wastewater_seq_graph( norm_type, source ):
-        print( source )
         # TODO: source=PointLoma is hardcoded, in the future this probably isn't going to be the case.
         return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source=source), norm_type=norm_type, source=source )
 

@@ -309,7 +309,18 @@ def load_catchment_areas():
     sd = sd.set_index( "ZIP" )
     return sd
 
-def load_ww_plot_config():
+def convert_rbg_to_tuple( rgb ):
+    rgb = rgb.lstrip( "#" )
+    return tuple( int( rgb[i :i + 2], 16 ) for i in (0, 2, 4) )
+
+def convert_tuple_to_rgb( r, g, b ):
+    return '#%02x%02x%02x' % (int(r), int(g), int(b))
+
+def lighten_field( value, alpha, gamma=2.2 ):
+    return pow( pow(255, gamma) * (1 - alpha) + pow( value, gamma ) * alpha, 1 / gamma)
+def lighten_color( r, g, b, alpha, gamma=2.2 ):
+    return lighten_field(r, alpha, gamma ), lighten_field( g, alpha, gamma ), lighten_field( b, alpha, gamma )
+def load_ww_plot_config( delta=0.15 ):
     """
     Loads the configuration file for the wastewater seqs plots. Essentially, the file specifies the name and color of
     lineages to be included.
@@ -321,19 +332,31 @@ def load_ww_plot_config():
     import yaml
     from urllib import request
 
-    try:
-        config_url = request.urlopen( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml" )
-        plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
-    except:
-        print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
-        with open( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml", "r" ) as f :
-            plot_config = yaml.load( f, Loader=yaml.FullLoader )
+    #try:
+    #    config_url = request.urlopen( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml" )
+    #    plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
+    #except:
+    print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
+    with open( "resources/ww_seqs.yml", "r" ) as f :
+        plot_config = yaml.load( f, Loader=yaml.FullLoader )
+
+    children_dict = dict()
 
     # Test the config is reasonable complete.
     assert "Other" in plot_config, "YAML is not complete. Does not contain 'Other' entry."
-    for key in plot_config.keys() :
-        for value in ["name", "members", "color"] :
+    for key in reversed( plot_config.keys() ):
+        for value in ["name", "members"]:
             assert value in plot_config[key], f"YAML entry {key} is not complete. Does not contain '{value}' entry."
+        if "color" not in plot_config[key]:
+            assert "parent" in plot_config[key], f"YAML entry {key} is incomplete. Must specify either a 'color' or 'parent' entry."
+            if plot_config[key]["parent"] in children_dict:
+                children_dict[plot_config[key]["parent"]] += 1
+            else:
+                children_dict[plot_config[key]["parent"]] = 1
+            child_idx = children_dict[plot_config[key]["parent"]]
+            parent_color = plot_config[plot_config[key]["parent"]]["color"]
+            parent_color = convert_rbg_to_tuple( parent_color )
+            plot_config[key]["color"] = convert_tuple_to_rgb( *lighten_color( *parent_color, alpha=1.0-(delta*child_idx) ) )
 
     return plot_config
 
