@@ -332,13 +332,13 @@ def load_ww_plot_config( delta=0.15 ):
     import yaml
     from urllib import request
 
-    #try:
-    #    config_url = request.urlopen( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml" )
-    #    plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
-    #except:
-    print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
-    with open( "resources/ww_seqs.yml", "r" ) as f :
-        plot_config = yaml.load( f, Loader=yaml.FullLoader )
+    try:
+        config_url = request.urlopen( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/plot_config.yml" )
+        plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
+    except:
+        print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
+        with open( "resources/ww_seqs.yml", "r" ) as f :
+            plot_config = yaml.load( f, Loader=yaml.FullLoader )
 
     children_dict = dict()
 

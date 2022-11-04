@@ -17,7 +17,8 @@ def test_voi_file_correct_format():
 def test_all_zipcodes_decimal():
     seqs = pd.read_csv( SEQ_FILE )
     try:
-        seqs["zipcode"].apply( lambda x: f"{float( x ):.0f}" )
+        _ = pd.to_numeric( seqs["zipcode"], errors="raise", downcast="integer" )
     except ValueError:
-        # TODO: determine what values are causing the error>
+        # TODO: determine what values are causing the error. Something like iterate through rows, try and convert, if
+        #  fail add to a list, assert list is empty at the end.
         assert False, "Some values in zipcode column are not able to be parsed to floats."
