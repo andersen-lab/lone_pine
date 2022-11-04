@@ -16,7 +16,7 @@ def get_layout():
     """
 
     uncertainty_alert = """
-    Due to the low viral load at the most recent dates, there is considerable uncertainty in the variant calls shown in 
+    Due to low viral load, there is considerable noisiness in the most recent variant calls shown in 
     the lower graph. We are actively investigating this problem and aim to have more accurate reports soon.
     """
 
