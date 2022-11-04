@@ -344,7 +344,7 @@ def load_ww_plot_config( delta=0.15 ):
 
     # Test the config is reasonable complete.
     assert "Other" in plot_config, "YAML is not complete. Does not contain 'Other' entry."
-    for key in reversed( plot_config.keys() ):
+    for key in reversed( list( plot_config.keys() ) ):
         for value in ["name", "members"]:
             assert value in plot_config[key], f"YAML entry {key} is not complete. Does not contain '{value}' entry."
         if "color" not in plot_config[key]:
