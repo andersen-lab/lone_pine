@@ -580,6 +580,11 @@ def plot_monkeypox_concentration( mx_gene: pd.DataFrame, mx_cases: pd.DataFrame,
     return fig
 
 def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma" ) -> go.Figure:
+    def hex_to_rgb( hex_color: str ) -> tuple:
+        hex_color = hex_color.lstrip( "#" )
+        if len( hex_color ) == 3:
+            hex_color = hex_color * 2
+        return int( hex_color[0:2], 16 ), int( hex_color[2:4], 16 ), int( hex_color[4:6], 16 )
 
     filtered_seqs = seqs.loc[seqs["source"]==source]
 
@@ -636,6 +641,7 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
                 hovertemplate=ht,
                 hoverinfo='x+y',
                 mode='lines',
+                fillcolor=f"rgba{(*hex_to_rgb(config[i]['color']), 0.65)}",
                 line=dict( width=0.5, color=config[i]["color"] ),
                 stackgroup='one'
             )
