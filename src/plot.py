@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from epiweeks import Week
 from src.variants import VOC, VOI
+import datetime
 
 COLOR_DARK = "#495057"
 COLOR_LIGHT = "#93aad3"
@@ -419,7 +420,9 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     xanchor="left",
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
-    fig.update_xaxes( range=["2021-11-25", "2022-12-01"] )
+    today = datetime.datetime.today()
+    max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
+    fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")] )
 
     esti = sgtf_data[2]
     double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
