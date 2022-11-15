@@ -6,7 +6,7 @@ from scipy.signal import savgol_filter
 
 SEQS_LOCATION = "../resources/sequences.csv"
 VOC_LOCATION = "../resources/voc.txt"
-CDC_LINEAGES = ["BA.5", "BA.5.2.6", "BA.4.6", "BQ.1.1", "BQ.1", "BF.7", "BA.4", "BA.2.75", "BA.2.75.2", "BA.2.12.1", "BA.2", "B.1.1.519", "BA.1.1", "B.1.617.2"]
+CDC_LINEAGES = ["BA.5", "BA.5.2.6", "BA.4.6", "BQ.1.1", "BQ.1", "BN.1", "BF.7", "BA.4", "BA.2.75", "BA.2.75.2", "BA.2.12.1", "BA.2", "B.1.1.519", "BA.1.1", "B.1.617.2"]
 
 
 def load_sequences():
