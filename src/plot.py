@@ -4,6 +4,8 @@ from plotly.subplots import make_subplots
 import numpy as np
 import pandas as pd
 from epiweeks import Week
+from scipy.signal import savgol_filter
+
 from src.variants import VOC, VOI
 import datetime
 
@@ -582,7 +584,7 @@ def plot_monkeypox_concentration( mx_gene: pd.DataFrame, mx_cases: pd.DataFrame,
 
     return fig
 
-def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma" ) -> go.Figure:
+def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma", smooth=True ) -> go.Figure:
     def hex_to_rgb( hex_color: str ) -> tuple:
         hex_color = hex_color.lstrip( "#" )
         if len( hex_color ) == 3:
@@ -604,6 +606,11 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
     plot_df = pd.concat( plot_df, axis=1 )
     plot_df["Other"] = 100 - plot_df.sum( axis=1 )
     plot_df["Other"] = plot_df["Other"].clip( lower=0 )
+
+    #if smooth:
+    #    plot_df = plot_df.apply( savgol_filter, window_length=7, polyorder=3 )
+    #    plot_df = plot_df.clip( lower=0 )
+    #    plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1   )
 
     norm=None
     ht = "%{y:.0f}"
