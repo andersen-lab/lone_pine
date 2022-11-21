@@ -643,6 +643,8 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
 
     fig = go.Figure()
 
+    fill_pattern = go.scatter.Fillpattern( bgcolor=config["Recombinants"]["color"], fgcolor="white", shape="/", solidity=0.5 )
+
     for i in reversed( list( config.keys() ) ):
         fig.add_trace(
             go.Scatter(
@@ -653,6 +655,7 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
                 mode='lines',
                 fillcolor=f"rgba{(*hex_to_rgb(config[i]['color']), 0.65)}",
                 line=dict( width=0.5, color=config[i]["color"] ),
+                fillpattern=fill_pattern if i == "Recombinants" else None,
                 stackgroup='one'
             )
         )
