@@ -6,8 +6,7 @@ from scipy.signal import savgol_filter
 
 SEQS_LOCATION = "../resources/sequences.csv"
 VOC_LOCATION = "../resources/voc.txt"
-CDC_LINEAGES = ["BA.5", "BA.5.2.6", "BA.4.6", "BQ.1.1", "BQ.1", "BN.1", "BF.7", "BA.4", "BA.2.75", "BA.2.75.2", "BA.2.12.1", "BA.2", "B.1.1.519", "BA.1.1", "B.1.617.2"]
-
+CDC_LINEAGES = ["BQ.1.1", "BQ.1", "BA.5" , "BF.7" , "XBB" , "BN.1" , "BA.4.6" , "BA.5.2.6" , "BF.11" , "BA.2" , "BA.2.75" , "BA.2.75.2" , "BA.4" , "BA.1.1" , "B.1.1.529" , "BA.2.12.1" , "B.1.617.2"]
 
 def load_sequences():
     seqs = pd.read_csv( SEQS_LOCATION, usecols=["ID", "collection_date", "epiweek", "lineage", "state"],
