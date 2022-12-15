@@ -329,3 +329,7 @@ BM.2.1,Omicron-like
 BN.5,Omicron-like
 XBB,Omicron-like
 XBE,Omicron-like
+BA.5.2.33,Omicron-like
+BA.5.2.38,Omicron-like
+CM.1,Omicron-like
+XAJ,Omicron-like
