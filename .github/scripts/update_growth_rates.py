@@ -3,10 +3,23 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.dates as mdates
 from scipy.signal import savgol_filter
+from subprocess import run
+import json
 
 SEQS_LOCATION = "../resources/sequences.csv"
 VOC_LOCATION = "../resources/voc.txt"
-CDC_LINEAGES = ["BQ.1.1", "BQ.1", "BA.5" , "BF.7" , "XBB" , "BN.1" , "BA.4.6" , "BA.5.2.6" , "BF.11" , "BA.2" , "BA.2.75" , "BA.2.75.2" , "BA.4" , "BA.1.1" , "B.1.1.529" , "BA.2.12.1" , "B.1.617.2"]
+
+def load_cdc_variants():
+    init_url = "https://data.cdc.gov/resource/jr58-6ysp.json"
+    request = run( f"curl -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36' {init_url}", shell=True, capture_output=True, text=True )
+    response = json.loads( request.stdout )
+
+    variants = []
+    for entry in response:
+        if (entry["variant"] in variants) or (entry["variant"] == "Other"):
+            continue
+        variants.append( entry["variant"] )
+    return variants
 
 def load_sequences():
     seqs = pd.read_csv( SEQS_LOCATION, usecols=["ID", "collection_date", "epiweek", "lineage", "state"],
@@ -77,7 +90,7 @@ def generate_table( rates_df : pd.DataFrame, seqs_df : pd.DataFrame, abundance_d
     table_filtered = table.loc[table["recent_counts"] > 5]
 
     fastest_growers = table_filtered.sort_values( "growth_rate", ascending=False ).head( 5 )["lineage"].to_list()
-    fastest_growers.extend( CDC_LINEAGES )
+    fastest_growers.extend( load_cdc_variants() )
     table_filtered = table_filtered.loc[table_filtered["lineage"].isin( fastest_growers )]
     return table_filtered, table
 

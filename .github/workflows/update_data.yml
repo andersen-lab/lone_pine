@@ -40,6 +40,10 @@ jobs:
           resources/sequences.csv
           resources/cases.csv
 
+    - name: Update growth rates
+      run: | 
+        python .github/scripts/update_growth_rates.py
+
     - name: Commit changed files
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
