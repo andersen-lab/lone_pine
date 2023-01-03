@@ -6,8 +6,8 @@ from scipy.signal import savgol_filter
 from subprocess import run
 import json
 
-SEQS_LOCATION = "../resources/sequences.csv"
-VOC_LOCATION = "../resources/voc.txt"
+SEQS_LOCATION = "resources/sequences.csv"
+VOC_LOCATION = "resources/voc.txt"
 
 def load_cdc_variants():
     # This link provides API access to the data found in this chart: https://covid.cdc.gov/covid-data-tracker/#variant-proportions
@@ -110,5 +110,5 @@ def calculate_growth_rates():
 
 if __name__ == "__main__":
     growth_rates_filtered, all = calculate_growth_rates()
-    growth_rates_filtered.to_csv( "../resources/growth_rates.csv", index=False )
-    all.to_csv( "../resources/growth_rates_all.csv", index=False )
+    growth_rates_filtered.to_csv( "resources/growth_rates.csv", index=False )
+    all.to_csv( "resources/growth_rates_all.csv", index=False )
