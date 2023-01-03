@@ -10,6 +10,8 @@ SEQS_LOCATION = "../resources/sequences.csv"
 VOC_LOCATION = "../resources/voc.txt"
 
 def load_cdc_variants():
+    # This link provides API access to the data found in this chart: https://covid.cdc.gov/covid-data-tracker/#variant-proportions
+    # However, I haven't confirmed this doesn't change over time.
     init_url = "https://data.cdc.gov/resource/jr58-6ysp.json"
     request = run( f"curl -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36' {init_url}", shell=True, capture_output=True, text=True )
     response = json.loads( request.stdout )
