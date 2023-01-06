@@ -188,6 +188,21 @@ def get_provider_sequencer_values( seqs, value ):
 
 
 def load_sgtf_data():
+    """ Loads S-gene target failure data from file and fits a logistic growth mixture model. Data comes from clinical
+    sequencing in San Diego. Logisitic growth mixture model is a summation of three logisitic growth models. Further
+    versions might include a fourth model. Logisitic growth models are parameterized using logisitic growth rate and
+    sigmoid midpoint.
+
+    Returns
+    -------
+    tests : pandas.DataFrame
+        Raw SGTF data, in terms of number of tests conducted with S-gene dropout.
+    fits : pandas.DataFrame
+        Estimated prevelence of SGTF using Logistic growth mixture model.
+    estimates : pandas.DataFrame
+        Estimates and confidence intervals for the growth rate, doubling time, and transmission advantage of the last component of the mixture model.
+
+    """
 
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
@@ -321,8 +336,7 @@ def lighten_field( value, alpha, gamma=2.2 ):
 def lighten_color( r, g, b, alpha, gamma=2.2 ):
     return lighten_field(r, alpha, gamma ), lighten_field( g, alpha, gamma ), lighten_field( b, alpha, gamma )
 def load_ww_plot_config( delta=0.15 ):
-    """
-    Loads the configuration file for the wastewater seqs plots. Essentially, the file specifies the name and color of
+    """ Loads the configuration file for the wastewater seqs plots. Essentially, the file specifies the name and color of
     lineages to be included.
     Returns
     -------
