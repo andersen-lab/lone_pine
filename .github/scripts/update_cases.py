@@ -40,6 +40,7 @@ def download_sd_cases():
     gis_layer = gis.content.get( cases_loc )
     features = gis_layer.layers[0].query( where='1=1' )
     sd = features.df
+    sd = sd.rename( columns={"zip_code_text" : "ziptext", "data_through" : "updatedate", } )
     sd = sd[["ziptext","case_count", "updatedate"]]
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
     sd["updatedate"] = sd["updatedate"].dt.normalize()
