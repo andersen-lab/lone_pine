@@ -45,8 +45,19 @@ def download_sd_cases():
     sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
     sd["updatedate"] = sd["updatedate"].dt.normalize()
     #sd["ziptext"] = pd.to_numeric( sd["ziptext"] )
-    sd = sd.groupby( ["updatedate", "ziptext"] ).last().reset_index()
-    sd = sd.sort_values( "updatedate" )
+
+    # the problem is that there are two entries for the week of 2022-07-10, and no entries for the week of 2022-08-21.
+    # I think the August data got switch to the July data. I'll pull the 2022-07-10 dates out and replace the max counts
+    # with 2022-08-21.
+    # TODO: CHECK THIS EVERYTIME, REALLY HACKY.
+    sd_fine = sd.loc[sd["updatedate"] != "2022-07-10"]
+    sd_fine = sd_fine.groupby( ["updatedate", "ziptext"] ).last().reset_index()
+    sd_duplicated = sd.loc[sd["updatedate"] == "2022-07-10"]
+    sd_duplicated = sd_duplicated.sort_values( "case_count" )
+    sd_dup_correct = sd_duplicated.groupby( ["updatedate", "ziptext"] ).first().reset_index()
+    sd_dup_incorrect = sd_duplicated.groupby( ["updatedate", "ziptext"] ).last().reset_index()
+    sd_dup_incorrect["updatedate"] = pd.to_datetime( "2022-08-21" )
+    sd = pd.concat( [sd_fine, sd_dup_correct, sd_dup_incorrect], ignore_index=True ).sort_values( "updatedate" )
 
     # Calculate cases per day because that's way more usable than cumulative counts.
     sd["case_count"] = sd["case_count"].fillna( 0 )
