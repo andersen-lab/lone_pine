@@ -46,6 +46,9 @@ def load_growth_rates():
     return pd.read_csv( "resources/growth_rates.csv" )
 
 
+def load_ww_growth_rates():
+    return pd.read_csv( "www.github.com/foo/bar" )
+
 def format_cases_total( cases_df ):
     return_df = cases_df.sort_values( "updatedate", ascending=False ).groupby( "ziptext" ).first()
     return_df = return_df.reset_index()

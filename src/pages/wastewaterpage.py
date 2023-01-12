@@ -132,7 +132,11 @@ def get_layout():
                         )
                     ],
 
-                )
+                ),
+                html.Div( id="top-table-div", style={ "width"        : "45em",
+                                                      "marginLeft"   : "auto",
+                                                      "marginRight"  : "auto",
+                                                      "marginBottom" : "25px" } ),
             ]
         ),
         html.Br(),
