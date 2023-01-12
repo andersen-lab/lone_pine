@@ -6,8 +6,9 @@ from dash.dash_table.Format import Format, Scheme
 def get_table( growth_rates ):
     date_first = growth_rates["first_date"].values[0]
     date_last = growth_rates["last_date"].values[0]
+    date_today = growth_rates["today"].values[0]
 
-    growth_rates = growth_rates.drop( columns=["first_date", "last_date"] )
+    growth_rates = growth_rates.drop( columns=["first_date", "last_date", "today"] )
 
     columns = [
         {'id': "lineage", 'name': "Lineage"},
@@ -15,6 +16,7 @@ def get_table( growth_rates ):
         {'id': "total_count", 'name': "Total", 'type' : 'numeric'},
         {'id': "recent_counts", 'name': "Last 2 months", 'type' : 'numeric'},
         {'id': "est_proportion", 'name': "Prevalence", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage ) },
+        {'id': "now_proportion", 'name': "Projection", 'type': 'numeric', 'format': Format( precision=1, scheme=Scheme.percentage ) },
         {'id': "growth_rate", 'name': "Growth rate", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage )},
     ]
 
@@ -26,6 +28,7 @@ def get_table( growth_rates ):
                 "total_count" : "Total number of genomes sequenced from lineage.",
                 "recent_counts" : "Number of genomes sequenced from lineage in past two months.",
                 "est_proportion" : f"Lineage prevalence in the community estimated from sequencing data as of {date_last}.",
+                "now_proportion" : f"Projected lineage prevalence in the community for {date_today} based on sequecing data as of {date_last}",
                 "growth_rate" : f"Estimated logistic growth rate over the past two months ({date_first} to {date_last})."
             },
             tooltip_delay=0,

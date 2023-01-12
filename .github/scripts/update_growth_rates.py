@@ -2,11 +2,11 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression, LogisticRegression
 import matplotlib.dates as mdates
-from scipy.signal import savgol_filter
 from subprocess import run
 import json
 from pango_aliasor.aliasor import Aliasor
 import re
+from datetime import datetime
 
 SEQS_LOCATION = "resources/sequences.csv"
 VOC_LOCATION = "resources/voc.txt"
@@ -106,6 +106,7 @@ def generate_table(
         abundance_df : pd.DataFrame,
         weeks, vocs: dict[str],
         forced_lineages : list[str],
+        model : LogisticRegression,
 ):
     table = rates_df.reset_index()
     table.columns = ["lineage", "growth_rate"]
@@ -127,9 +128,16 @@ def generate_table(
     table["first_date"] = mdates.num2date( abundance_df.index[0] ).strftime( "%Y-%m-%d" )
     table["last_date"] = mdates.num2date( abundance_df.index[-1] ).strftime( "%Y-%m-%d" )
 
+    today = mdates.date2num( datetime.today().date() )
+    nowcast = pd.Series( model.predict_proba( [[today]] )[0], index=model.classes_ )
+    nowcast.name = "now_proportion"
+    table = table.merge( nowcast, left_on="lineage", right_index=True, how="left" )
+
+    table["today"] = mdates.num2date( today ).strftime( "%Y-%m-%d" )
+
     table = table.reindex(
-        columns=["lineage", "variant", "total_count", "recent_counts", "est_proportion", "growth_rate", "first_date",
-                 "last_date"] )
+        columns=["lineage", "variant", "total_count", "recent_counts", "est_proportion", "now_proportion", "growth_rate", "first_date",
+                 "last_date", "today"] )
     table_filtered = table.loc[table["recent_counts"] > 5]
 
     fastest_growers = table_filtered.sort_values( "growth_rate", ascending=False ).head( 5 )["lineage"].to_list()
@@ -153,7 +161,7 @@ def calculate_growth_rates():
     seqs = add_collapsed_lineages( seqs, names )
 
     voc_names = load_vocs()
-    return generate_table( rates_df=rates, seqs_df=seqs, abundance_df=smooth_seqs, weeks=last_weeks, vocs=voc_names, forced_lineages=cdc_lineages )
+    return generate_table( rates_df=rates, seqs_df=seqs, abundance_df=smooth_seqs, weeks=last_weeks, vocs=voc_names, forced_lineages=cdc_lineages, model=model )
 
 
 if __name__ == "__main__":
