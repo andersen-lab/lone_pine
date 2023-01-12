@@ -4,7 +4,7 @@ from plotly.subplots import make_subplots
 import numpy as np
 import pandas as pd
 from epiweeks import Week
-from scipy.signal import savgol_filter
+from scipy.special import betaincinv
 
 from src.variants import VOC, VOI
 import datetime
@@ -338,13 +338,30 @@ def plot_zips( df, colorby="sequences" ):
     return fig
 
 
+def binom_conf_interval(k, n, confidence_level=0.95 ):
+    alpha = 1.0 - confidence_level
+    k = np.asarray( k ).astype( int )
+    n = np.asarray( n ).astype( int )
+    lowerbound = betaincinv( k + 0.5, n - k + 0.5, 0.5 * alpha )
+    upperbound = betaincinv( k + 0.5, n - k + 0.5, 1.0 - 0.5 * alpha )
+    if lowerbound.ndim == 0:
+        if k == 0:
+            lowerbound = 0.0
+        elif k == n:
+            upperbound = 1.0
+    else:
+        lowerbound[k == 0] = 0
+        upperbound[k == n] = 1
+
+    return pd.Series( [lowerbound, upperbound] )
+
 def plot_sgtf( sgtf_data ):
     plot_df = sgtf_data[0]
     plot_df["week"] = plot_df["Date"].apply( lambda x: Week.fromdate( x ).startdate() )
     plot_df = plot_df.groupby( "week" )[["sgtf_all", "sgtf_likely", "sgtf_unlikely", "total_positive"]].agg( sum )
     plot_df["percent"] = plot_df["sgtf_all"] / plot_df["total_positive"]
+    plot_df[["lower", "upper"]] = plot_df.apply( lambda x: binom_conf_interval( x["sgtf_all"], x["total_positive"] ), axis=1 )
     plot_df = plot_df.reset_index()
-
 
     max_lim = np.round( plot_df["total_positive"].max() * 1.05 )
 
@@ -357,6 +374,19 @@ def plot_sgtf( sgtf_data ):
                                  name='SGTF (%)',
                                  showlegend=False,
                                  line={ "color" : "#000000", "width" : 2, "dash" : "dash"} ), secondary_y=True )
+    fig.add_trace( go.Scatter( x=plot_df["week"], y=plot_df["lower"],
+                               mode='lines',
+                               fillcolor="rgba(0,0,0,0.1)",
+                               showlegend=False,
+                               hoverinfo='skip',
+                               line={"color" : "#E4E4E4"} ), secondary_y=True )
+    fig.add_trace( go.Scatter( x=plot_df["week"], y=plot_df["upper"],
+                               mode='lines',
+                               fill="tonextx",
+                               fillcolor="rgba(0,0,0,0.1)",
+                               showlegend=False,
+                               hoverinfo='skip',
+                               line={"color" : "#E4E4E4" } ), secondary_y=True )
     fig.update_layout( barmode='stack' )
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
@@ -431,11 +461,11 @@ def plot_sgtf_estiamte( sgtf_data ):
     growth_str =  f"Daily growth rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
     transmission_str =  f"Transmission increase: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-    for col, name in [("date99", "99%")]:
-        date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
-        midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
-        fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
-        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
+#    for col, name in [("date99", "99%")]:
+#        date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
+#        midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
+#        fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
+#        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
 
     #y_scale = 0.75
     #x_place = "2021-12-10"
