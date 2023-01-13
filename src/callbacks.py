@@ -7,6 +7,7 @@ import src.pages.wastewaterpage as wastepage
 import src.pages.monkeypox as monkeypox
 import src.pages.growth_table as growth_table
 import src.pages.graphonly as graphonly
+import src.pages.ww_growth_table as ww_growth_table
 from dash import Input, Output, html
 from datetime import datetime, timezone, timedelta
 import requests
@@ -44,7 +45,7 @@ def get_last_commit_date( url ):
         #return "Updating at the moment..."
         return ""
 
-def register_callbacks( app, sequences, cases_whole, growth_rates ):
+def register_callbacks( app, sequences, cases_whole, growth_rates, ww_growth_rates ):
 
     def get_sequences( seqs, url, window=None, provider=None, sequencer=None, zip_f=None ):
         new_seqs = seqs.copy()
@@ -128,6 +129,8 @@ def register_callbacks( app, sequences, cases_whole, growth_rates ):
     def generate_top_table( url ):
         if url == "/bajacalifornia":
             return [html.Table( id="summary-table" )]
+        elif url == "/wastewater":
+            return ww_growth_table.get_table( ww_growth_rates )
         else:
             return growth_table.get_table( growth_rates )
 
