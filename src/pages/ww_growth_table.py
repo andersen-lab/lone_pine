@@ -4,32 +4,24 @@ import pandas as pd
 from dash.dash_table.Format import Format, Scheme
 
 def get_table( growth_rates ):
-    date_first = growth_rates["first_date"].values[0]
-    date_last = growth_rates["last_date"].values[0]
-    date_today = growth_rates["today"].values[0]
-
-    growth_rates = growth_rates.drop( columns=["first_date", "last_date", "today"] )
-
+    print(growth_rates)
+    # date_first = growth_rates["first_date"].values[0]
+    # date_last = growth_rates["last_date"].values[0]
+    # date_today = growth_rates["today"].values[0]
+    growth_rates['Lineage'] = [dfl if dfl!='Recombinants' else 'Other recombinants' for dfl in growth_rates['Lineage']]
     columns = [
-        {'id': "lineage", 'name': "Lineage"},
-        {"id": "variant", 'name': 'Variant'},
-        {'id': "total_count", 'name': "Total", 'type' : 'numeric'},
-        {'id': "recent_counts", 'name': "Last 2 months", 'type' : 'numeric'},
-        {'id': "est_proportion", 'name': "Prevalence", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage ) },
-        {'id': "now_proportion", 'name': "Projection", 'type': 'numeric', 'format': Format( precision=1, scheme=Scheme.percentage ) },
-        {'id': "growth_rate", 'name': "Growth rate", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage )},
+        {'id': "Lineage", 'name': "Lineage"},
+        {"id": "Estimated Advantage", 'name': 'Growth Advantage'},
+        {'id': "Bootstrap 95% interval", 'name': "Bootstrap 95% CI"}
     ]
+    
 
     table = html.Div( [
         dash_table.DataTable(
             data=growth_rates.to_dict('records'),
             columns=columns,
             tooltip_header={
-                "total_count" : "Total number of genomes sequenced from lineage.",
-                "recent_counts" : "Number of genomes sequenced from lineage in past two months.",
-                "est_proportion" : f"Lineage prevalence in the community estimated from sequencing data as of {date_last}.",
-                "now_proportion" : f"Projected lineage prevalence in the community for {date_today} based on sequecing data as of {date_last}",
-                "growth_rate" : f"Estimated logistic growth rate over the past two months ({date_first} to {date_last})."
+                "Estimated Advantage" : "Estimated growth advantage of a particular lineage relative to circulating lineages, with serial interval of 3.1 days"
             },
             tooltip_delay=0,
             tooltip_duration=None,
@@ -60,35 +52,35 @@ def get_table( growth_rates ):
             },
             style_header_conditional=[
                 {
-                    'if': { 'column_id': 'variant' },
+                    'if': { 'column_id': 'Estimated Advantage' },
                     'textAlign': 'center'
                 },
                 {
-                    'if': { 'column_id': 'lineage' },
+                    'if': { 'column_id': 'Lineage' },
                     'textAlign': 'left'
                 }
             ],
             style_data_conditional=[
-                {
-                    'if': { 'filter_query': '{growth_rate} > 0.05', 'column_id': 'growth_rate' },
-                    'color': 'rgb(200, 0, 0)',
-                    'fontWeight': 'bold'
-                },
-                {
-                    'if': { 'filter_query': '{growth_rate} < -0.05', 'column_id': 'growth_rate' },
-                    'color': 'rgb(0, 0, 200)',
-                    'fontWeight': 'bold'
-                },
+                # {
+                #     'if': { 'filter_query': '{growth_rate} > 10.', 'column_id': 'Estimated Advantage' },
+                #     'color': 'rgb(200, 0, 0)',
+                #     'fontWeight': 'bold'
+                # },
+                # {
+                #     'if': { 'filter_query': '{growth_rate} < -10.', 'column_id': 'Estimated Advantage'},
+                #     'color': 'rgb(0, 0, 200)',
+                #     'fontWeight': 'bold'
+                # },
                 {
                     'if': {'row_index': 'odd' },
                     'backgroundColor': '#e9eef6', # was #f0f0f0
                 },
                 {
-                    'if': {'column_id': 'variant'},
+                    'if': {'column_id': 'Estimated Advantage'},
                     'textAlign': 'center'
                 },
                 {
-                    'if': { 'column_id': 'lineage' },
+                    'if': { 'column_id': 'Lineage' },
                     'textAlign': 'left',
                     'fontStyle': 'italic'
                 }
