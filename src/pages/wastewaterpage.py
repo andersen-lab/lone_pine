@@ -134,7 +134,7 @@ def get_layout():
 
                 ),
                 html.P(),
-                html.Div( id="top-table-div", style={ "width"        : "45em",
+                html.Div( id="top-table-div", style={ "width"        : "33em",
                                                       "marginLeft"   : "auto",
                                                       "marginRight"  : "auto",
                                                       "marginBottom" : "25px" } ),
