@@ -1,7 +1,6 @@
 import base64
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-import src.plot as dashplot
 
 def get_layout():
     markdown = """

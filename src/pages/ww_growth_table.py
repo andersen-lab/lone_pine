@@ -5,9 +5,6 @@ from dash.dash_table.Format import Format, Scheme
 
 def get_table( growth_rates ):
     print(growth_rates)
-    # date_first = growth_rates["first_date"].values[0]
-    # date_last = growth_rates["last_date"].values[0]
-    # date_today = growth_rates["today"].values[0]
     growth_rates['Lineage'] = [dfl if dfl!='Recombinants' else 'Other recombinants' for dfl in growth_rates['Lineage']]
     columns = [
         {'id': "Lineage", 'name': "Lineage"},
