@@ -1,12 +1,14 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression, LogisticRegression
+import statsmodels.api as sm
 import matplotlib.dates as mdates
 from subprocess import run
 import json
 from pango_aliasor.aliasor import Aliasor
 import re
 from datetime import datetime
+
+from scipy.special import expit, logit
 
 SEQS_LOCATION = "resources/sequences.csv"
 VOC_LOCATION = "resources/voc.txt"
@@ -40,13 +42,46 @@ def collapse_lineage( entry : str, accepted_lineages: set[str] ):
         return aliasor.partial_compress( aliasor.uncompress( entry ), accepted_aliases=["BA"] )
     return ".".join( entry.split( "." )[:-1] )
 
-def model_sequence_counts( df : pd.DataFrame, weeks : list ):
-    lg = LogisticRegression( multi_class="multinomial", solver="newton-cg", max_iter=1000 )
-    lg.fit( df["epiweek_num"].to_numpy().reshape(-1,1), df["collapsed_linege"] )
 
-    results = lg.predict_proba( mdates.date2num(weeks).reshape(-1,1) )
-    results = pd.DataFrame( results, columns=lg.classes_, index=mdates.date2num(weeks) )
+def calculate_CIs( entry, name, model ):
+    return_df = entry.copy()
+    se = model.cov_params().loc[name,name].to_numpy()
+    se = np.sqrt( [xx@se@xx for xx in [[i, 1] for i in return_df.index]] )
+    return_df["upper"] = expit( logit( return_df["prevalence"] ) + 1.96 * se )
+    return_df["lower"] = expit( logit( return_df["prevalence"] ) - 1.96 * se )
+    return return_df
+
+
+def format_model_results( model_results, weeks : list ):
+    results = pd.DataFrame( model_results.predict( [[i, 1] for i in weeks] ), index=weeks,
+                            columns=model_results.model._ynames_map.values() )
+    results = results.drop( columns=["Other"] )
+    results = results.melt( var_name="variant", value_name="prevalence", ignore_index=False )
+    results = results.groupby( "variant" ).apply( lambda x: calculate_CIs( x, x.name, model_results ) )
+    return results
+
+
+def model_sequence_counts( df : pd.DataFrame, weeks : list ):
+    mdata = df.copy()
+    mdata["const"] = 1
+    X = mdata[["epiweek", "const"]]
+    Y = mdata["collapsed_linege"]
+
+    model = sm.MNLogit( Y, X, missing="drop" )
+    res = model.fit_regularized( maxiter=1000 )
+
+    format_model_results( res, weeks )
+
     return results, lg
+
+
+def calculate_growth_rate( results ):
+    coeff = results.params.T
+    coeff[["lower", "upper"]] = results._results.conf_int()[:, :1].reshape( -1, 2 )
+    coeff.index = list( results.model._ynames_map.values() )[1:]
+    coeff = coeff.drop( columns=["const"] )
+    coeff = coeff.rename( columns={"epiweek" : "growth_rate" })
+    return coeff
 
 
 def smooth_sequence_counts( df : pd.DataFrame, weeks : list, forced_lineages : list[str], rounds : int = 10, min_sequences : int = 50 ):
@@ -68,12 +103,16 @@ def smooth_sequence_counts( df : pd.DataFrame, weeks : list, forced_lineages : l
         accepted = set( list( counts.loc[counts > min_sequences].index ) + forced_lineages )
         last_seqs.loc[~last_seqs["collapsed_linege"].isin( accepted ), "collapsed_linege"] = "Other"
 
-    last_seqs["epiweek_num"] = mdates.date2num( last_seqs["epiweek"] )
+    last_seqs["epiweek"] = mdates.date2num( last_seqs["epiweek"] )
     collapsed_names = last_seqs.groupby( "lineage" ).first()["collapsed_linege"].to_dict()
+    cat = last_seqs["collapsed_linege"].unique()
+    cat = np.append( ["Other"], cat[cat != "Other"] )
+    last_seqs["collapsed_linege"] = last_seqs["collapsed_linege"].astype( 'category' ).cat.set_categories( new_categories=cat )
 
     smoothed, model = model_sequence_counts( last_seqs, weeks )
+    growth_rates = calculate_growth_rate( model )
 
-    return smoothed, model, collapsed_names
+    return smoothed, growth_rates, collapsed_names
 
 
 def calculate_last_weeks( df : pd.DataFrame ):
@@ -81,17 +120,6 @@ def calculate_last_weeks( df : pd.DataFrame ):
     last_weeks = last_weeks[last_weeks > 100]
     last_weeks = last_weeks[-8:].index
     return last_weeks
-
-
-def calculate_growth_rate( entry: pd.Series ):
-    logit = np.log( entry / (1-entry))
-    logit = logit.replace([np.inf, -np.inf], np.nan )
-    logit = logit.dropna()
-    x = logit.index.values.reshape(-1, 1)
-    y = logit.values.reshape(-1,1)
-    linear_regressor = LinearRegression()
-    linear_regressor.fit( x, y )
-    return linear_regressor.coef_[0][0]
 
 
 def load_vocs():
@@ -106,7 +134,7 @@ def generate_table(
         abundance_df : pd.DataFrame,
         weeks, vocs: dict[str],
         forced_lineages : list[str],
-        model : LogisticRegression,
+        model,
 ):
     table = rates_df.reset_index()
     table.columns = ["lineage", "growth_rate"]
@@ -154,9 +182,8 @@ def calculate_growth_rates():
     cdc_lineages = load_cdc_variants()
     seqs = load_sequences()
     last_weeks = calculate_last_weeks( seqs )
-    smooth_seqs, model, names = smooth_sequence_counts( seqs, last_weeks, forced_lineages=cdc_lineages )
-    rates = smooth_seqs.apply( calculate_growth_rate )
-    rates = rates.sort_values( ascending=False )
+    smooth_seqs, rates, names = smooth_sequence_counts( seqs, last_weeks, forced_lineages=cdc_lineages )
+    rates = rates.sort_values( "growth_rate", ascending=False )
 
     seqs = add_collapsed_lineages( seqs, names )
 
