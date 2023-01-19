@@ -391,7 +391,7 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="" )
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
@@ -447,16 +447,16 @@ def plot_sgtf_estiamte( sgtf_data ):
                        plot_bgcolor="#ffffff",
                        paper_bgcolor="#ffffff",
                        xaxis=dict( hoverformat="%b %d, %Y" ),
-                       margin={"r":0,"t":40,"l":0,"b":10},
+                       margin={"r":0,"t":40,"l":0,"b":0},
                        legend=dict( yanchor="top",
                                     y=0.99,
                                     xanchor="left",
                                     x=0.01,
-                                    bgcolor="rgba(0,0,0,0)" ) )
+                                    bgcolor="rgba(255,255,255,0.8)" ) )
     today = datetime.datetime.today()
     #max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
     max_date = pd.to_datetime( "2023-05-01" )
-    fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")] )
+    fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")], tickangle=0 )
 
     esti = sgtf_data[2]
 
