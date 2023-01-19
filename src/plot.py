@@ -470,7 +470,7 @@ def plot_sgtf_estiamte( sgtf_data ):
     growth_str = f"Daily decline rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
     transmission_str = f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-    for col, name in [("date50", "50%")]:
+    for col, name in [("date50", "50%"), ("date99", "1%")]:
         date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
         midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
         fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
