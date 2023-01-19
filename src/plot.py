@@ -455,7 +455,7 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     bgcolor="rgba(255,255,255,0.8)" ) )
     today = datetime.datetime.today()
     #max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
-    max_date = pd.to_datetime( "2023-05-01" )
+    max_date = pd.to_datetime( "2023-08-01" )
     fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")], tickangle=0 )
 
     esti = sgtf_data[2]
@@ -474,7 +474,9 @@ def plot_sgtf_estiamte( sgtf_data ):
         date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
         midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
         fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
-        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
+        align = "left" if name == "1%" else "center"
+        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"}, align=align, xanchor=align )
+
 
     y_scale = 0.75
     x_place = "2021-12-10"
