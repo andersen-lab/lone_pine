@@ -376,17 +376,17 @@ def plot_sgtf( sgtf_data ):
                                  line={ "color" : "#000000", "width" : 2, "dash" : "dash"} ), secondary_y=True )
     fig.add_trace( go.Scatter( x=plot_df["week"], y=plot_df["lower"],
                                mode='lines',
-                               fillcolor="rgba(0,0,0,0.1)",
+                               fillcolor="#E4E4E4",
                                showlegend=False,
                                hoverinfo='skip',
-                               line={"color" : "#E4E4E4"} ), secondary_y=True )
+                               line={"color" : "#E4E4E4", "width" : 0 } ), secondary_y=True )
     fig.add_trace( go.Scatter( x=plot_df["week"], y=plot_df["upper"],
                                mode='lines',
                                fill="tonextx",
                                fillcolor="rgba(0,0,0,0.1)",
                                showlegend=False,
                                hoverinfo='skip',
-                               line={"color" : "#E4E4E4" } ), secondary_y=True )
+                               line={"color" : "#E4E4E4", "width" : 0 } ), secondary_y=True )
     fig.update_layout( barmode='stack' )
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
@@ -430,14 +430,14 @@ def plot_sgtf_estiamte( sgtf_data ):
                                fillcolor=shade,
                                showlegend=False,
                                hoverinfo='skip',
-                               line={"color" : shade} ) )
+                               line={"color" : shade, "width" : 0} ) )
     fig.add_trace( go.Scatter( x=plot_df["date"], y=plot_df["fit_upper"],
                                mode='lines',
                                fill="tonextx",
                                fillcolor="rgba(0,0,0,0.1)",
                                showlegend=False,
                                hoverinfo='skip',
-                               line={"color" : shade } ) )
+                               line={"color" : shade, "width" : 0} ) )
 
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
     fig.update_yaxes( mirror=True, tickformat='.0%', showline=False, ticks="" )
