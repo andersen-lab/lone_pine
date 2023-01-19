@@ -218,7 +218,7 @@ def load_sgtf_data():
     tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
     tests = tests.loc[~tests["Date"].isna()]
     tests["percent"] = tests["sgtf_all"] / tests["total_positive"]
-    tests["percent_filter"] = savgol_filter( tests["percent"], window_length=5, polyorder=2 )
+    tests["percent_filter"] = savgol_filter( tests["percent"], window_length=7, polyorder=2 )
     tests["ndays"] = tests.index
 
     fit, covar = curve_fit(
@@ -230,7 +230,7 @@ def load_sgtf_data():
     )
     sigma_ab = np.sqrt( np.diagonal( covar ) )
 
-    days_sim = 500
+    days_sim = 1000
 
     fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
     fit_df["ndays"] = fit_df.index
@@ -241,24 +241,26 @@ def load_sgtf_data():
     sigma_addition[4] *= -1
     sigma_addition[5] *= -1
 
-    fit_df["fit_lower"] = [lgm_mixture( i, *(fit - sigma_addition) ) for i in range( days_sim )]
-    fit_df["fit_upper"] = [lgm_mixture( i, *(fit + sigma_addition) ) for i in range( days_sim )]
+    fit_df["fit_lower"] = [lgm_mixture( i, *(fit + sigma_addition) ) for i in range( days_sim )]
+    fit_df["fit_upper"] = [lgm_mixture( i, *(fit - sigma_addition) ) for i in range( days_sim )]
 
-    above_99 = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_y"] > 0.99),"date"].min()
-    above_99_lower = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_lower"] > 0.99),"date"].min()
-    above_99_upper = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_upper"] > 0.99),"date"].min()
+    min_date = "2022-09-01"
 
-    above_50 = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_y"] > 0.50),"date"].min()
-    above_50_lower = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_lower"] > 0.50),"date"].min()
-    above_50_upper = fit_df.loc[(fit_df["date"] > "2022-04-15")&(fit_df["fit_upper"] > 0.50),"date"].min()
+    above_99 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] < 0.01),"date"].min()
+    above_99_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] < 0.01),"date"].min()
+    above_99_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] < 0.01),"date"].min()
+
+    above_50 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] < 0.50),"date"].min()
+    above_50_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] < 0.50),"date"].min()
+    above_50_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] < 0.50),"date"].min()
 
     growth_rate = fit[5]
     serial_interval = 5.5
 
     estimates = pd.DataFrame( {
         "estimate" : [above_99, above_50, growth_rate],
-        "lower" : [above_99_lower, above_50_lower, growth_rate - sigma_ab[5]],
-        "upper" : [above_99_upper, above_50_upper, growth_rate + sigma_ab[5]] }, index=["date99", "date50", "growth_rate"] )
+        "lower" : [above_99_lower, above_50_lower, growth_rate + sigma_ab[5]],
+        "upper" : [above_99_upper, above_50_upper, growth_rate - sigma_ab[5]] }, index=["date99", "date50", "growth_rate"] )
     estimates = estimates.T
     estimates["doubling_time"] = log(2) / estimates["growth_rate"]
     estimates["transmission_increase"] = serial_interval * estimates["growth_rate"]

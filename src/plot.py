@@ -411,6 +411,7 @@ def plot_sgtf( sgtf_data ):
 
 def plot_sgtf_estiamte( sgtf_data ):
     plot_df = sgtf_data[1]
+    plot_df.loc[plot_df["date"]<"2024-01-01"]
     shade = "#E4E4E4"
     fig = go.Figure()
     fig.add_trace( go.Scattergl( x=sgtf_data[0]["Date"], y=sgtf_data[0]["percent_filter"],
@@ -453,26 +454,34 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     x=0.01,
                                     bgcolor="rgba(0,0,0,0)" ) )
     today = datetime.datetime.today()
-    max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
+    #max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
+    max_date = pd.to_datetime( "2023-05-01" )
     fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")] )
 
     esti = sgtf_data[2]
-    double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
-    growth_str =  f"Daily growth rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
-    transmission_str =  f"Transmission increase: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-#    for col, name in [("date99", "99%")]:
-#        date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
-#        midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
-#        fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
-#        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
+    # Use these when SGTF is increasing.
+    #double_str =  f"Doubling time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
+    #growth_str =  f"Daily growth rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
+    #transmission_str =  f"Transmission increase: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
 
-    #y_scale = 0.75
-    #x_place = "2021-12-10"
-    #bgcolor = "rgba(255,255,255,0.8)"
-    #fig.add_annotation( x=x_place, y=0.2 + y_scale, text=double_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
-    #fig.add_annotation( x=x_place, y=0.15 + y_scale, text=growth_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
-    #fig.add_annotation( x=x_place, y=0.1 + y_scale, text=transmission_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
+    # Use these when SGTF is decreasing.
+    double_str = f"Halving time (days): {esti['doubling_time'][0]:.1f} ({esti['doubling_time'][2]:.1f}–{esti['doubling_time'][1]:.1f})<br>"
+    growth_str = f"Daily decline rate: {esti['growth_rate'][0]:.1%} ({esti['growth_rate'][1]:.1%}–{esti['growth_rate'][2]:.1%})<br>"
+    transmission_str = f"Transmission decrease: {esti['transmission_increase'][0]:.0%} ({esti['transmission_increase'][1]:.0%}–{esti['transmission_increase'][2]:.0%})<br>"
+
+    for col, name in [("date50", "50%")]:
+        date_str = f"{name}: {esti[col][0].strftime( '%b %d' )}<br>({esti[col][1].strftime( '%b %d' )}–{esti[col][2].strftime( '%b %d' )})"
+        midpoint =  pd.to_datetime( sgtf_data[2][col]["estimate"] ).timestamp() * 1000
+        fig.add_vline( midpoint, line_color="#ff6a6a", line_dash="dash", opacity=1, line_width=2 )
+        fig.add_annotation( x=midpoint, y=1.10, yref="paper", text=date_str, showarrow=False, font={"color" : "#ff6a6a"} )
+
+    y_scale = 0.75
+    x_place = "2021-12-10"
+    bgcolor = "rgba(255,255,255,0.8)"
+    fig.add_annotation( x=x_place, y=0.2 + y_scale, text=double_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
+    fig.add_annotation( x=x_place, y=0.15 + y_scale, text=growth_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
+    fig.add_annotation( x=x_place, y=0.1 + y_scale, text=transmission_str, showarrow=False, xanchor="left", bgcolor=bgcolor )
 
     return fig
 
