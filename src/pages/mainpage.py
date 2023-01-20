@@ -5,7 +5,7 @@ def get_layout():
     layout = [
         html.Div( [dcc.Markdown( id="markdown-stuff", link_target='_blank' ),
                    html.P() ] ),
-        html.Div( id="top-table-div", style={"width" : "45em",
+        html.Div( id="top-table-div", style={"width" : "55em",
                                              "marginLeft" : "auto",
                                              "marginRight" : "auto",
                                              "marginBottom" : "25px"} ),

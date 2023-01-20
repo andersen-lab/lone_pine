@@ -6,8 +6,6 @@ from subprocess import run
 import json
 from pango_aliasor.aliasor import Aliasor
 import re
-from datetime import datetime
-
 from scipy.special import expit, logit
 
 SEQS_LOCATION = "resources/sequences.csv"
@@ -70,9 +68,9 @@ def model_sequence_counts( df : pd.DataFrame, weeks : list ):
     model = sm.MNLogit( Y, X, missing="drop" )
     res = model.fit_regularized( maxiter=1000 )
 
-    format_model_results( res, weeks )
+    results = format_model_results( res, weeks )
 
-    return results, lg
+    return results, res
 
 
 def calculate_growth_rate( results ):
@@ -104,12 +102,19 @@ def smooth_sequence_counts( df : pd.DataFrame, weeks : list, forced_lineages : l
         last_seqs.loc[~last_seqs["collapsed_linege"].isin( accepted ), "collapsed_linege"] = "Other"
 
     last_seqs["epiweek"] = mdates.date2num( last_seqs["epiweek"] )
+
+    last_weeks = list( last_seqs["epiweek"].sort_values().unique() )
+    prediction_weeks = [max( last_weeks )+7*i for i in range(1,4)]
+    last_week_prediction = last_weeks + prediction_weeks
+
     collapsed_names = last_seqs.groupby( "lineage" ).first()["collapsed_linege"].to_dict()
     cat = last_seqs["collapsed_linege"].unique()
     cat = np.append( ["Other"], cat[cat != "Other"] )
     last_seqs["collapsed_linege"] = last_seqs["collapsed_linege"].astype( 'category' ).cat.set_categories( new_categories=cat )
 
-    smoothed, model = model_sequence_counts( last_seqs, weeks )
+    smoothed, model = model_sequence_counts( last_seqs, last_week_prediction )
+    smoothed.index = mdates.num2date( smoothed.index )
+    smoothed.index = smoothed.index.tz_localize(None)
     growth_rates = calculate_growth_rate( model )
 
     return smoothed, growth_rates, collapsed_names
@@ -131,13 +136,14 @@ def load_vocs():
 def generate_table(
         rates_df : pd.DataFrame,
         seqs_df : pd.DataFrame,
-        abundance_df : pd.DataFrame,
+        prevalence_df : pd.DataFrame,
         weeks, vocs: dict[str],
-        forced_lineages : list[str],
-        model,
+        forced_lineages : list[str]
 ):
     table = rates_df.reset_index()
-    table.columns = ["lineage", "growth_rate"]
+    table["growth_rate_str"] = table.apply( lambda x: f"{x['lower']:.1%} to {x['upper']:.1%}", axis=1 )
+    table = table.drop( columns=["upper", "lower"] )
+    table.columns = ["lineage", "growth_rate", "growth_rate_str"]
 
     table["variant"] = table["lineage"].map( vocs )
 
@@ -150,21 +156,25 @@ def generate_table(
     table = table.merge( recent_counts, left_on="lineage", right_index=True, how="left" )
     table = table.dropna( subset=["recent_counts"] )
 
-    last_prop = abundance_df.iloc[-1]
-    last_prop.name = "est_proportion"
-    table = table.merge( last_prop, left_on="lineage", right_index=True, how="left" )
-    table["first_date"] = mdates.num2date( abundance_df.index[0] ).strftime( "%Y-%m-%d" )
-    table["last_date"] = mdates.num2date( abundance_df.index[-1] ).strftime( "%Y-%m-%d" )
+    last_prop = prevalence_df.loc[prevalence_df.index.isin( weeks )].groupby( "variant" ).last()
 
-    today = mdates.date2num( datetime.today().date() )
-    nowcast = pd.Series( model.predict_proba( [[today]] )[0], index=model.classes_ )
-    nowcast.name = "now_proportion"
+    table = table.merge( last_prop["prevalence"], left_on="lineage", right_index=True, how="left" )
+    table = table.rename( columns={"prevalence" : "est_proportion"} )
+    table["first_date"] = min( weeks ).strftime( "%Y-%m-%d" )
+    table["last_date"] = max( weeks ).strftime( "%Y-%m-%d" )
+
+
+    today = prevalence_df.index.max().strftime( "%Y-%m-%d" )
+    nowcast = prevalence_df.groupby( "variant" ).last()
+    nowcast["prevalence_str"] = nowcast.apply( lambda x: f"{x['lower']:.1%} to {x['upper']:.1%}", axis=1 )
+    nowcast = nowcast[["prevalence", "prevalence_str"]]
+    nowcast.columns = ["now_proportion", "now_proportion_str"]
     table = table.merge( nowcast, left_on="lineage", right_index=True, how="left" )
 
-    table["today"] = mdates.num2date( today ).strftime( "%Y-%m-%d" )
+    table["today"] = today
 
     table = table.reindex(
-        columns=["lineage", "variant", "total_count", "recent_counts", "est_proportion", "now_proportion", "growth_rate", "first_date",
+        columns=["lineage", "variant", "total_count", "recent_counts", "est_proportion", "now_proportion", "now_proportion_str", "growth_rate", "growth_rate_str", "first_date",
                  "last_date", "today"] )
     table_filtered = table.loc[table["recent_counts"] > 5]
 
@@ -188,7 +198,7 @@ def calculate_growth_rates():
     seqs = add_collapsed_lineages( seqs, names )
 
     voc_names = load_vocs()
-    return generate_table( rates_df=rates, seqs_df=seqs, abundance_df=smooth_seqs, weeks=last_weeks, vocs=voc_names, forced_lineages=cdc_lineages, model=model )
+    return generate_table( rates_df=rates, seqs_df=seqs, prevalence_df=smooth_seqs, weeks=last_weeks, vocs=voc_names, forced_lineages=cdc_lineages )
 
 
 if __name__ == "__main__":

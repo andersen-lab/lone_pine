@@ -16,14 +16,15 @@ def get_table( growth_rates ):
         {'id': "total_count", 'name': "Total", 'type' : 'numeric'},
         {'id': "recent_counts", 'name': "Last 2 months", 'type' : 'numeric'},
         {'id': "est_proportion", 'name': "Prevalence", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage ) },
-        {'id': "now_proportion", 'name': "Projection", 'type': 'numeric', 'format': Format( precision=1, scheme=Scheme.percentage ) },
-        {'id': "growth_rate", 'name': "Growth rate", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage )},
+        {'id': "now_proportion", 'name': "Projected Prevalence", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage )},
+        {'id': "growth_rate", 'name': "Growth rate", 'type' : 'numeric', 'format' : Format( precision=1, scheme=Scheme.percentage ) },
     ]
 
     table = html.Div( [
         dash_table.DataTable(
             data=growth_rates.to_dict('records'),
             columns=columns,
+            tooltip_data=[{"now_proportion" : record[7], "growth_rate" : record[9]} for record in growth_rates.to_records()],
             tooltip_header={
                 "total_count" : "Total number of genomes sequenced from lineage.",
                 "recent_counts" : "Number of genomes sequenced from lineage in past two months.",
@@ -91,6 +92,22 @@ def get_table( growth_rates ):
                     'if': { 'column_id': 'lineage' },
                     'textAlign': 'left',
                     'fontStyle': 'italic'
+                },
+                {
+                    'if': { 'column_id': "recent_counts" },
+                    'padding-right': "6.5%"
+                },
+                {
+                    'if': { 'column_id': "est_proportion" },
+                    'padding-right': "3.5%"
+                },
+                {
+                    'if': { 'column_id' : "now_proportion" },
+                    'padding-right' : "8%"
+                },
+                {
+                    'if': { 'column_id': "growth_rate" },
+                    'padding-right': "3.5%"
                 }
             ]
         ) ]
