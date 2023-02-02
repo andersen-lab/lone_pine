@@ -29,6 +29,7 @@ jobs:
         python .github/scripts/update_seqs.py
 
     - name: Update cases
+      continue-on-error: true
       run: |
         python .github/scripts/update_cases.py
 
