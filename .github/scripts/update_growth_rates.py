@@ -20,7 +20,7 @@ def load_cdc_variants():
     request = run( f"curl -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36' {init_url}", shell=True, capture_output=True, text=True )
     response = json.loads( request.stdout )
 
-    variants = ["XBB.1.5", "XBB"]
+    variants = ["XBB.1.5", "XBB", "DQ.1"]
     for entry in response:
         if (entry["variant"] in variants) or (entry["variant"] == "Other"):
             continue
@@ -176,7 +176,8 @@ def generate_table(
     table = table.reindex(
         columns=["lineage", "variant", "total_count", "recent_counts", "est_proportion", "now_proportion", "now_proportion_str", "growth_rate", "growth_rate_str", "first_date",
                  "last_date", "today"] )
-    table_filtered = table.loc[table["recent_counts"] > 5]
+    #table_filtered = table.loc[table["recent_counts"] > 5]
+    table_filtered = table.copy()
 
     fastest_growers = table_filtered.sort_values( "growth_rate", ascending=False ).head( 5 )["lineage"].to_list()
     fastest_growers.extend( forced_lineages )
