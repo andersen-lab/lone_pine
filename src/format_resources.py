@@ -8,9 +8,8 @@ from epiweeks import Week
 from src.variants import VOC, VOI
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
-from numpy import exp, sqrt, diagonal, log
+from numpy import exp, log
 import geopandas as gpd
-from matplotlib.dates import date2num
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
