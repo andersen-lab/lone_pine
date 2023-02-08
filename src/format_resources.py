@@ -10,7 +10,7 @@ from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 from numpy import exp, sqrt, diagonal, log
 import geopandas as gpd
-
+from matplotlib.dates import date2num
 
 def load_sequences( window=None ):
     sequences = pd.read_csv( "resources/sequences.csv" )
@@ -217,9 +217,10 @@ def load_sgtf_data():
     tests = tests.dropna( how='all', axis=1 )
     tests.columns = ["Date", "sgtf_all", "sgtf_likely", "sgtf_unlikely", "no_sgtf", "total_positive", "percent_low", "percen_all"]
     tests = tests.loc[~tests["Date"].isna()]
-    tests["percent"] = tests["sgtf_all"] / tests["total_positive"]
+    tests["percent"] = (tests["sgtf_all"] / tests["total_positive"]).fillna(0)
     tests["percent_filter"] = savgol_filter( tests["percent"], window_length=7, polyorder=2 )
-    tests["ndays"] = tests.index
+    tests["ndays"] = tests["Date"].apply(lambda x: x.toordinal())
+    tests["ndays"] = tests["ndays"] - min( tests["ndays"] ) + 1
 
     fit, covar = curve_fit(
         f=lgm_mixture,
