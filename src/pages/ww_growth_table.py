@@ -4,7 +4,6 @@ import pandas as pd
 from dash.dash_table.Format import Format, Scheme
 
 def get_table( growth_rates ):
-    print(growth_rates)
     growth_rates['Lineage'] = [dfl if dfl!='Recombinants' else 'Other recombinants' for dfl in growth_rates['Lineage']]
     columns = [
         {'id': "Lineage", 'name': "Lineage"},
