@@ -100,27 +100,39 @@ def get_layout():
                                     placement="right",
                                     style={"width" : "500", "maxWidth" : "500"}
                                 ),
-                                html.Div(
-                                    dbc.RadioItems(
-                                        id="scale-seqs-radios",
-                                        className="btn-group",
-                                        inputClassName="btn-check",
-                                        labelClassName="btn btn-outline-primary",
-                                        labelCheckedClassName="active",
-                                        options=[
-                                            { "label": "Prevalence", "value": "prevalence" },
-                                            { "label": "Scale by viral load", "value": "viral" },
-                                            { "label": "Scale by cases", "value": "cases" },
-                                        ],
-                                        value="prevalence",
-                                        style={"justifyContent": "flex-end"}
-                                    ),
-                                    #className="three columns",
-                                    style={ 'display': 'inline-block', "justifyContent": "flex-end" }
-                                )
                             ],
                             className="radio-group",
                             style={"margin" : "0"}
+                        ),
+                        html.Div(
+                            [dbc.RadioItems(
+                                id="scale-seqs-radios",
+                                className="btn-group",
+                                inputClassName="btn-check",
+                                labelClassName="btn btn-outline-primary",
+                                labelCheckedClassName="active",
+                                options=[
+                                    { "label": "Prevalence", "value": "prevalence" },
+                                    { "label": "Scale by viral load", "value": "viral" },
+                                    { "label": "Scale by cases", "value": "cases" },
+                                ],
+                                value="prevalence",
+                                style={ "width": "50%", "justifyContent": "flex-start" }
+                            ),
+                                dbc.RadioItems(
+                                    id="smooth-radio",
+                                    className="btn-group",
+                                    inputClassName="btn-check",
+                                    labelClassName="btn btn-outline-primary",
+                                    labelCheckedClassName="active",
+                                    options=[
+                                        { "label": "Raw data", "value": False },
+                                        { "label": "Smoothed", "value": True },
+
+                                    ],
+                                    value=True,
+                                    style={ "width": "50%", "justifyContent": "flex-end" }
+                                )],
                         ),
                         html.Div(
                             dcc.Graph(
@@ -130,7 +142,6 @@ def get_layout():
                             style={ "height": "30em", "margin" : "auto" }
                         )
                     ],
-
                 ),
                 html.P(),
                 html.Div( id="top-table-div", style={ "width"        : "33em",

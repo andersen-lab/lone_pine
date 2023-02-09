@@ -4,6 +4,7 @@ from plotly.subplots import make_subplots
 import numpy as np
 import pandas as pd
 from epiweeks import Week
+from scipy.signal import savgol_filter
 from scipy.special import betaincinv
 
 from src.variants import VOC, VOI
@@ -648,10 +649,11 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
     plot_df["Other"] = 100 - plot_df.sum( axis=1 )
     plot_df["Other"] = plot_df["Other"].clip( lower=0 )
 
-    #if smooth:
-    #    plot_df = plot_df.apply( savgol_filter, window_length=7, polyorder=3 )
-    #    plot_df = plot_df.clip( lower=0 )
-    #    plot_df = plot_df.apply( lambda x: x / x.sum(), axis=1   )
+    if smooth:
+        plot_df = plot_df.apply( savgol_filter, window_length=21, polyorder=2 )
+        #plot_df = plot_df.apply( lambda x: x.rolling( 14, min_periods=1, win_type="triang" ).mean() )
+        plot_df = plot_df.clip( lower=0 )
+        plot_df = plot_df.apply( lambda x:( x / x.sum()) * 100, axis=1   )
 
     norm=None
     ht = "%{y:.0f}"

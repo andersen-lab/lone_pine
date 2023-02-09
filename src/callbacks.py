@@ -313,10 +313,11 @@ def register_callbacks( app, sequences, cases_whole, growth_rates, ww_growth_rat
     @app.callback(
         Output( "wastewater-seq-graph", "figure" ),
         [Input( "scale-seqs-radios", "value" ),
-         Input( "ww-source-radio", "value" )]
+         Input( "ww-source-radio", "value" ),
+         Input( "smooth-radio", "value")]
     )
-    def update_wastewater_seq_graph( norm_type, source ):
-        return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source=source), norm_type=norm_type, source=source )
+    def update_wastewater_seq_graph( norm_type, source, smooth ):
+        return dashplot.plot_wastewater_seqs( *format_data.load_wastewater_data(), config=format_data.load_ww_plot_config(), cases=get_cases( cases_whole, "/", source=source), norm_type=norm_type, source=source, smooth=smooth )
 
     @app.callback(
         Output( "monkeypox-graph", "figure"),
