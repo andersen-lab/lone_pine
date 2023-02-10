@@ -7,6 +7,7 @@ import json
 from pango_aliasor.aliasor import Aliasor
 import re
 from scipy.special import expit, logit
+import pickle
 
 SEQS_LOCATION = "resources/sequences.csv"
 VOC_LOCATION = "resources/voc.txt"
@@ -81,6 +82,12 @@ def calculate_growth_rate( results ):
     coeff = coeff.rename( columns={"epiweek" : "growth_rate" })
     return coeff
 
+def dump_model_names( model, collapsed_names ):
+    with open( "resources/clinical.model", "wb" ) as model_file:
+        pickle.dump( model, model_file )
+    with open( "resources/collapsed_names.csv", "w" ) as cn:
+        cn.write( "lineage,collapsed_lineage\n" )
+        [cn.write( f"{k},{v}\n" ) for k, v in collapsed_names.items()]
 
 def smooth_sequence_counts( df : pd.DataFrame, weeks : list, forced_lineages : list[str], rounds : int = 10, min_sequences : int = 50 ):
     last_seqs = df.loc[df["epiweek"].isin( weeks )].copy()
@@ -113,6 +120,9 @@ def smooth_sequence_counts( df : pd.DataFrame, weeks : list, forced_lineages : l
     last_seqs["collapsed_linege"] = last_seqs["collapsed_linege"].astype( 'category' ).cat.set_categories( new_categories=cat )
 
     smoothed, model = model_sequence_counts( last_seqs, last_week_prediction )
+
+    dump_model_names( model, collapsed_names )
+
     smoothed.index = mdates.num2date( smoothed.index )
     smoothed.index = smoothed.index.tz_localize(None)
     growth_rates = calculate_growth_rate( model )

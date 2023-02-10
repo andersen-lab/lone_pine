@@ -688,6 +688,16 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
 
     fill_pattern = go.scatter.Fillpattern( bgcolor=config["Recombinants"]["color"], fgcolor="white", shape="/", solidity=0.5 )
 
+    fig.add_trace(
+        go.Scatter(
+            x=plot_df.index, y=[0]*plot_df.shape[0],
+            hoverinfo="skip",
+            showlegend=False,
+            fillcolor="black",
+            line=dict( width=1, color="black" ),
+            stackgroup='one'
+        )
+    )
     for i in reversed( list( config.keys() ) ):
         fig.add_trace(
             go.Scatter(
@@ -702,9 +712,20 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
                 stackgroup='one'
             )
         )
+    fig.add_trace(
+        go.Scatter(
+            x=plot_df.index, y=[0]*plot_df.shape[0],
+            hoverinfo="skip",
+            showlegend=False,
+            fillcolor="black",
+            line=dict( width=1, color="black" ),
+            stackgroup='one'
+        )
+    )
+
     fig.update_yaxes( showgrid=True, title=yaxis_label, range=yrange, tickformat='.0f',
-                      ticksuffix=ticksuffix, showline=False, ticks="" )
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=False )
+                      ticksuffix=ticksuffix, showline=True, ticks="", mirror=True, linewidth=2 ) # Twice as wide because fake lineages adds with the x-axis
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=True, ticks="", showgrid=False, linewidth=1 )
     _add_date_formatting_minimum( fig )
     fig.update_layout( legend=dict( bgcolor="white" ) )
     fig.update_traces( mode="lines" )
