@@ -722,7 +722,6 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
             stackgroup='one'
         )
     )
-
     fig.update_yaxes( showgrid=True, title=yaxis_label, range=yrange, tickformat='.0f',
                       ticksuffix=ticksuffix, showline=True, ticks="", mirror=True, linewidth=2 ) # Twice as wide because fake lineages adds with the x-axis
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=True, ticks="", showgrid=False, linewidth=1 )
