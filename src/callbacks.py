@@ -130,7 +130,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates, ww_growth_rat
         if url == "/bajacalifornia":
             return [html.Table( id="summary-table" )]
         elif url == "/wastewater":
-            return ww_growth_table.get_table( ww_growth_rates )
+            return ww_growth_table.get_table( format_data.load_ww_growth_rates() )
         else:
             return growth_table.get_table( growth_rates )
 
