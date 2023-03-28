@@ -28,10 +28,10 @@ jobs:
       run: |
         python .github/scripts/update_seqs.py
 
-    - name: Update cases
-      continue-on-error: true
-      run: |
-        python .github/scripts/update_cases.py
+    #- name: Update cases
+    #  continue-on-error: true
+    #  run: |
+    #    python .github/scripts/update_cases.py
 
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v13
