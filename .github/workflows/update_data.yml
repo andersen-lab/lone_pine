@@ -28,10 +28,16 @@ jobs:
       run: |
         python .github/scripts/update_seqs.py
 
-    #- name: Update cases
-    #  continue-on-error: true
-    #  run: |
-    #    python .github/scripts/update_cases.py
+    - name: Update cases
+      continue-on-error: true
+      run: |
+        python .github/scripts/update_cases.py
+
+    - name: Save new cases
+      uses: actions/upload-artifact@v3
+      with:
+        name: NewCases
+        path: new_cases.csv
 
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v13
