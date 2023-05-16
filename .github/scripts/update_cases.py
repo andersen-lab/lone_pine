@@ -1,15 +1,17 @@
 from urllib.error import HTTPError
 import pandas as pd
-from arcgis import GIS
 import datetime
+from tableauscraper import TableauScraper as TS
 
 def append_wastewater( sd ):
     zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
     zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"], dtype={"Zip_code" : str, "Wastewater_treatment_plant" : str } )
-    zips.columns = ["ziptext", "catchment"]
-    zips["catchment"] = zips["catchment"].str.replace( " " , "" )
+    zips.columns = ["ziptext", "catchment_new"]
+    zips["catchment_new"] = zips["catchment_new"].str.replace( " " , "" )
     zips = zips.set_index( "ziptext" )
     return_df = sd.merge( zips, left_on="ziptext", right_index=True, how="left" )
+    return_df.loc[return_df["catchment"].isna(),"catchment"] = return_df.loc[return_df["catchment"].isna(),"catchment_new"]
+    return_df = return_df.drop( columns=["catchment_new"] )
     return_df["catchment"] = return_df["catchment"].fillna( "Other" )
 
     assert return_df.shape[0] == sd.shape[0], f"Merge was unsuccessful. {sd.shape[0]} rows in original vs. {return_df.shape[0]} rows in merge output."
@@ -26,53 +28,66 @@ def download_sd_cases():
         pop_loc = "resources/zip_pop.csv"
         pop = pd.read_csv( pop_loc, usecols=["Zip", "Total Population"], thousands=",", dtype={"Zip" : str, "Total Population" : int } )
         dataframe = dataframe.merge( pop, left_on="ziptext", right_on="Zip", how="left" )
-        dataframe = dataframe.drop( columns=["Zip"] ).rename( columns={"Total Population" : "population"} )
+        dataframe = dataframe.drop( columns=["Zip"] )
+        dataframe["population"] = dataframe["Total Population"]
+        dataframe = dataframe.drop( columns=["Total Population"] )
+
         return dataframe
 
-    def _add_missing_cases( entry ):
-        entry = entry.set_index( "updatedate" ).reindex( pd.date_range( entry["updatedate"].min(), entry["updatedate"].max() ) ).rename_axis( "updatedate" ).reset_index()
+    def _add_missing_cases( entry, start ):
+        entry = entry.set_index( "updatedate" ).reindex( pd.date_range( start, entry["updatedate"].max() ) ).rename_axis( "updatedate" ).reset_index()
         indexer = pd.api.indexers.FixedForwardWindowIndexer(window_size=7)
         entry["new_cases"] = entry.rolling( window=indexer, min_periods=1 )["new_cases"].apply( lambda x: x.max() / 7 )
+        entry["new_cases"] = entry["new_cases"].fillna(0)
         return entry
 
-    gis = GIS()
-    cases_loc = "34b6df47e084441790813348c69d49ee"
-    gis_layer = gis.content.get( cases_loc )
-    features = gis_layer.layers[0].query( where='1=1' )
-    sd = features.df
-    sd = sd.rename( columns={"zip_code_text" : "ziptext", "data_through" : "updatedate", } )
-    sd = sd[["ziptext","case_count", "updatedate"]]
-    sd["updatedate"] = pd.to_datetime( sd["updatedate"] ).dt.tz_localize( None )
-    sd["updatedate"] = sd["updatedate"].dt.normalize()
-    #sd["ziptext"] = pd.to_numeric( sd["ziptext"] )
+    # First, we load current dataset of cases
+    sd = pd.read_csv( "resources/cases.csv", parse_dates=["updatedate"] )
+    sd = sd.loc[~sd["ziptext"].isna()]
+    sd["ziptext"] = sd["ziptext"].astype(int).astype(str)
 
-    # the problem is that there are two entries for the week of 2022-07-10, and no entries for the week of 2022-08-21.
-    # I think the August data got switch to the July data. I'll pull the 2022-07-10 dates out and replace the max counts
-    # with 2022-08-21.
-    # TODO: CHECK THIS EVERYTIME, REALLY HACKY.
-    sd_fine = sd.loc[sd["updatedate"] != "2022-07-10"]
-    sd_fine = sd_fine.groupby( ["updatedate", "ziptext"] ).last().reset_index()
-    sd_duplicated = sd.loc[sd["updatedate"] == "2022-07-10"]
-    sd_duplicated = sd_duplicated.sort_values( "case_count" )
-    sd_dup_correct = sd_duplicated.groupby( ["updatedate", "ziptext"] ).first().reset_index()
-    sd_dup_incorrect = sd_duplicated.groupby( ["updatedate", "ziptext"] ).last().reset_index()
-    sd_dup_incorrect["updatedate"] = pd.to_datetime( "2022-08-21" )
-    sd = pd.concat( [sd_fine, sd_dup_correct, sd_dup_incorrect], ignore_index=True ).sort_values( "updatedate" )
+    # Next we load the diff, which is an offset which helps reconcile differences between dataset. Not perfect and we
+    # still see a big leap when we switched.
+    diff = pd.read_csv("resources/cases-zip-diff.csv", index_col="zipcode")
+    diff = diff["diff"]
 
-    # Calculate cases per day because that's way more usable than cumulative counts.
-    sd["case_count"] = sd["case_count"].fillna( 0 )
-    sd["new_cases"] = sd.groupby( "ziptext" )["case_count"].diff()
-    sd["new_cases"] = sd["new_cases"].fillna( sd["case_count"] )
-    sd.loc[sd["new_cases"]<0, "new_cases"] = 0
+    # We load the latest cummulative cases from the Tableau dashbaord
+    url = "https://public.tableau.com/views/COVID-19Geography/GeoZip"
+    ts = TS()
+    ts.loads( url )
+    workbook = ts.getWorkbook()
+    updatedate = pd.to_datetime( workbook.worksheets[0].data["DAY(End Date)-alias"] ).values[0]
+    if updatedate <= sd["updatedate"].max():
+        print( "No update to San Diego's cases." )
+        return cases
 
-    # Brief hack because SD stopped reporting daily cases and instead reports weekly cases after 2021-06-29.
-    sdprob = sd.loc[sd["updatedate"]>"2021-06-28"]
-    sdprob = sdprob.groupby( "ziptext" ).apply( _add_missing_cases )
+    temp = workbook.worksheets[1].data
+    temp = temp[["ZIP-value", "SUM(population (Zip))-alias", "SUM(zipcount (Zip))-alias", "DAY(End Date)-value"]].copy()
+    temp.columns = ["ziptext", "population", "case_count", "updatedate"]
+    temp["ziptext"] = temp["ziptext"].astype(int).astype(str)
+    temp["case_count"] = temp["case_count"].replace({"%null%": 0})
+    temp["updatedate"] = pd.to_datetime(temp["updatedate"])
+    temp["diff"] = temp["ziptext"].map(diff)
+    temp["case_count"] += temp["diff"]
+    temp = temp.drop(columns=["diff"])
+
+    # Combine lastest commulative cases and prior SD cases
+    sd = pd.concat([sd, temp])
+    sd["new_cases"] = sd.groupby("ziptext")["case_count"].diff()
+    sd["new_cases"] = sd["new_cases"].fillna(0)
+    sd.loc[sd["new_cases"] < 0, "new_cases"] = 0
+
+    # Fill in new_cases by interpolating difference in cummulative cases.
+    date = sd["updatedate"].unique()[-2]
+
+    sdprob = sd.loc[sd["updatedate"]>date]
+    sdprob = sdprob.groupby( "ziptext" ).apply( _add_missing_cases, start=date + pd.Timedelta( days=1 ) )
     sdprob = sdprob.drop( columns="ziptext" ).reset_index()
     sdprob = sdprob.drop( columns="level_1" )
 
-    sd = sd.loc[sd["updatedate"]<="2021-06-28"]
+    sd = sd.loc[sd["updatedate"]<=date]
     sd = pd.concat( [sd,sdprob] )
+    sd["case_count"] = sd.groupby("ziptext")["new_cases"].cumsum()
 
     sd = _append_population( sd )
 
