@@ -44,6 +44,7 @@ def download_sd_cases():
     # First, we load current dataset of cases
     sd = pd.read_csv( "resources/cases.csv", parse_dates=["updatedate"] )
     sd = sd.loc[~sd["ziptext"].isna()]
+    sd = sd.loc[sd["ziptext"]!="None"]
     sd["ziptext"] = sd["ziptext"].astype(int).astype(str)
 
     # Next we load the diff, which is an offset which helps reconcile differences between dataset. Not perfect and we
