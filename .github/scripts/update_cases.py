@@ -70,6 +70,7 @@ def download_sd_cases():
     temp["diff"] = temp["ziptext"].map(diff)
     temp["case_count"] += temp["diff"]
     temp = temp.drop(columns=["diff"])
+    temp.to_csv( "new_cases.csv" )
 
     # Combine lastest commulative cases and prior SD cases
     sd = pd.concat([sd, temp])
