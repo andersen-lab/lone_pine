@@ -49,7 +49,7 @@ def download_sd_cases():
 
     # Next we load the diff, which is an offset which helps reconcile differences between dataset. Not perfect and we
     # still see a big leap when we switched.
-    diff = pd.read_csv("resources/cases-zip-diff.csv", index_col="zipcode")
+    diff = pd.read_csv("resources/cases-zip-diff.csv", index_col="zipcode", dtype={"zipcode" : str, "diff" : float})
     diff = diff["diff"]
 
     # We load the latest cummulative cases from the Tableau dashbaord
@@ -74,7 +74,7 @@ def download_sd_cases():
     temp.to_csv( "new_cases.csv" )
 
     # Combine lastest commulative cases and prior SD cases
-    sd = pd.concat([sd, temp])
+    sd = pd.concat([sd, temp], ignore_index=True)
     sd["new_cases"] = sd.groupby("ziptext")["case_count"].diff()
     sd["new_cases"] = sd["new_cases"].fillna(0)
     sd.loc[sd["new_cases"] < 0, "new_cases"] = 0
