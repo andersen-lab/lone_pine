@@ -60,7 +60,7 @@ def download_sd_cases():
     updatedate = pd.to_datetime( workbook.worksheets[0].data["DAY(End Date)-alias"] ).values[0]
     if updatedate <= sd["updatedate"].max():
         print( "No update to San Diego's cases." )
-        return cases
+        return sd
 
     temp = workbook.worksheets[1].data
     temp = temp[["ZIP-value", "SUM(population (Zip))-alias", "SUM(zipcount (Zip))-alias", "DAY(End Date)-value"]].copy()
