@@ -76,6 +76,7 @@ def register_callbacks( app, sequences, cases_whole, growth_rates, ww_growth_rat
                 reported_cases=("new_cases", sum),
                 population=("population", sum ) )
             new_cases["reported_cases_rolling"] = savgol_filter( new_cases["reported_cases"], window_length=21, polyorder=2 )
+            new_cases.loc[new_cases["reported_cases_rolling"] < 0] = 0
             new_cases["reported_cases_rolling"] = new_cases["reported_cases_rolling"] / new_cases["population"]
         return new_cases
 
