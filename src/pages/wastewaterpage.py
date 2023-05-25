@@ -15,8 +15,9 @@ def get_layout():
     """
 
     uncertainty_alert = """
-    Due to low viral load, there is considerable noisiness in the most recent variant calls shown in 
-    the lower graph. We are actively investigating this problem and aim to have more accurate reports soon.
+    As a result of changing our datasource for cases, there is currently a large increase in cases during the second 
+    week of May. This increase corresponds to discrepancies between the two datasources and does not reflect actual 
+    COVID-19 incidence. We hope to resolve this soon.
     """
 
     #commit_date = get_last_commit_date()
@@ -28,7 +29,7 @@ def get_layout():
     layout = [
         html.Div(
             [
-                #dbc.Alert( [html.I(className="bi bi-exclamation-triangle-fill me-2"), html.Strong( uncertainty_alert )], color="info" ),
+                dbc.Alert( [html.I(className="bi bi-exclamation-triangle-fill me-2"), html.Strong( uncertainty_alert )], color="info" ),
                 dcc.Markdown( markdown, style={"margin-bottom" : "-15pt" }, link_target='_blank' ),
                 html.Div(
                     html.Img( src='data:image/png;base64,{}'.format(encoded_image.decode()),
