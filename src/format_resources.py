@@ -31,7 +31,7 @@ def load_sequences( window=None ):
 
 
 def load_cases( window = None ):
-    cases = pd.read_csv( "resources/cases.csv" )
+    cases = pd.read_csv( "resources/new_cases.csv" )
 
     # Convert to dates correctly.
     cases["updatedate"] = pd.to_datetime( cases["updatedate"] ).dt.tz_localize( None )
