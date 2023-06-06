@@ -392,7 +392,7 @@ def plot_sgtf( sgtf_data ):
     fig.update_yaxes( showgrid=True, title=f"<b>Tests</b>", range=[0,max_lim], secondary_y=False )
     fig.update_yaxes( showgrid=False, title=f"<b>SGTF (%)</b>", secondary_y=True, range=[-0.01,1.01] )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
+    fig.update_xaxes( dtick="M4", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
     fig.update_yaxes( mirror=True, secondary_y=False, showline=False, ticks="" )
     fig.update_yaxes( tickformat='.0%', secondary_y=True, showline=False, ticks="" )
     fig.update_layout( template="simple_white",
@@ -440,7 +440,7 @@ def plot_sgtf_estiamte( sgtf_data ):
                                hoverinfo='skip',
                                line={"color" : shade, "width" : 0} ) )
 
-    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
+    fig.update_xaxes( dtick="M4", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", showgrid=True )
     fig.update_yaxes( mirror=True, tickformat='.0%', showline=False, ticks="" )
     fig.update_yaxes( showgrid=True, title=f"<b>SGTF (%)</b>", range=[-0.01,1.01] )
     fig.update_layout( template="simple_white",
@@ -457,7 +457,7 @@ def plot_sgtf_estiamte( sgtf_data ):
     today = datetime.datetime.today()
     #max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
     max_date = pd.to_datetime( "2023-08-01" )
-    fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")], tickangle=0 )
+    fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")] )
 
     esti = sgtf_data[2]
 
