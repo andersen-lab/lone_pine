@@ -6,7 +6,7 @@ def get_table( growth_rates ):
     date_last = growth_rates["last_date"].values[0]
     date_today = growth_rates["today"].values[0]
 
-    growth_rates = growth_rates.loc[growth_rates["total_counts"]>5]
+    growth_rates = growth_rates.loc[growth_rates["total_counts"].astype(int)>5]
     growth_rates = growth_rates.drop( columns=["first_date", "last_date", "today"] )
 
     columns = [
