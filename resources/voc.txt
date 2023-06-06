@@ -600,3 +600,4 @@ XBC.1.1,Omicron-like
 XBK.1,Omicron-like
 XBV,Omicron-like
 XBW,Omicron-like
+XBB.2.3,Omicron-like
