@@ -552,8 +552,11 @@ def plot_wastewater( ww, seqs, cases, scale="linear", source="PointLoma", seq_in
     if seq_indicator:
         fig.add_vrect( x0=seq_min, x1=seq_max, fillcolor="#e9eef6", opacity=0.5, annotation_text="*Sequence data available", annotation_borderpad=10, annotation_position="top left", layer="below" )
 
-    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale )
-    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases / 100,000</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type=scale )
+    ww_range = [-subset_ww["gene_copies"].max()*0.05, subset_ww["gene_copies"].max()*1.05]
+    cases_range = [-cases["reported_cases_rolling"].max()*100000*0.05, cases["reported_cases_rolling"].max()*100000*1.05]
+
+    fig.update_yaxes( showgrid=True, title=f"<b>Mean viral gene copies / Liter</b>", tickfont=dict(color="#56B4E9"), title_font=dict(color="#56B4E9"), secondary_y=False, showline=False, ticks="", type=scale, range=ww_range )
+    fig.update_yaxes( showgrid=False, title=f"<b>Reported cases / 100,000</b>", tickfont=dict(color="#D55E00"), title_font=dict(color="#D55E00"), secondary_y=True, showline=False, ticks="", type=scale, range=cases_range )
     fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=False, ticks="", range=date_range )
 
     fig.update_layout( template="simple_white",
