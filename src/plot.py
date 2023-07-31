@@ -658,10 +658,10 @@ def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="Point
     plot_df["Other"] = plot_df["Other"].clip( lower=0 )
 
     if smooth:
-        plot_df = plot_df.apply( savgol_filter, window_length=21, polyorder=2 )
+        plot_df = plot_df.apply( savgol_filter, window_length=21, polyorder=1 )
         #plot_df = plot_df.apply( lambda x: x.rolling( 14, min_periods=1, win_type="triang" ).mean() )
-        plot_df = plot_df.clip( lower=0 )
-        plot_df = plot_df.apply( lambda x:( x / x.sum()) * 100, axis=1   )
+        #plot_df = plot_df.clip( lower=0 )
+        #plot_df = plot_df.apply( lambda x:( x / x.sum()) * 100, axis=1  )
 
     norm=None
     ht = "%{y:.0f}"
