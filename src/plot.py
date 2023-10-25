@@ -455,8 +455,8 @@ def plot_sgtf_estiamte( sgtf_data ):
                                     x=0.01,
                                     bgcolor="rgba(255,255,255,0.8)" ) )
     today = datetime.datetime.today()
-    #max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
-    max_date = pd.to_datetime( "2023-08-01" )
+    max_date = (today.replace(day=1) + datetime.timedelta(days=32)).replace(day=1)
+    # max_date = pd.to_datetime( "2023-08-01" )
     fig.update_xaxes( range=["2021-11-25", max_date.strftime( "%Y-%m-%d")] )
 
     esti = sgtf_data[2]
