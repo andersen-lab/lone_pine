@@ -3,8 +3,8 @@ import dash_bootstrap_components as dbc
 
 def get_layout():
     markdown = """
-    To monitor the prevalence of Monkeypox in San Diego, we are measuring virus concentration at the wastewater 
-    treatment plants in San Diego. Fragments of monkeypox virus DNA are shed in urine and stool and can serve as an 
+    To monitor the prevalence of Mpox in San Diego, we are measuring virus concentration at the wastewater 
+    treatment plants in San Diego. Fragments of Mpox virus DNA are shed in urine and stool and can serve as an 
     early indicator of the caseload in the community. The data shown here is collected by the Knight Lab at UCSD in 
     collaboration with San Diego County, and is available on our [Github repository](https://github.com/andersen-lab/MPX_WasteWater_San-Diego). 
     Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. 
@@ -49,7 +49,7 @@ def get_layout():
                                 )]
                         ),
                         dcc.Graph(
-                            id="monkeypox-graph",
+                            id="Mpox-graph",
                             config={"displayModeBar" : False },
                             style={"height" : "30em"}
                         )
