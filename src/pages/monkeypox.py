@@ -49,7 +49,7 @@ def get_layout():
                                 )]
                         ),
                         dcc.Graph(
-                            id="Mpox-graph",
+                            id="monkeypox-graph",
                             config={"displayModeBar" : False },
                             style={"height" : "30em"}
                         )
