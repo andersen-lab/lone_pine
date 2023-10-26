@@ -8,7 +8,7 @@ def get_layout():
     early indicator of the caseload in the community. The data shown here is collected by the EXCITE Lab at UCSD in 
     collaboration with San Diego County, and is available on our [Github repository](https://github.com/andersen-lab/MPX_WasteWater_San-Diego). 
     Scatter points indicate raw data, while solid line represent the same data smoothed with a Savitzky-Golay filter. 
-    Hover-over text displays raw values for viral load and smoothed values for reported cases.
+    Hover-over text displays raw values for viral load and smoothed values for reported cases. 
     """
 
     layout = [
