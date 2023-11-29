@@ -79,7 +79,7 @@ def get_seqs_per_case( time_series, seq_md, zip_f=None ):
 
     cases["new_sequences"] = cases["new_sequences"].fillna( 0.0 )
     cases["sequences"] = cases["new_sequences"].cumsum()
-    cases = cases.loc[~cases["cases"].isna()]
+    cases["cases"] = np.maximum.accumulate( cases["cases"].fillna(0) )
     cases["new_cases"] = cases["cases"].diff()
     cases["new_cases"] = cases["new_cases"].fillna( 0.0 )
     cases.loc[cases["new_cases"] < 0,"new_cases"] = 0
