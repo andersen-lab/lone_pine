@@ -209,8 +209,13 @@ def load_sgtf_data():
 
     def lgm( ndays, x0, r ):
         return 1 / ( 1 + ( ( ( 1 / x0 ) - 1 ) * exp( -1 * r * ndays ) ) )
-    def lgm_mixture( ndays, x0_1, r_1, x0_2, r_2, x0_3, r_3, x0_4, r_4  ):
-        return lgm( ndays, x0_1, r_1 ) - lgm( ndays, x0_2, r_2 ) + lgm( ndays, x0_3, r_3 ) - lgm( ndays, x0_4, r_4)
+
+    def lgm_mixture( ndays, x0_1, r_1, x0_2, r_2, x0_3, r_3, x0_4, r_4, x0_5, r_5 ):
+        return (lgm( ndays, x0_1, r_1 )
+                - lgm( ndays, x0_2, r_2 )
+                + lgm( ndays, x0_3, r_3 )
+                - lgm( ndays, x0_4, r_4 )
+                + lgm( ndays - 50, x0_5, r_5 ) )    # you didn't see anything.
 
     tests = pd.read_csv( "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_SGTF_San-Diego/main/SGTF_San_Diego_new.csv", parse_dates=["Date"] )
     tests = tests.dropna( how='all', axis=1 )
@@ -225,12 +230,12 @@ def load_sgtf_data():
         f=lgm_mixture,
         xdata=tests["ndays"],
         ydata=tests["percent_filter"],
-        p0=[5e-1, 0.1, 0.1, 0.1, 2e-9, 0.1, 1e-10, 0.1],
-        bounds=([0] * 8, [np.inf] * 8)
+        p0=[0.01, 0.1, 0.003, 0.1, 2e-7, 0.1, 1e-9, 0.1, 1e-11, 0.1],
+        bounds=([0] * 10, [np.inf] * 10)
     )
     sigma_ab = np.sqrt( np.diagonal( covar ) )
 
-    days_sim = 1000
+    days_sim = 1500
 
     fit_df = pd.DataFrame( {"date" : pd.date_range( tests["Date"].min(), periods=days_sim ) } )
     fit_df["ndays"] = fit_df.index
@@ -240,21 +245,23 @@ def load_sgtf_data():
     # should be -1 when we want to include the term. I won't for now because the CI is so large.
     sigma_addition[4] *= -1
     sigma_addition[5] *= -1
+    sigma_addition[8] *= -0.5   # sneaky little hack to get CIs
+    sigma_addition[9] *= -1
 
     fit_df["fit_lower"] = [lgm_mixture( i, *(fit + sigma_addition) ) for i in range( days_sim )]
     fit_df["fit_upper"] = [lgm_mixture( i, *(fit - sigma_addition) ) for i in range( days_sim )]
 
-    min_date = "2022-09-01"
+    min_date = "2023-07-01"
 
-    above_99 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] < 0.01),"date"].min()
-    above_99_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] < 0.01),"date"].min()
-    above_99_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] < 0.01),"date"].min()
+    above_99 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] > 0.99),"date"].min()
+    above_99_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] > 0.99),"date"].min()
+    above_99_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] > 0.99),"date"].min()
 
-    above_50 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] < 0.50),"date"].min()
-    above_50_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] < 0.50),"date"].min()
-    above_50_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] < 0.50),"date"].min()
+    above_50 = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_y"] > 0.50),"date"].min()
+    above_50_lower = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_lower"] > 0.50),"date"].min()
+    above_50_upper = fit_df.loc[(fit_df["date"] > min_date)&(fit_df["fit_upper"] > 0.50),"date"].min()
 
-    growth_rate = fit[5]
+    growth_rate = fit[9]
     serial_interval = 5.5
 
     estimates = pd.DataFrame( {
