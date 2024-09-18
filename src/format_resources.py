@@ -1,5 +1,5 @@
 from typing import List
-
+import os
 import numpy as np
 import pandas as pd
 from dash import html
@@ -12,7 +12,7 @@ from numpy import exp, log
 import geopandas as gpd
 
 def load_sequences( window=None ):
-    sequences = pd.read_csv( "resources/sequences.csv" )
+    sequences = pd.read_csv( os.path.abspath("./resources/sequences.csv") )
 
     # Convert to dates correctly.
     sequences["collection_date"] = pd.to_datetime( sequences["collection_date"] ).dt.tz_localize( None )
@@ -31,7 +31,7 @@ def load_sequences( window=None ):
 
 
 def load_cases( window = None ):
-    cases = pd.read_csv( "resources/new_cases.csv" )
+    cases = pd.read_csv( os.path.abspath("./resources/new_cases.csv" ))
 
     # Convert to dates correctly.
     cases["updatedate"] = pd.to_datetime( cases["updatedate"] ).dt.tz_localize( None )
@@ -43,7 +43,7 @@ def load_cases( window = None ):
 
 
 def load_growth_rates():
-    return pd.read_csv( "resources/growth_rates.csv" )
+    return pd.read_csv( os.path.abspath("./resources/growth_rates.csv" ))
 
 
 def load_ww_growth_rates():
@@ -327,7 +327,7 @@ def load_catchment_areas():
     zip_loc = "https://raw.githubusercontent.com/andersen-lab/SARS-CoV-2_WasteWater_San-Diego/master/Zipcodes.csv"
     zips = pd.read_csv( zip_loc, usecols=["Zip_code", "Wastewater_treatment_plant"] )
 
-    sd = gpd.read_file( "resources/zips.geojson" )
+    sd = gpd.read_file( os.path.abspath("./resources/zips.geojson" ))
 
     sd = sd.merge( zips, left_on=["ZIP"], right_on=["Zip_code"], how="outer" )
     sd = sd.loc[~sd["geometry"].isna()]
@@ -364,7 +364,7 @@ def load_ww_plot_config( delta=0.15 ):
         plot_config = yaml.load( config_url, Loader=yaml.FullLoader )
     except:
         print( "Unable to connect to remote config. Defaulting to local, potentially out-of-date copy." )
-        with open( "resources/ww_seqs.yml", "r" ) as f :
+        with open( os.path.abspath("./resources/ww_seqs.yml"), "r" ) as f :
             plot_config = yaml.load( f, Loader=yaml.FullLoader )
 
     children_dict = dict()

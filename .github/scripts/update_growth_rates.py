@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
@@ -9,8 +10,8 @@ import re
 from scipy.special import expit, logit
 import pickle
 
-SEQS_LOCATION = "resources/sequences.csv"
-VOC_LOCATION = "resources/voc.txt"
+SEQS_LOCATION = os.path.abspath("../../resources/sequences.csv")
+VOC_LOCATION = os.path.abspath("../../resources/voc.txt")
 
 aliasor = Aliasor()
 
@@ -37,7 +38,7 @@ def load_sequences():
 def collapse_lineage( entry : str, accepted_lineages: set[str] ):
     if entry in accepted_lineages or "." not in entry:
         return entry
-    elif re.match( "[A-Z]{2}.\d+$", entry ):
+    elif re.match( "[A-Z]{2}.\\+$", entry ):
         return aliasor.partial_compress( aliasor.uncompress( entry ), accepted_aliases=["BA"] )
     return ".".join( entry.split( "." )[:-1] )
 
@@ -83,9 +84,9 @@ def calculate_growth_rate( results ):
     return coeff
 
 def dump_model_names( model, collapsed_names ):
-    with open( "resources/clinical.model", "wb" ) as model_file:
+    with open( os.path.abspath("../../resources/clinical.model"), "wb" ) as model_file:
         pickle.dump( model, model_file )
-    with open( "resources/collapsed_names.csv", "w" ) as cn:
+    with open( os.path.abspath("../../resources/collapsed_names.csv"), "w" ) as cn:
         cn.write( "lineage,collapsed_lineage\n" )
         [cn.write( f"{k},{v}\n" ) for k, v in collapsed_names.items()]
 
@@ -214,5 +215,5 @@ def calculate_growth_rates():
 
 if __name__ == "__main__":
     growth_rates_filtered, all = calculate_growth_rates()
-    growth_rates_filtered.to_csv( "resources/growth_rates.csv", index=False )
-    all.to_csv( "resources/growth_rates_all.csv", index=False )
+    growth_rates_filtered.to_csv( os.path.abspath("../../resources/growth_rates.csv") , index=False )
+    all.to_csv( os.path.abspath("../../resources/growth_rates_all.csv"), index=False )

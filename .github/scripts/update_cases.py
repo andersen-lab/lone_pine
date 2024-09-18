@@ -1,3 +1,4 @@
+import os
 from urllib.error import HTTPError
 import pandas as pd
 import datetime
@@ -25,7 +26,7 @@ def download_sd_cases():
         DataFrame detailing the daily number of cases in San Diego.
     """
     def _append_population( dataframe ):
-        pop_loc = "resources/zip_pop.csv"
+        pop_loc = os.path.abspath("../../resources/zip_pop.csv")
         pop = pd.read_csv( pop_loc, usecols=["Zip", "Total Population"], thousands=",", dtype={"Zip" : str, "Total Population" : int } )
         dataframe = dataframe.merge( pop, left_on="ziptext", right_on="Zip", how="left" )
         dataframe = dataframe.drop( columns=["Zip"] )
@@ -42,14 +43,14 @@ def download_sd_cases():
         return entry
 
     # First, we load current dataset of cases
-    sd = pd.read_csv( "resources/cases.csv", parse_dates=["updatedate"] )
+    sd = pd.read_csv(os.path.abspath("../../resources/cases.csv"), parse_dates=["updatedate"] )
     sd = sd.loc[~sd["ziptext"].isna()]
     sd = sd.loc[sd["ziptext"]!="None"]
     sd["ziptext"] = sd["ziptext"].astype(int).astype(str)
 
     # Next we load the diff, which is an offset which helps reconcile differences between dataset. Not perfect and we
     # still see a big leap when we switched.
-    diff = pd.read_csv("resources/cases-zip-diff.csv", index_col="zipcode", dtype={"zipcode" : str, "diff" : float})
+    diff = pd.read_csv(os.path.abspath("../../resources/cases-zip-diff.csv"), index_col="zipcode", dtype={"zipcode" : str, "diff" : float})
     diff = diff["diff"]
 
     # We load the latest cummulative cases from the Tableau dashbaord
@@ -157,4 +158,4 @@ def download_cases():
 
 if __name__ == "__main__":
     cases = download_cases()
-    cases.to_csv( "resources/cases.csv", index=False )
+    cases.to_csv( os.path.abspath("../../resources/cases.csv"), index=False )
