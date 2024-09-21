@@ -1,11 +1,13 @@
+import os
 import pandas as pd
 from epiweeks import Week
 import datetime
 
+path = os.path.abspath('../../resources/excite_providers.csv')
 def load_excite_providers() :
-    excite = pd.read_csv( "resources/excite_providers.csv" )
-    excite = excite.set_index( "search_id" )
-    return excite["source"].to_dict()
+    excite = pd.read_csv(path)
+    excite = excite.set_index( "ID" )
+    return excite["provider"].to_dict()
 
 def load_file_as_list( loc ):
     with open( loc, "r" ) as open_file:
@@ -66,7 +68,7 @@ def download_search():
     md["sequencer"] = "Andersen Lab"
     md.loc[md["originating_lab"]=="UCSD EXCITE Lab","sequencer"] = "UCSD EXCITE Lab"
     md.loc[md["authors"]=="Helix","sequencer"] = "Helix"
-    md.loc[md["ID"].isin( load_file_as_list( "resources/sdphl_sequences.txt" ) ),"sequencer"] = "SD County Public Health Laboratory"
+    md.loc[md["ID"].isin( load_file_as_list( os.path.abspath('../../resources/sdphl_sequences.txt' )) ),"sequencer"] = "SD County Public Health Laboratory"
     md.loc[md['ID'].str.startswith( "CA-SDCPHL-" ),"sequencer"] = "SD County Public Health Laboratory"
 
     md["provider"] = md["originating_lab"]
@@ -94,7 +96,7 @@ def download_search():
     md["num"] = md["ID"].str.extract( "SEARCH-([0-9]+)" )
     md.loc[md["num"].isna(),"num"] = md["ID"]
 
-    md = md.merge( pango, left_on="num", right_on="num", how="left", validate="one_to_one" )
+    md = md.merge( pango, left_on="num", right_on="num", how="left")
 
     # Filter sequences which failed lineage calling. These sequences are likely incomplete/erroneous.
     md = md.loc[~md["lineage"].isin( ["None", "Unassigned"] )]
@@ -105,4 +107,4 @@ def download_search():
 
 if __name__ == "__main__":
     seqs_md = download_search()
-    seqs_md.to_csv( "resources/sequences.csv", index=False )
+    seqs_md.to_csv( path, index=False )

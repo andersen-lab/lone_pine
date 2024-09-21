@@ -148,6 +148,80 @@ def get_layout():
             style={ "marginLeft" : "auto",
                     "marginRight" : "auto" }
         ),
+
+        ## Marking the addition of a new area graph
+        html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.Br(),
+                                html.Div(
+                                    html.H4( ["Clinical Lineages  ", ] ), 
+                                    className="three columns",
+                                    style={"width" : "63.3%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
+                                ),
+                                dbc.Tooltip(
+                                    uncertainty_alert,
+                                    target="tooltip-target",
+                                    placement="right",
+                                    style={"width" : "500", "maxWidth" : "500"}
+                                ),
+                            ],
+                            className="radio-group",
+                            style={"margin" : "0"}
+                        ),
+                        html.Div(
+                            [dbc.RadioItems(
+                                id="scale-seqs-radios",
+                                className="btn-group",
+                                inputClassName="btn-check",
+                                labelClassName="btn btn-outline-primary",
+                                labelCheckedClassName="active",
+                                options=[
+                                    { "label": "Prevalence", "value": "prevalence" },
+                                    { "label": "Scale by viral load", "value": "viral" },
+                                    { "label": "Scale by cases", "value": "cases" },
+                                ],
+                                value="prevalence",
+                                style={ "width": "50%", "justifyContent": "flex-start" }
+                            ),
+                                dbc.RadioItems(
+                                    id="smooth-radio",
+                                    className="btn-group",
+                                    inputClassName="btn-check",
+                                    labelClassName="btn btn-outline-primary",
+                                    labelCheckedClassName="active",
+                                    options=[
+                                        { "label": "Raw data", "value": False },
+                                        { "label": "Smoothed", "value": True },
+
+                                    ],
+                                    value=True,
+                                    style={ "width": "50%", "justifyContent": "flex-end" }
+                                )],
+                        ),
+                        html.Div(
+                            dcc.Graph(
+                                id="wastewater-seq-graph",
+                                config={"displayModeBar" : False},
+                            ),
+                            style={ "height": "30em", "margin" : "auto" }
+                        )
+                    ],
+                ),
+                html.P(),
+                html.Div( id="top-table-div", style={ "width"        : "33em",
+                                                      "marginLeft"   : "auto",
+                                                      "marginRight"  : "auto",
+                                                      "marginBottom" : "25px" } ),
+            ]
+        ),
+        html.Br(),
+        html.Br(),
+        html.P( id="commit-date", style={ 'textAlign': 'center' }
+
+        ),
+
         html.Div( [
             html.H4( "ZIP Codes" ),
             dcc.Graph(
@@ -159,6 +233,9 @@ def get_layout():
             className="pretty_container",
             style={ "marginLeft" : "auto",
                     "marginRight" : "auto" }
-        )
+        ) 
+
+
+        
     ]
     return layout

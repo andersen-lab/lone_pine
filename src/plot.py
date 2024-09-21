@@ -634,7 +634,122 @@ def plot_monkeypox_concentration( mx_gene: pd.DataFrame, mx_cases: pd.DataFrame,
 
     return fig
 
+##### The code that creates/returns the wastewater_area plot is below; replicate code below in a new clinical function beneath it
+## From wastewater page copy code from line 92 on into main page -- this is the code for the area plot
+## Add (copy/paste) the callback code
+## In callbacks copy code starting from 290 for the wastewater plot
+## Use load_sequences (1st function from format_resources.py) to get your data, perhaps make code similar to what is seen in load_wastewater_data (line 307)
+## We need to connect the selections with Zipcode data instead of locations in wastewater.
+
 def plot_wastewater_seqs( ww_data, seqs, cases, config, norm_type, source="PointLoma", smooth=True ) -> go.Figure:
+    def hex_to_rgb( hex_color: str ) -> tuple:
+        hex_color = hex_color.lstrip( "#" )
+        if len( hex_color ) == 3:
+            hex_color = hex_color * 2
+        return int( hex_color[0:2], 16 ), int( hex_color[2:4], 16 ), int( hex_color[4:6], 16 )
+
+    filtered_seqs = seqs.loc[seqs["source"]==source]
+
+    plot_df = []
+    for i in config.keys() :
+        if i != "Other" :
+            try:
+                temp_sum = filtered_seqs[config[i]["members"]].sum( axis=1 )
+            except KeyError:
+                print( 'help"')
+                exit()
+            temp_sum.name = i
+            plot_df.append( temp_sum )
+    plot_df = pd.concat( plot_df, axis=1 )
+    plot_df["Other"] = 100 - plot_df.sum( axis=1 )
+    plot_df["Other"] = plot_df["Other"].clip( lower=0 )
+
+
+    if smooth:
+        plot_df = plot_df.apply( savgol_filter, window_length=21, polyorder=1 )
+        #plot_df = plot_df.apply( lambda x: x.rolling( 14, min_periods=1, win_type="triang" ).mean() )
+        plot_df = plot_df.clip( lower=0 )
+        plot_df = plot_df.apply( lambda x:( x / x.sum()) * 100, axis=1  )
+
+    norm=None
+    ht = "%{y:.0f}"
+
+    if norm_type == "viral":
+        norm = "gene_copies_rolling"
+        yaxis_label = "<b>Variant copies / Liter</b>"
+        ticksuffix = ""
+        yrange = None
+    elif norm_type == "cases":
+        ww_data = ww_data.merge( cases, left_on="date", right_index=True, how="left" )
+        ww_data["reported_cases_rolling"] = ww_data["reported_cases_rolling"] * ww_data["population"]
+        norm="reported_cases_rolling"
+        yaxis_label = "<b>Estimated cases<b>"
+        ticksuffix = ""
+        yrange = None
+    elif norm_type == "prevalence":
+        ht = "%{y:.0f}%"
+        yaxis_label = "<b>Variant prevalence</b>"
+        ticksuffix = "%"
+        yrange = [0,100]
+
+    if norm is not None:
+        ww_data = ww_data.loc[ww_data["source"]==source]
+        plot_df = plot_df.merge( ww_data[["date", norm]], left_index=True, right_on="date", how="left" )
+        plot_df = plot_df.rename( columns={ "date" : "Date" } )
+        plot_df = plot_df.dropna()
+        plot_df = plot_df.set_index( "Date" )
+        plot_df = plot_df.loc[:, plot_df.columns != norm].apply( lambda x : (x / 100) * plot_df[norm] )
+
+    fig = go.Figure()
+
+    fill_pattern = go.scatter.Fillpattern( bgcolor=config["Recombinants"]["color"], fgcolor="white", shape="/", solidity=0.5 )
+
+    fig.add_trace(
+        go.Scatter(
+            x=plot_df.index, y=[0]*plot_df.shape[0],
+            hoverinfo="skip",
+            showlegend=False,
+            fillcolor="black",
+            line=dict( width=1, color="black" ),
+            stackgroup='one'
+        )
+    )
+    for i in reversed( list( config.keys() ) ):
+        fig.add_trace(
+            go.Scatter(
+                x=plot_df.index, y=plot_df[i],
+                name=config[i]["name"],
+                hovertemplate=ht,
+                hoverinfo='x+y',
+                mode='lines',
+                fillcolor=f"rgba{(*hex_to_rgb(config[i]['color']), 0.65)}",
+                line=dict( width=0.5, color=config[i]["color"] ),
+                fillpattern=fill_pattern if i == "Recombinants" else None,
+                stackgroup='one'
+            )
+        )
+    fig.add_trace(
+        go.Scatter(
+            x=plot_df.index, y=[0]*plot_df.shape[0],
+            hoverinfo="skip",
+            showlegend=False,
+            fillcolor="black",
+            line=dict( width=1, color="black" ),
+            stackgroup='one'
+        )
+    )
+    fig.update_yaxes( showgrid=True, title=yaxis_label, range=yrange, tickformat='.0f',
+                      ticksuffix=ticksuffix, showline=True, ticks="", mirror=True, linewidth=2 ) # Twice as wide because fake lineages adds with the x-axis
+    fig.update_xaxes( dtick="M1", tickformat="%b\n%Y", mirror=True, showline=True, ticks="", showgrid=False, linewidth=1 )
+    _add_date_formatting_minimum( fig )
+    fig.update_layout( legend=dict( bgcolor="white" ) )
+    fig.update_traces( mode="lines" )
+    return fig
+
+
+
+
+def plot_clinical_seqs( clinical_data, seqs, cases, config, norm_type, source="PointLoma", smooth=True ) -> go.Figure:
     def hex_to_rgb( hex_color: str ) -> tuple:
         hex_color = hex_color.lstrip( "#" )
         if len( hex_color ) == 3:

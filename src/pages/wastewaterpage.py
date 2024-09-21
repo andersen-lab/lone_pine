@@ -91,7 +91,7 @@ def get_layout():
                             [
                                 html.Br(),
                                 html.Div(
-                                    html.H4( ["Wastewater lineages  ", ] ), #html.I(className="bi bi-exclamation-triangle-fill me-2", id="tooltip-target", style={"fontSize" : "1.25rem", "color" : "#DA1414"}) ] ),
+                                    html.H4( ["Wastewater lineages  ", ] ),
                                     className="three columns",
                                     style={"width" : "63.3%", "marginLeft" : "0", "marginRight": "2.5%", 'display': 'inline-block'}
                                 ),
