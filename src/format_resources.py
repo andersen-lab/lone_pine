@@ -185,7 +185,7 @@ def get_summary_table( seqs ):
     return table
 
 def get_provider_sequencer_values( seqs, value ):
-    labels = [{"label" : f"{i} ({j})", "value": i }for i, j in seqs[value].sort_values().value_counts().iteritems()]
+    labels = [{"label" : f"{i} ({j})", "value": i }for i, j in seqs[value].sort_values().value_counts().items()]
     labels = sorted( labels, key=lambda x: x["label"] )
     return labels
 

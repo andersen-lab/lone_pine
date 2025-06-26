@@ -277,7 +277,7 @@ def plot_delta( df, scaleby="fraction" ):
 def plot_lineages( df ):
 
     plot_df = df["lineage"].value_counts().reset_index()
-
+    print(plot_df)
     colors = list()
     for i in plot_df["index"]:
         if i in sorted( VOI.keys() ):
